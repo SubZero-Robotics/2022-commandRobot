@@ -7,12 +7,9 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 #include "subsystems/DriveSubsystem.h"
-#include <frc/Encoder.h>
+//#include <frc/Encoder.h>
 
-DriveSubsystem::DriveSubsystem()
-    : m_leftEncoder{kLeftEncoderPorts[0], kLeftEncoderPorts[1]},
-      m_rightEncoder{kRightEncoderPorts[0], kRightEncoderPorts[1]}
-        {
+DriveSubsystem::DriveSubsystem() {
   // Implementation of subsystem constructor goes here.
 
   // Invert right side, since DifferentialDrive no longer does it for us
@@ -24,10 +21,10 @@ DriveSubsystem::DriveSubsystem()
   LeftFollow.Follow(LeftLead);
 
   // Set the distance per pulse for the encoders
-  m_leftEncoder.SetDistancePerPulse(kEncoderDistancePerPulse);
-  m_rightEncoder.SetDistancePerPulse(kEncoderDistancePerPulse);
+  //m_leftEncoder.SetDistancePerPulse(kEncoderDistancePerPulse);
+  //m_rightEncoder.SetDistancePerPulse(kEncoderDistancePerPulse); 
 
-  ResetEncoders();
+  //ResetEncoders();
 
   // zero gyro
   // Note that this can't happen at power-on when this constructor likely happens
@@ -43,8 +40,8 @@ DriveSubsystem::DriveSubsystem()
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
   // for example, publish encoder settings or motor currents to dashboard
-  Distance = Ultrasonic.GetVoltage()*1000.0*(1.0/0.977)*(1.0/25.4);
-  frc::SmartDashboard::PutNumber("Distance", Distance);
+  /*Distance = Ultrasonic.GetVoltage()*1000.0*(1.0/0.977)*(1.0/25.4);
+  frc::SmartDashboard::PutNumber("Distance", Distance);*/
 
   //Display encoder values in SmartDashboard
   rEncoder = -RightLead.GetSelectedSensorPosition();
@@ -69,7 +66,7 @@ void DriveSubsystem::Periodic() {
 void DriveSubsystem::ArcadeDrive(double fwd, double rot) {
   m_drive.ArcadeDrive(fwd, rot, true);
 }
-
+/*
 void DriveSubsystem::ResetEncoders() {
  m_leftEncoder.Reset();
  m_rightEncoder.Reset();
@@ -85,7 +82,7 @@ frc::Encoder& DriveSubsystem::GetRightEncoder() { return m_rightEncoder; }
 
 void DriveSubsystem::SetMaxOutput(double maxOutput) {
   m_drive.SetMaxOutput(maxOutput);
-}
+}*/
 
 units::degree_t DriveSubsystem::GetHeading() {
   // make sure it fits in +/- 180.  Yaw does this, so should be ok.
@@ -117,9 +114,9 @@ void DriveSubsystem::ZeroGyro(){
   ahrs.ZeroYaw();
 }
 
-double DriveSubsystem::GetDistance() {
+/*double DriveSubsystem::GetDistance() {
   return Distance;
-}
+}*/
 
 units::degree_t DriveSubsystem::SanitizeAngle(units::degree_t target){
   units::degree_t cleanedAngle = target;

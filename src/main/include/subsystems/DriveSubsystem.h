@@ -45,28 +45,28 @@ class DriveSubsystem : public frc2::SubsystemBase {
 /**
    * Resets the drive encoders to currently read a position of 0.
    */
-  void ResetEncoders();
+  //void ResetEncoders();
 
 /**
    * Gets the average distance of the TWO encoders.
    *
    * @return the average of the TWO encoder readings (left and right)
    */
-  double GetAverageEncoderDistance();
+  //double GetAverageEncoderDistance();
 
 /**
    * Gets the left drive encoder.
    *
    * @return the left drive encoder
    */
-  frc::Encoder& GetLeftEncoder();
+  //frc::Encoder& GetLeftEncoder();
 
   /**
    * Gets the right drive encoder.
    *
    * @return the right drive encoder
    */
-  frc::Encoder& GetRightEncoder();
+  //frc::Encoder& GetRightEncoder();
 
 /**
    * Sets the max output of the drive.  Useful for scaling the drive to drive
@@ -114,7 +114,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
    *
    * @return The range from the ultrasonic sensor, in inches
    */
-  double GetDistance();
+  //double GetDistance();
 
   
  /**
@@ -137,10 +137,6 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   frc::DifferentialDrive m_drive{RightLead, LeftLead};
 
-  // encoders here, if we get them
-  frc::Encoder m_leftEncoder;
-  frc::Encoder m_rightEncoder;
-  
   // The default (starting) values for the encoder
   double lEncoder = 0.0;
   double rEncoder = 0.0;

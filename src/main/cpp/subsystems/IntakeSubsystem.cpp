@@ -11,21 +11,21 @@
 
 // Constructor, set initial state to in and stopped
 IntakeSubsystem::IntakeSubsystem() {
-    IntakeArm.Set(frc::DoubleSolenoid::Value(1));
+    //IntakeArm.Set(frc::DoubleSolenoid::Value(1));
     IntakeWheels.Set(ControlMode::PercentOutput, 0.0);
 }
 
 void IntakeSubsystem::Extend() {
-    IntakeArm.Set(frc::DoubleSolenoid::Value(2));
+    //IntakeArm.Set(frc::DoubleSolenoid::Value(2));
     IntakeWheels.Set(ControlMode::PercentOutput, kIntakeSpeed);
 }
 
 void IntakeSubsystem::Retract() {
-    IntakeArm.Set(frc::DoubleSolenoid::Value(1));
+    //IntakeArm.Set(frc::DoubleSolenoid::Value(1));
     IntakeWheels.Set(ControlMode::PercentOutput, 0.0);
 }
 
 void IntakeSubsystem::Spit() {
-    IntakeArm.Set(frc::DoubleSolenoid::Value(2));
+    //IntakeArm.Set(frc::DoubleSolenoid::Value(2));
     IntakeWheels.Set(ControlMode::PercentOutput, -kIntakeSpeed);
 }
