@@ -21,8 +21,8 @@ DriveSubsystem::DriveSubsystem() {
   ConfigureMotor(&LeftFollow);
 
   // Invert right side, since DifferentialDrive no longer does it for us
-  RightLead.SetInverted(true);
-  RightFollow.SetInverted(true);
+  LeftLead.SetInverted(true);
+  LeftFollow.SetInverted(true);
 
   //Drive train motor grouping start
   RightFollow.Follow(RightLead);
@@ -47,6 +47,7 @@ void DriveSubsystem::Periodic() {
   // Things that happen while robot is running */
 
   //Display encoder values in SmartDashboard
+  rEncoder = GetRightEncoder();
   frc::SmartDashboard::PutNumber("Right Encoder", rEncoder);
   lEncoder = GetLeftEncoder();
   frc::SmartDashboard::PutNumber("Left Encoder", lEncoder);
@@ -77,7 +78,7 @@ void DriveSubsystem::ResetEncoders() {
 
 // return the average of the two left encoders
 double DriveSubsystem::GetLeftEncoder() { 
-  return (LeftLead.GetSelectedSensorPosition()+LeftFollow.GetSelectedSensorPosition()/2.0);
+  return -(LeftLead.GetSelectedSensorPosition()+LeftFollow.GetSelectedSensorPosition()/2.0);
   }
 
 // return the NEGATIVE average of the two right encoders

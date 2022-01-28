@@ -153,7 +153,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   // limelight
   float tx = 0.0;           // limelight angle off left/right
-  int tv = 0;               // does the limelight have a target?
+  int tv = 1;               // does the limelight have a target?
   // pointer to network tables for limelight stuff
   std::shared_ptr<nt::NetworkTable> table;
 };
