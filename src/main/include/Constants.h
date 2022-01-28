@@ -42,20 +42,17 @@ constexpr double kIntakeSpeed = 0.5;
 
 //DriveSubsystem constants
 
-constexpr int kLeftEncoderPorts[]{3, 4};
-constexpr int kRightEncoderPorts[]{1, 2};
-
-constexpr bool kLeftEncoderReversed = false;
-constexpr bool kRightEncoderReversed = false;
-
 constexpr auto kTrackwidth = 0.69_m; //I have not measured this, it is copied
 
-constexpr int kEncoderCPR = 1024; //Max power value???
-constexpr double kWheelDiameterInches = 6;
+constexpr int kEncoderCPR = 2048; // Counts Per Rotation. TalonFX is 2048
+constexpr double kWheelDiameterInches = 6.0;
 constexpr double kEncoderDistancePerPulse =
     // Assumes the encoders are directly mounted on the wheel shafts
     (kWheelDiameterInches * wpi::numbers::pi) /
     static_cast<double>(kEncoderCPR);
+// Or: just measure the DistancePerPulse for the whole drivetrain,
+// and replace this calculation with a number. 
+// Let's do it in feet per tick
 
 // Turning constants
 constexpr bool kGyroReversed = false;

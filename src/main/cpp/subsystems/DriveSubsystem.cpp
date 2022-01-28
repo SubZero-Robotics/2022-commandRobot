@@ -11,6 +11,14 @@
 
 DriveSubsystem::DriveSubsystem() {
   // Implementation of subsystem constructor goes here.
+  // Stuff you want to happen once, when robot code starts running
+
+  // Initialize each motor with MotionMagic settings
+  // Made this a function since we do the same thing four times
+  ConfigureMotor(&RightLead);
+  ConfigureMotor(&RightFollow);
+  ConfigureMotor(&LeftLead);
+  ConfigureMotor(&LeftFollow);
 
   // Invert right side, since DifferentialDrive no longer does it for us
   RightLead.SetInverted(true);
@@ -20,11 +28,8 @@ DriveSubsystem::DriveSubsystem() {
   RightFollow.Follow(RightLead);
   LeftFollow.Follow(LeftLead);
 
-  // Set the distance per pulse for the encoders
-  //m_leftEncoder.SetDistancePerPulse(kEncoderDistancePerPulse);
-  //m_rightEncoder.SetDistancePerPulse(kEncoderDistancePerPulse); 
-
-  //ResetEncoders();
+  // Start encoders at zero
+  ResetEncoders();
 
   // zero gyro
   // Note that this can't happen at power-on when this constructor likely happens
@@ -39,16 +44,12 @@ DriveSubsystem::DriveSubsystem() {
 
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
-  // for example, publish encoder settings or motor currents to dashboard
-  /*Distance = Ultrasonic.GetVoltage()*1000.0*(1.0/0.977)*(1.0/25.4);
-  frc::SmartDashboard::PutNumber("Distance", Distance);*/
+  // Things that happen while robot is running */
 
   //Display encoder values in SmartDashboard
-  rEncoder = -RightLead.GetSelectedSensorPosition();
   frc::SmartDashboard::PutNumber("Right Encoder", rEncoder);
-  lEncoder = LeftLead.GetSelectedSensorPosition();
+  lEncoder = GetLeftEncoder();
   frc::SmartDashboard::PutNumber("Left Encoder", lEncoder);
-
   gyroAngle = ahrs.GetYaw();
   frc::SmartDashboard::PutNumber("gyroAngle", gyroAngle);
   gyroRate = ahrs.GetRate();
@@ -66,23 +67,33 @@ void DriveSubsystem::Periodic() {
 void DriveSubsystem::ArcadeDrive(double fwd, double rot) {
   m_drive.ArcadeDrive(fwd, rot, true);
 }
-/*
+
 void DriveSubsystem::ResetEncoders() {
- m_leftEncoder.Reset();
- m_rightEncoder.Reset();
+  RightLead.SetSelectedSensorPosition(0, 0, 10);
+  RightFollow.SetSelectedSensorPosition(0, 0, 10);
+  LeftLead.SetSelectedSensorPosition(0, 0, 10);
+  LeftFollow.SetSelectedSensorPosition(0, 0, 10);
 }
 
-double DriveSubsystem::GetAverageEncoderDistance() {
-  return (m_leftEncoder.GetDistance() + m_rightEncoder.GetDistance()) / 2.0;
+// return the average of the two left encoders
+double DriveSubsystem::GetLeftEncoder() { 
+  return (LeftLead.GetSelectedSensorPosition()+LeftFollow.GetSelectedSensorPosition()/2.0);
+  }
+
+// return the NEGATIVE average of the two right encoders
+// Because it's inverted.  Maybe not needed?
+double DriveSubsystem::GetRightEncoder() { 
+    return -(RightLead.GetSelectedSensorPosition()+RightFollow.GetSelectedSensorPosition()/2.0);
 }
 
-frc::Encoder& DriveSubsystem::GetLeftEncoder() { return m_leftEncoder; }
-
-frc::Encoder& DriveSubsystem::GetRightEncoder() { return m_rightEncoder; }
+// return the average of left and right encoder sets, in feet
+double DriveSubsystem::GetAverageEncoderDistance() { 
+  return kEncoderDistancePerPulse*(GetLeftEncoder()+GetRightEncoder()/2.0);
+}
 
 void DriveSubsystem::SetMaxOutput(double maxOutput) {
   m_drive.SetMaxOutput(maxOutput);
-}*/
+}
 
 units::degree_t DriveSubsystem::GetHeading() {
   // make sure it fits in +/- 180.  Yaw does this, so should be ok.
@@ -114,13 +125,54 @@ void DriveSubsystem::ZeroGyro(){
   ahrs.ZeroYaw();
 }
 
-/*double DriveSubsystem::GetDistance() {
+double DriveSubsystem::GetDistance() {
   return Distance;
-}*/
+}
 
 units::degree_t DriveSubsystem::SanitizeAngle(units::degree_t target){
   units::degree_t cleanedAngle = target;
   if ( cleanedAngle >= 180_deg) cleanedAngle -= 360_deg;
   if ( cleanedAngle <= -180_deg) cleanedAngle += 360_deg;
   return cleanedAngle;
+}
+
+void DriveSubsystem::ConfigureMotor(WPI_TalonFX *_talon) {
+  // Looking at this example:
+  // https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/blob/master/C%2B%2B%20Talon%20FX%20(Falcon%20500)/MotionMagic/src/main/cpp/Robot.cpp
+  // Sets up MotionMagic parameters inside the motor
+  // The exact numbers need to be determined!
+
+  // set motor to factory default each time the robot starts, 
+  // so that we don't have unexpected things left over
+  _talon->ConfigFactoryDefault();
+
+  // Choose the sensor we're using for PID 0 to be the built-in encoders
+  // This should be the default anyway, but we'll be sure
+  _talon->ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor,
+                                        0, 
+                                        10);
+
+/* Set relevant frame periods to be at least as fast as periodic rate */
+    _talon->SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0, 10, 10);
+    _talon->SetStatusFramePeriod(StatusFrameEnhanced::Status_10_MotionMagic, 10, 10);
+
+    /* Set the peak and nominal outputs */
+    _talon->ConfigNominalOutputForward(0, 10);
+    _talon->ConfigNominalOutputReverse(0, 10);
+    _talon->ConfigPeakOutputForward(1, 10);
+    _talon->ConfigPeakOutputReverse(-1, 10);
+
+    /* Set Motion Magic gains in slot0 - see documentation */
+    _talon->SelectProfileSlot(0, 0);
+    _talon->Config_kF(0, 0.3, 10);
+    _talon->Config_kP(0, 0.1, 10);
+    _talon->Config_kI(0, 0.0, 10);
+    _talon->Config_kD(0, 0.0, 10);
+
+    /* Set acceleration and vcruise velocity - see documentation */
+    _talon->ConfigMotionCruiseVelocity(1500, 10);
+    _talon->ConfigMotionAcceleration(1500, 10);
+
+    /* Zero the sensor */
+    _talon->SetSelectedSensorPosition(0, 0, 10);
 }

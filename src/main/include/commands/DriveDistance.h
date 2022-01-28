@@ -18,11 +18,10 @@ class DriveDistance
   /**
    * Creates a new DriveDistance.
    *
-   * @param inches The number of inches the robot will drive
-   * @param speed The speed at which the robot will drive
+   * @param feet The number of feet the robot will drive
    * @param drive The drive subsystem on which this command will run
    */
-  DriveDistance(double inches, double speed, DriveSubsystem* subsystem);
+  DriveDistance(double feet, double speed, DriveSubsystem* subsystem);
 
   void Initialize() override;
 

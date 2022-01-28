@@ -8,15 +8,12 @@
 #pragma once
 
 #include <ctre/Phoenix.h>
-#include <frc/motorcontrol/VictorSP.h>
-#include <frc/Encoder.h>
 #include <frc/AnalogInput.h>
 #include <AHRS.h>
 #include <networktables/NetworkTable.h>
 #include <networktables/NetworkTableInstance.h>
 #include <networktables/NetworkTableEntry.h>
 
-//#include <frc/SpeedControllerGroup.h>
 #include <frc/drive/DifferentialDrive.h>
 
 #include <frc2/command/SubsystemBase.h>
@@ -45,28 +42,25 @@ class DriveSubsystem : public frc2::SubsystemBase {
 /**
    * Resets the drive encoders to currently read a position of 0.
    */
-  //void ResetEncoders();
-
-/**
-   * Gets the average distance of the TWO encoders.
-   *
-   * @return the average of the TWO encoder readings (left and right)
-   */
-  //double GetAverageEncoderDistance();
+  void ResetEncoders();
 
 /**
    * Gets the left drive encoder.
    *
    * @return the left drive encoder
    */
-  //frc::Encoder& GetLeftEncoder();
+  double GetLeftEncoder();
 
   /**
    * Gets the right drive encoder.
-   *
    * @return the right drive encoder
    */
-  //frc::Encoder& GetRightEncoder();
+  double GetRightEncoder();
+/**
+   * Gets the average distance traveled by both sides, in feet.
+   * @return the average of left and right encoders, in feet
+   */
+  double GetAverageEncoderDistance();
 
 /**
    * Sets the max output of the drive.  Useful for scaling the drive to drive
@@ -114,7 +108,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
    *
    * @return The range from the ultrasonic sensor, in inches
    */
-  //double GetDistance();
+  double GetDistance();
 
   
  /**
@@ -123,6 +117,13 @@ class DriveSubsystem : public frc2::SubsystemBase {
    * @return The angle to turn to, put into -180,180 degrees
    */
   units::degree_t SanitizeAngle(units::degree_t target);
+
+ /**
+   * set up a motor.  Call this in Init for each motor
+   *
+   * @return The angle to turn to, put into -180,180 degrees
+   */
+  void ConfigureMotor(WPI_TalonFX *_talon);
 
   private:
   // Components (e.g. motor controllers and sensors) should generally be
