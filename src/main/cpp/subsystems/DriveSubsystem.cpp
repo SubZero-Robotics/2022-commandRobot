@@ -20,7 +20,7 @@ DriveSubsystem::DriveSubsystem() {
   ConfigureMotor(&LeftLead);
   ConfigureMotor(&LeftFollow);
 
-  // Invert right side, since DifferentialDrive no longer does it for us
+  // Invert left side, since DifferentialDrive no longer does it for us
   LeftLead.SetInverted(true);
   LeftFollow.SetInverted(true);
 
@@ -55,6 +55,8 @@ void DriveSubsystem::Periodic() {
   frc::SmartDashboard::PutNumber("gyroAngle", gyroAngle);
   gyroRate = ahrs.GetRate();
   frc::SmartDashboard::PutNumber("gyroRate", gyroRate);
+  AverageEncoderDistance = GetAverageEncoderDistance();
+  frc::SmartDashboard::PutNumber("Encoder Distance in:", AverageEncoderDistance);
 
 // Get limelight stuff
   tx = table->GetNumber("tx",0.0); 

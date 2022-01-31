@@ -120,8 +120,6 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
  /**
    * set up a motor.  Call this in Init for each motor
-   *
-   * @return The angle to turn to, put into -180,180 degrees
    */
   void ConfigureMotor(WPI_TalonFX *_talon);
 
@@ -141,6 +139,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // The default (starting) values for the encoder
   double lEncoder = 0.0;
   double rEncoder = 0.0;
+
+  double AverageEncoderDistance = 0.0;
 
   // Ultrasonic Ranger
   frc::AnalogInput Ultrasonic{0};

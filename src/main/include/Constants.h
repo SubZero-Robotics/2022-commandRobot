@@ -45,7 +45,7 @@ constexpr double kIntakeSpeed = 0.5;
 constexpr auto kTrackwidth = 0.69_m; //I have not measured this, it is copied
 
 constexpr int kEncoderCPR = 2048; // Counts Per Rotation. TalonFX is 2048
-constexpr double kWheelDiameterInches = 6.0;
+constexpr double kWheelDiameterInches = 6.25;
 constexpr double kEncoderDistancePerPulse =
     // Assumes the encoders are directly mounted on the wheel shafts
     (kWheelDiameterInches * wpi::numbers::pi) /
