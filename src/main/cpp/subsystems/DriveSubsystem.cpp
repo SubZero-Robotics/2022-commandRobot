@@ -80,18 +80,18 @@ void DriveSubsystem::ResetEncoders() {
 
 // return the average of the two left encoders
 double DriveSubsystem::GetLeftEncoder() { 
-  return -(LeftLead.GetSelectedSensorPosition()+LeftFollow.GetSelectedSensorPosition()/2.0);
+  return -((LeftLead.GetSelectedSensorPosition()+LeftFollow.GetSelectedSensorPosition())/2.0);
   }
 
 // return the NEGATIVE average of the two right encoders
 // Because it's inverted.  Maybe not needed?
 double DriveSubsystem::GetRightEncoder() { 
-    return -(RightLead.GetSelectedSensorPosition()+RightFollow.GetSelectedSensorPosition()/2.0);
+    return -((RightLead.GetSelectedSensorPosition()+RightFollow.GetSelectedSensorPosition())/2.0);
 }
 
 // return the average of left and right encoder sets, in feet
 double DriveSubsystem::GetAverageEncoderDistance() { 
-  return kEncoderDistancePerPulse*(GetLeftEncoder()+GetRightEncoder()/2.0);
+  return kEncoderDistancePerPulse*((GetLeftEncoder()+GetRightEncoder())/2.0);
 }
 
 void DriveSubsystem::SetMaxOutput(double maxOutput) {
