@@ -54,6 +54,14 @@ constexpr double kEncoderDistancePerPulse = //0.000657555;
 // and replace this calculation with a number. 
 // Let's do it in feet per tick
 
+// These characterization values MUST be determined either experimentally or
+// theoretically for *your* robot's drive. The Robot Characterization
+// Toolsuite provides a convenient tool for obtaining these values for your
+// robot.
+constexpr auto ks = 0.6506_V;
+constexpr auto kv = 0.078629 * 1_V * 1_s / 1_in;
+constexpr auto ka = 0.0072005 * 1_V * 1_s * 1_s / 1_in;
+
 // Turning constants
 constexpr bool kGyroReversed = false;
 
