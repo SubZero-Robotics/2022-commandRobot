@@ -25,10 +25,23 @@
 #include "commands/TurnToLimelight.h"
 #include "commands/TurnToAngle.h"
 
+
+#include <utility>
+
+#include <frc/controller/PIDController.h>
+#include <frc/controller/RamseteController.h>
+#include <frc/trajectory/Trajectory.h>
+#include <frc/trajectory/TrajectoryGenerator.h>
+#include <frc/trajectory/constraint/DifferentialDriveVoltageConstraint.h>
+#include <frc2/command/InstantCommand.h>
+#include <frc2/command/RamseteCommand.h>
+#include <frc2/command/SequentialCommandGroup.h>
+
 #include "commands/ClimberUpUp.h"
 #include "commands/ClimberDownDown.h"
 #include "commands/ClimberClimb.h"
 #include "commands/ClimberStop.h"
+
 
 #include "Constants.h"
 
@@ -139,5 +152,9 @@ void RobotContainer::ConfigureButtonBindings() {
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // Runs the chosen command in autonomous
+  frc::DifferentialDriveVoltageConstraint autoVoltageConstraint(
+      frc::SimpleMotorFeedforward<units::meters>(
+          DriveConstants::ks, DriveConstants::kv, DriveConstants::ka),
+      DriveConstants::kDriveKinematics, 10_V);
   return m_chooser.GetSelected();
 }

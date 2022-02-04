@@ -17,7 +17,10 @@
 #include "commands/DriveStraight.h"
 #include "commands/ShooterShoot.h"
 #include "commands/IndexerForward.h"
-#include "commands/IndexerForwardCheckRPM.h"
+#include "commands/IndexerForwardCheckRPM.h" 
+#include "Constants.h"
+#include <pathplanner/lib/PathPlanner.h>
+#include "subsystems/DriveSubsystem.h"
 
 /**
  * An auto for starting on the left
