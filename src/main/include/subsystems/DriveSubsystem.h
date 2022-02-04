@@ -20,6 +20,10 @@
 
 #include "Constants.h"
 
+#include <frc/geometry/Pose2d.h>
+#include <frc/kinematics/DifferentialDriveOdometry.h>
+
+
 class DriveSubsystem : public frc2::SubsystemBase {
  public:
   DriveSubsystem();
@@ -38,6 +42,14 @@ class DriveSubsystem : public frc2::SubsystemBase {
    * @param rot the commanded rotation
    */
   void ArcadeDrive(double fwd, double rot);
+
+/**
+   * Controls each side of the drive directly with a voltage.
+   *
+   * @param left the commanded left output
+   * @param right the commanded right output
+   */
+  void TankDriveVolts(units::volt_t left, units::volt_t right);
 
 /**
    * Resets the drive encoders to currently read a position of 0.
@@ -84,7 +96,28 @@ class DriveSubsystem : public frc2::SubsystemBase {
    */
   double GetTurnRate();
 
+/**
+   * Returns the currently-estimated pose of the robot.
+   *
+   * @return The pose.
+   */
+  frc::Pose2d GetPose();
+
   /**
+   * Returns the current wheel speeds of the robot.
+   *
+   * @return The current wheel speeds.
+   */
+  frc::DifferentialDriveWheelSpeeds GetWheelSpeeds();
+
+  /**
+   * Resets the odometry to the specified pose.
+   *
+   * @param pose The pose to which to set the odometry.
+   */
+  void ResetOdometry(frc::Pose2d pose);
+
+/**
    * Returns the heading to the limelight target
    *
    * @return The heading at which the limelight target sits
@@ -109,6 +142,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
    * @return The range from the ultrasonic sensor, in inches
    */
   double GetDistance();
+
 
   
  /**
@@ -142,6 +176,9 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   double AverageEncoderDistance = 0.0;
 
+  // Odometry class for tracking robot pose
+  frc::DifferentialDriveOdometry m_odometry;
+
   // Ultrasonic Ranger
   frc::AnalogInput Ultrasonic{0};
   double Distance = 0.0;    // the ranger distance
@@ -150,6 +187,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
   double gyroAngle = 0.0;   // What is the angle (degrees) from the gyro?
   double gyroRate = 0.0;    // What is angle change (deg/sec)
   AHRS ahrs{frc::SPI::Port::kMXP};
+
 
   // limelight
   float tx = 0.0;           // limelight angle off left/right

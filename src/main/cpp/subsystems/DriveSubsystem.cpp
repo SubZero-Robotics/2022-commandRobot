@@ -7,9 +7,15 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 #include "subsystems/DriveSubsystem.h"
+#include <frc/kinematics/DifferentialDriveWheelSpeeds.h>
+#include <frc/geometry/Rotation2d.h>
 //#include <frc/Encoder.h>
 
-DriveSubsystem::DriveSubsystem() {
+using namespace DriveConstants;
+
+DriveSubsystem::DriveSubsystem() 
+: m_odometry{ahrs.GetRotation2d()}
+{
   // Implementation of subsystem constructor goes here.
   // Stuff you want to happen once, when robot code starts running
 
@@ -64,11 +70,21 @@ void DriveSubsystem::Periodic() {
   //float ty = table->GetNumber("ty",0.0); 
   //float ta = table-> GetNumber("ta",0.0);
   //float ts = table-> GetNumber("ts", 0.0);
-  tv = table-> GetNumber("tv", 0); //tv is 0 when box is not in view 
+  tv = table-> GetNumber("tv", 0); //tv is 0 when box is not in view
+
+  m_odometry.Update(ahrs.GetRotation2d(),
+                    units::meter_t(lEncoder*kEncoderDistancePerPulse),
+                    units::meter_t(rEncoder*kEncoderDistancePerPulse)); 
 }
 
 void DriveSubsystem::ArcadeDrive(double fwd, double rot) {
   m_drive.ArcadeDrive(fwd, rot, true);
+}
+
+void DriveSubsystem::TankDriveVolts(units::volt_t left, units::volt_t right) {
+  LeftLead.SetVoltage(left);
+  RightLead.SetVoltage(right);
+  m_drive.Feed();
 }
 
 void DriveSubsystem::ResetEncoders() {
@@ -105,6 +121,20 @@ units::degree_t DriveSubsystem::GetHeading() {
 
 double DriveSubsystem::GetTurnRate() {
   return gyroRate * (kGyroReversed ? -1.0 : 1.0);
+}
+
+frc::Pose2d DriveSubsystem::GetPose() {
+  return m_odometry.GetPose();
+}
+
+frc::DifferentialDriveWheelSpeeds DriveSubsystem::GetWheelSpeeds() {
+  return {units::meters_per_second_t(-(RightLead.GetSelectedSensorVelocity()*kEncoderDistancePerPulse+RightFollow.GetSelectedSensorVelocity()*kEncoderDistancePerPulse)/2.0),
+          units::meters_per_second_t(-(LeftLead.GetSelectedSensorVelocity()*kEncoderDistancePerPulse+LeftFollow.GetSelectedSensorVelocity()*kEncoderDistancePerPulse)/2.0)};
+}
+
+void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
+  ResetEncoders();
+  m_odometry.ResetPosition(pose, ahrs.GetRotation2d());
 }
 
  units::degree_t DriveSubsystem::GetLimelightTargetAngle() {

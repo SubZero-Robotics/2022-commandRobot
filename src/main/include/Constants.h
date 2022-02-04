@@ -17,6 +17,8 @@
 #include <units/velocity.h>
 #include <units/voltage.h>
 #include <wpi/numbers>
+#include <frc/kinematics/DifferentialDriveKinematics.h>
+#include <frc/trajectory/constraint/DifferentialDriveKinematicsConstraint.h>
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
@@ -29,6 +31,28 @@
  */
 
 // The deadzone for the joystick
+namespace DriveConstants {
+  constexpr auto kTrackWidth = 0.6096_m;
+  constexpr int kEncoderCPR = 29860.57; // Counts Per Rotation. TalonFX is 2048
+  constexpr double kWheelDiameterMeters = 0.15875;
+  constexpr double kEncoderDistancePerPulse = 0.0000167019304039;
+    // Assumes the encoders are directly mounted on the wheel shafts
+    //((kWheelDiameterMeters * wpi::numbers::pi) /
+    //static_cast<double>(kEncoderCPR)); ////////now in feet by dividing by 12
+// Or: just measure the DistancePerPulse for the whole drivetrain,
+// and replace this calculation with a number. 
+
+// These characterization values MUST be determined either experimentally or
+// theoretically for *your* robot's drive. The Robot Characterization
+// Toolsuite provides a convenient tool for obtaining these values for your
+// robot.
+  constexpr auto ks = 0.60936_V;
+  constexpr auto kv = 3.1421 * 1_V * 1_s / 1_m;
+  constexpr auto ka = 0.27805 * 1_V * 1_s * 1_s / 1_m;
+  extern const frc::DifferentialDriveKinematics kDriveKinematics;
+
+
+}
 constexpr double kDeadzone = 0.2;
 
 // How close in inches to rumble while shooting?
@@ -41,26 +65,6 @@ constexpr double kIndexerSpeed = 0.5;
 constexpr double kIntakeSpeed = 0.5;
 
 //DriveSubsystem constants
-
-constexpr auto kTrackwidth = 0.69_m; //I have not measured this, it is copied
-
-constexpr int kEncoderCPR = 29860.57; // Counts Per Rotation. TalonFX is 2048
-constexpr double kWheelDiameterInches = 6.25;
-constexpr double kEncoderDistancePerPulse = //0.000657555;
-    // Assumes the encoders are directly mounted on the wheel shafts
-    (kWheelDiameterInches * wpi::numbers::pi) /
-    static_cast<double>(kEncoderCPR);
-// Or: just measure the DistancePerPulse for the whole drivetrain,
-// and replace this calculation with a number. 
-// Let's do it in feet per tick
-
-// These characterization values MUST be determined either experimentally or
-// theoretically for *your* robot's drive. The Robot Characterization
-// Toolsuite provides a convenient tool for obtaining these values for your
-// robot.
-constexpr auto ks = 0.6506_V;
-constexpr auto kv = 0.078629 * 1_V * 1_s / 1_in;
-constexpr auto ka = 0.0072005 * 1_V * 1_s * 1_s / 1_in;
 
 // Turning constants
 constexpr bool kGyroReversed = false;
@@ -76,8 +80,14 @@ constexpr double kTurnD = 0.01; //Finaly tune this to fix final error  .01
 constexpr auto kTurnTolerance = 5_deg;
 constexpr auto kTurnRateTolerance = 10_deg_per_s;
 
+constexpr auto kMaxSpeed = 3_mps;
+constexpr auto kMaxAcceleration = 10_mps_sq;
+
 constexpr auto kMaxTurnRate = 100_deg_per_s;
 constexpr auto kMaxTurnAcceleration = 300_deg_per_s / 1_s;
+
+constexpr double kRamseteB = 2;
+constexpr double kRamseteZeta = 0.7;
 
 // Shooter constants
 constexpr double kTargetRPM = 2500.0; // desired shooter wheel speed
