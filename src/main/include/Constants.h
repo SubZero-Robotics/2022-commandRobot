@@ -35,7 +35,7 @@ namespace DriveConstants {
   constexpr auto kTrackWidth = 0.6096_m;
   constexpr int kEncoderCPR = 29860.57; // Counts Per Rotation. TalonFX is 2048
   constexpr double kWheelDiameterMeters = 0.15875;
-  constexpr double kEncoderDistancePerPulse = 0.0000167019304039;
+  constexpr double kEncoderDistancePerPulse = 0.00001699323;
     // Assumes the encoders are directly mounted on the wheel shafts
     //((kWheelDiameterMeters * wpi::numbers::pi) /
     //static_cast<double>(kEncoderCPR)); ////////now in feet by dividing by 12
@@ -46,14 +46,15 @@ namespace DriveConstants {
 // theoretically for *your* robot's drive. The Robot Characterization
 // Toolsuite provides a convenient tool for obtaining these values for your
 // robot.
-  constexpr auto ks = 0.60936_V;
-  constexpr auto kv = 3.1421 * 1_V * 1_s / 1_m;
-  constexpr auto ka = 0.27805 * 1_V * 1_s * 1_s / 1_m;
+  constexpr auto ks = 0.6134_V;
+  constexpr auto kv = 3.1236 * 1_V * 1_s / 1_m;
+  constexpr auto ka = 0.30552 * 1_V * 1_s * 1_s / 1_m;
   extern const frc::DifferentialDriveKinematics kDriveKinematics;
 
-  constexpr double kPDriveVel = 2.0078;
+  constexpr double kPDriveVel = 3.894;
 
-
+  constexpr double kRamseteB = 2.0;
+  constexpr double kRamseteZeta = 0.7;
 }
 constexpr double kDeadzone = 0.2;
 
@@ -88,8 +89,6 @@ constexpr auto kMaxAcceleration = 10_mps_sq;
 constexpr auto kMaxTurnRate = 100_deg_per_s;
 constexpr auto kMaxTurnAcceleration = 300_deg_per_s / 1_s;
 
-constexpr double kRamseteB = 2.0;
-constexpr double kRamseteZeta = 0.7;
 
 // Shooter constants
 constexpr double kTargetRPM = 2500.0; // desired shooter wheel speed

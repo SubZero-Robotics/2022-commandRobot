@@ -89,6 +89,13 @@ class DriveSubsystem : public frc2::SubsystemBase {
    */
   units::degree_t GetHeading();
 
+/**
+   * Translate NavX into Rotation2D values.
+   *
+   * @return the robot's heading in degrees, coninuous vectorization from 360 to 361
+   */
+  units::degree_t Get2dAngle();
+
   /**
    * Returns the turn rate of the robot.
    *
@@ -178,6 +185,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   // Odometry class for tracking robot pose
   frc::DifferentialDriveOdometry m_odometry;
+  frc::Pose2d currentRobotPose;
+  frc::Rotation2d currentrobotAngle;
 
   // Ultrasonic Ranger
   frc::AnalogInput Ultrasonic{0};

@@ -14,7 +14,7 @@
 using namespace DriveConstants;
 
 DriveSubsystem::DriveSubsystem() 
-: m_odometry{ahrs.GetRotation2d()}
+: m_odometry{currentrobotAngle}
 {
   // Implementation of subsystem constructor goes here.
   // Stuff you want to happen once, when robot code starts running
@@ -52,6 +52,7 @@ void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
   // Things that happen while robot is running */
 
+  currentrobotAngle = Get2dAngle();
   //Display encoder values in SmartDashboard
   rEncoder = GetRightEncoder();
   frc::SmartDashboard::PutNumber("Right Encoder", rEncoder);
@@ -72,7 +73,7 @@ void DriveSubsystem::Periodic() {
   //float ts = table-> GetNumber("ts", 0.0);
   tv = table-> GetNumber("tv", 0); //tv is 0 when box is not in view
 
-  m_odometry.Update(ahrs.GetRotation2d(),
+ m_odometry.Update(currentrobotAngle,
                     units::meter_t(lEncoder*kEncoderDistancePerPulse),
                     units::meter_t(rEncoder*kEncoderDistancePerPulse)); 
 }
@@ -114,6 +115,10 @@ void DriveSubsystem::SetMaxOutput(double maxOutput) {
   m_drive.SetMaxOutput(maxOutput);
 }
 
+units::degree_t DriveSubsystem::Get2dAngle() {
+  return (units::degree_t)ahrs.GetAngle();
+}
+
 units::degree_t DriveSubsystem::GetHeading() {
   // make sure it fits in +/- 180.  Yaw does this, so should be ok.
   return units::degree_t((gyroAngle) * (kGyroReversed ? -1.0 : 1.0));
@@ -134,7 +139,7 @@ frc::DifferentialDriveWheelSpeeds DriveSubsystem::GetWheelSpeeds() {
 
 void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
   ResetEncoders();
-  m_odometry.ResetPosition(pose, ahrs.GetRotation2d());
+  m_odometry.ResetPosition(pose, currentrobotAngle);
 }
 
  units::degree_t DriveSubsystem::GetLimelightTargetAngle() {
