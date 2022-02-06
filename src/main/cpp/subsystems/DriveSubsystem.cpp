@@ -180,6 +180,9 @@ void DriveSubsystem::ConfigureMotor(WPI_TalonFX *_talon) {
   // Sets up MotionMagic parameters inside the motor
   // The exact numbers need to be determined!
 
+  // A reference to all the methods you could call in these motors is:
+  // https://store.ctr-electronics.com/content/api/cpp/html/classctre_1_1phoenix_1_1motorcontrol_1_1can_1_1_talon_f_x.html
+
   // set motor to factory default each time the robot starts, 
   // so that we don't have unexpected things left over
   _talon->ConfigFactoryDefault();
