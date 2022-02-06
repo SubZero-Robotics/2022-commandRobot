@@ -190,26 +190,30 @@ void DriveSubsystem::ConfigureMotor(WPI_TalonFX *_talon) {
                                         0, 
                                         10);
 
+// The commented out commands below are for setting up MotionMagic PIDs
+// to run on the motor controller.  Since we're using Ramsete on the RIO
+// instead, commenting these out now just in case they cause problems
+// although it shouldn't matter
 /* Set relevant frame periods to be at least as fast as periodic rate */
-    _talon->SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0, 10, 10);
-    _talon->SetStatusFramePeriod(StatusFrameEnhanced::Status_10_MotionMagic, 10, 10);
+//    _talon->SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0, 10, 10);
+//    _talon->SetStatusFramePeriod(StatusFrameEnhanced::Status_10_MotionMagic, 10, 10);
 
     /* Set the peak and nominal outputs */
-    _talon->ConfigNominalOutputForward(0, 10);
-    _talon->ConfigNominalOutputReverse(0, 10);
-    _talon->ConfigPeakOutputForward(1, 10);
-    _talon->ConfigPeakOutputReverse(-1, 10);
+//    _talon->ConfigNominalOutputForward(0, 10);
+//    _talon->ConfigNominalOutputReverse(0, 10);
+//    _talon->ConfigPeakOutputForward(1, 10);
+//    _talon->ConfigPeakOutputReverse(-1, 10);
 
     /* Set Motion Magic gains in slot0 - see documentation */
-    _talon->SelectProfileSlot(0, 0);
-    _talon->Config_kF(0, 0.3, 10);
-    _talon->Config_kP(0, 0.1, 10);
-    _talon->Config_kI(0, 0.0, 10);
-    _talon->Config_kD(0, 0.0, 10);
+//    _talon->SelectProfileSlot(0, 0);
+//    _talon->Config_kF(0, 0.3, 10);
+//    _talon->Config_kP(0, 0.1, 10);
+//    _talon->Config_kI(0, 0.0, 10);
+//    _talon->Config_kD(0, 0.0, 10);
 
     /* Set acceleration and vcruise velocity - see documentation */
-    _talon->ConfigMotionCruiseVelocity(1500, 10);
-    _talon->ConfigMotionAcceleration(1500, 10);
+//    _talon->ConfigMotionCruiseVelocity(1500, 10);
+//    _talon->ConfigMotionAcceleration(1500, 10);
 
     /* Zero the sensor */
     _talon->SetSelectedSensorPosition(0, 0, 10);
