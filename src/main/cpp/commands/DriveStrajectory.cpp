@@ -50,6 +50,9 @@ void DriveStrajectory::Initialize() {
       frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
       [this](auto left, auto right) { m_drive->TankDriveVolts(left, right); },
       {m_drive});
+
+  // This might be what actually fires off the command
+  // std::move(ScurveCommand); 
 }
 
 void DriveStrajectory::End(bool interrupted) { m_drive->TankDriveVolts(0_V, 0_V); }
