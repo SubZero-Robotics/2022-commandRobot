@@ -15,6 +15,7 @@
 #include "commands/TurnToAngle.h"
 #include "commands/TurnToLimelight.h"
 #include "commands/DriveStraight.h"
+#include "commands/DriveStrajectory.h"
 #include "commands/ShooterShoot.h"
 #include "commands/IndexerForward.h"
 #include "commands/IndexerForwardCheckRPM.h" 

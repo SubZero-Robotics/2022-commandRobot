@@ -23,6 +23,7 @@
 #include <frc/geometry/Pose2d.h>
 #include <frc/kinematics/DifferentialDriveOdometry.h>
 
+#include <frc/trajectory/TrajectoryGenerator.h>
 
 class DriveSubsystem : public frc2::SubsystemBase {
  public:
@@ -85,7 +86,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
 /**
    * Returns the heading of the robot.
    *
-   * @return the robot's heading in degrees, from 180 to 180
+   * @return the robot's heading in degrees, from -180 to 180
    */
   units::degree_t GetHeading();
 
@@ -164,6 +165,11 @@ class DriveSubsystem : public frc2::SubsystemBase {
    */
   void ConfigureMotor(WPI_TalonFX *_talon);
 
+ /**
+   * get the trajectory config for this drive
+   */
+  frc::TrajectoryConfig *GetTrajectoryConfig();
+
   private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -184,9 +190,10 @@ class DriveSubsystem : public frc2::SubsystemBase {
   double AverageEncoderDistance = 0.0;
 
   // Odometry class for tracking robot pose
-  frc::DifferentialDriveOdometry m_odometry;
-  frc::Pose2d currentRobotPose;
-  frc::Rotation2d currentrobotAngle;
+  frc::Rotation2d currentrobotAngle; // is zeroed by default
+  frc::Pose2d currentRobotPose;      // is also zeroed by default
+  // so now use those to initialize odemetry at zero too
+  frc::DifferentialDriveOdometry m_odometry{currentrobotAngle,currentRobotPose};
 
   // Ultrasonic Ranger
   frc::AnalogInput Ultrasonic{0};
@@ -203,4 +210,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
   int tv = 1;               // does the limelight have a target?
   // pointer to network tables for limelight stuff
   std::shared_ptr<nt::NetworkTable> table;
+
+  // The drive's config for trajectory
+  frc::TrajectoryConfig *trajectoryConfig;
 };

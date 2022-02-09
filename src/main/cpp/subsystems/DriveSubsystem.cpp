@@ -9,12 +9,11 @@
 #include "subsystems/DriveSubsystem.h"
 #include <frc/kinematics/DifferentialDriveWheelSpeeds.h>
 #include <frc/geometry/Rotation2d.h>
-//#include <frc/Encoder.h>
+#include <frc/trajectory/constraint/DifferentialDriveVoltageConstraint.h>
 
 using namespace DriveConstants;
 
 DriveSubsystem::DriveSubsystem() 
-: m_odometry{currentrobotAngle}
 {
   // Implementation of subsystem constructor goes here.
   // Stuff you want to happen once, when robot code starts running
@@ -46,6 +45,21 @@ DriveSubsystem::DriveSubsystem()
   table = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
   // set camera mode to start with, we don't want the led's on
   table->PutNumber("pipeline", 1);
+
+  // setup for trajectories 
+  trajectoryConfig = new frc::TrajectoryConfig(kMaxSpeed,
+                               kMaxAcceleration);
+  // Create a voltage constraint to ensure we don't accelerate too fast
+  frc::DifferentialDriveVoltageConstraint autoVoltageConstraint(
+      frc::SimpleMotorFeedforward<units::meters>(
+          DriveConstants::ks, DriveConstants::kv, DriveConstants::ka),
+      DriveConstants::kDriveKinematics, 10_V);
+
+  // Add kinematics to ensure max speed is actually obeyed
+  trajectoryConfig->SetKinematics(DriveConstants::kDriveKinematics);
+  // Apply the voltage constraint
+  trajectoryConfig->AddConstraint(autoVoltageConstraint);
+
 }
 
 void DriveSubsystem::Periodic() {
@@ -221,3 +235,7 @@ void DriveSubsystem::ConfigureMotor(WPI_TalonFX *_talon) {
     /* Zero the sensor */
     _talon->SetSelectedSensorPosition(0, 0, 10);
 }
+
+ frc::TrajectoryConfig *DriveSubsystem::GetTrajectoryConfig() {
+   return trajectoryConfig;
+ }
