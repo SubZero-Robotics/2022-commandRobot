@@ -32,6 +32,11 @@ void DriveStrajectory::Initialize() {
       // Pass the config
       *m_drive->GetTrajectoryConfig());
 
+  // Reset odometry to the starting pose of the trajectory.
+  m_drive->ResetOdometry(exampleTrajectory.InitialPose());
+
+  // this sets up the command
+  // I also think it fires it off, since this is a CommandHelper?
   frc2::RamseteCommand ScurveCommand(
       exampleTrajectory, 
       [this]() { return m_drive->GetPose(); },
@@ -45,19 +50,11 @@ void DriveStrajectory::Initialize() {
       frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
       [this](auto left, auto right) { m_drive->TankDriveVolts(left, right); },
       {m_drive});
-
-  // Reset odometry to the starting pose of the trajectory.
-  m_drive->ResetOdometry(exampleTrajectory.InitialPose());
-
-  // issue the command, followed by a stop
-  frc2::SequentialCommandGroup(
-        std::move(ScurveCommand),
-        frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {}));
-
 }
 
-void DriveStrajectory::End(bool interrupted) { m_drive->ArcadeDrive(0, 0); }
+void DriveStrajectory::End(bool interrupted) { m_drive->TankDriveVolts(0_V, 0_V); }
 
 bool DriveStrajectory::IsFinished() {  
+  // we could add a check in here, to see where in the trajectory we currently are?
   return false;
 }

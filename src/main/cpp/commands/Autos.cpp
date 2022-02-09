@@ -14,7 +14,7 @@
 
 LeftAuto::LeftAuto(DriveSubsystem* drive, ShooterSubsystem * shooter, IndexerSubsystem* indexer) {
   AddCommands(
-    DriveStrajectory(drive)
+    DriveStrajectory(drive).WithTimeout(5_s)
 //      DriveStraight(-0.5, drive).WithTimeout(0.5_s), 
 //      TurnToAngle(0_deg, drive).WithTimeout(5_s)
       //TurnToLimelight(drive).WithTimeout(2_s)
