@@ -147,8 +147,8 @@ frc::Pose2d DriveSubsystem::GetPose() {
 }
 
 frc::DifferentialDriveWheelSpeeds DriveSubsystem::GetWheelSpeeds() {
-  return {units::meters_per_second_t(-(RightLead.GetSelectedSensorVelocity()*kEncoderDistancePerPulse+RightFollow.GetSelectedSensorVelocity()*kEncoderDistancePerPulse)/2.0),
-          units::meters_per_second_t(-(LeftLead.GetSelectedSensorVelocity()*kEncoderDistancePerPulse+LeftFollow.GetSelectedSensorVelocity()*kEncoderDistancePerPulse)/2.0)};
+  return {units::meters_per_second_t(-(RightLead.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse+RightFollow.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse)/2.0),
+          units::meters_per_second_t(-(LeftLead.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse+LeftFollow.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse)/2.0)};
 }
 
 void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
@@ -206,6 +206,8 @@ void DriveSubsystem::ConfigureMotor(WPI_TalonFX *_talon) {
   _talon->ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor,
                                         0, 
                                         10);
+
+  _talon->SetNeutralMode(Brake);
 
 // The commented out commands below are for setting up MotionMagic PIDs
 // to run on the motor controller.  Since we're using Ramsete on the RIO
