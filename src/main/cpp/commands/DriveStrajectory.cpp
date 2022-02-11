@@ -52,9 +52,9 @@ void DriveStrajectory::Initialize() {
       {m_drive});
 
   // This might be what actually fires off the command
-  // frc2::SequentialCommandGroup(
-  //    std::move(ScurveCommand),
-  //    frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {}));
+   new frc2::SequentialCommandGroup(
+      std::move(ScurveCommand),
+      frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {}));
 }
 
 void DriveStrajectory::End(bool interrupted) { m_drive->TankDriveVolts(0_V, 0_V); }

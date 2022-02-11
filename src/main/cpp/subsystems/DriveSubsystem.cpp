@@ -68,6 +68,10 @@ void DriveSubsystem::Periodic() {
 
   currentrobotAngle = Get2dAngle();
   //Display encoder values in SmartDashboard
+  frc::SmartDashboard::PutNumber("2d Angle", (double)currentrobotAngle.Degrees());
+  frc::SmartDashboard::PutNumber("Pose X", (double)m_odometry.GetPose().X());
+  frc::SmartDashboard::PutNumber("Pose Y", (double)m_odometry.GetPose().Y());
+  frc::SmartDashboard::PutNumber("Pose Degrees", (double)m_odometry.GetPose().Rotation().Degrees());
   rEncoder = GetRightEncoder();
   frc::SmartDashboard::PutNumber("Right Encoder", rEncoder);
   lEncoder = GetLeftEncoder();
@@ -130,7 +134,7 @@ void DriveSubsystem::SetMaxOutput(double maxOutput) {
 }
 
 units::degree_t DriveSubsystem::Get2dAngle() {
-  return (units::degree_t)ahrs.GetAngle();
+  return -(units::degree_t)ahrs.GetAngle();
 }
 
 units::degree_t DriveSubsystem::GetHeading() {
