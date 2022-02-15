@@ -20,7 +20,7 @@ ShooterSubsystem::ShooterSubsystem() {
 // PID stuff for shooter
 // This runs on the Talon
   Shooter.ConfigFactoryDefault();
-  /*
+  
   Shooter.ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10); 
 
   Shooter.SetSensorPhase(true);
@@ -33,7 +33,7 @@ ShooterSubsystem::ShooterSubsystem() {
   Shooter.Config_kF(0, kShootF, 10);
   Shooter.Config_kP(0, kShootP, 10);
   Shooter.Config_kI(0, kShootI, 10);
-  Shooter.Config_kD(0, kShootD, 10); */
+  Shooter.Config_kD(0, kShootD, 10); 
 }
 
 // Methods
@@ -50,11 +50,11 @@ void ShooterSubsystem::Shoot() {
 }
 
 void ShooterSubsystem::Unjam() {
-    //Shooter.Set(ControlMode::PercentOutput, -0.5);
+    Shooter.Set(ControlMode::PercentOutput, -0.5);
 }
 
 void ShooterSubsystem::Stop() {
-    //Shooter.Set(ControlMode::PercentOutput, 0.0);
+    Shooter.Set(ControlMode::PercentOutput, 0.0);
 }
 
 double ShooterSubsystem::GetRPM() {

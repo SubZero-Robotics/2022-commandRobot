@@ -11,6 +11,8 @@
 #include <ctre/Phoenix.h>
 #include <frc/motorcontrol/VictorSP.h>
 
+#include "rev/CANSparkMax.h"
+
 #include <frc2/command/SubsystemBase.h>
 
 
@@ -23,7 +25,7 @@ class IntakeSubsystem : public frc2::SubsystemBase {
   /**
    * Push intake out, starts wheels
    */
-  void Extend();
+  void Spin();
 
   /**
    * Pulls intake in, stops wheels
@@ -35,9 +37,36 @@ class IntakeSubsystem : public frc2::SubsystemBase {
    */
   void Spit();
 
+  
+  /**
+   * Move balls towards the target, fast
+   */
+  void Shoot(); 
+
+  /**
+   * Move balls away from the shooter, towards the intake, to clear jams
+   */
+  void Unjam();
+
+  /**
+   * Stop the shooter
+   */
+  void Stop();
+
+  /**
+   * How fast is it going?
+   */
+  double GetRPM();
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
   //frc::DoubleSolenoid IntakeArm {frc::PneumaticsModuleType::CTREPCM,2,3};
   //WPI_VictorSPX IntakeWheels{10};
+  rev::CANSparkMax IntakeWheels{8, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax BottomIndexer{9, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax TopIndexer{7, rev::CANSparkMax::MotorType::kBrushless};
+
+  WPI_VictorSPX Shooter = WPI_VictorSPX(4); 
+  WPI_VictorSPX ShooterFollow{5};
 };

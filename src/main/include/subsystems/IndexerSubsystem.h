@@ -11,6 +11,8 @@
 #include <frc/motorcontrol/VictorSP.h>
 #include <frc/DigitalInput.h>
 
+#include "rev/CANSparkMax.h"
+
 #include <frc2/command/SubsystemBase.h>
 
 

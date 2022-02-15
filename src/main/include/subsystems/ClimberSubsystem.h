@@ -12,6 +12,8 @@
 
 #include <frc2/command/SubsystemBase.h>
 
+#include "rev/CANSparkMax.h"
+
 #include "Constants.h"
 
 class ClimberSubsystem : public frc2::SubsystemBase {

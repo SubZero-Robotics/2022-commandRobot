@@ -12,10 +12,10 @@
 // Constructor, set initial state to in and stopped
 IntakeSubsystem::IntakeSubsystem() {
     //IntakeArm.Set(frc::DoubleSolenoid::Value(1));
-    //IntakeWheels.Set(ControlMode::PercentOutput, 0.0);
+    IntakeWheels.Set(0);
 }
 
-void IntakeSubsystem::Extend() {
+void IntakeSubsystem::Spin() {
     //IntakeArm.Set(frc::DoubleSolenoid::Value(2));
     //IntakeWheels.Set(ControlMode::PercentOutput, kIntakeSpeed);
 }

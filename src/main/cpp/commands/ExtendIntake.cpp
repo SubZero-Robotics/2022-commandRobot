@@ -11,7 +11,7 @@ ExtendIntake::ExtendIntake(IntakeSubsystem* subsystem) : m_intake(subsystem) {
   AddRequirements({subsystem});
 }
 
-void ExtendIntake::Initialize() { m_intake->Extend(); }
+void ExtendIntake::Initialize() { m_intake->Spin(); }
 
 // this is a state, it lasts till it's cancelled
 // although we could check if the piston is all the way out
