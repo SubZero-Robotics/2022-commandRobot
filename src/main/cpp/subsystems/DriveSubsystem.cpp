@@ -39,7 +39,7 @@ DriveSubsystem::DriveSubsystem()
   // zero gyro
   // Note that this can't happen at power-on when this constructor likely happens
   // because the gyro is calibrating.  Probably want to call this in a later init routine
-  ahrs.ZeroYaw();
+  //ahrs.ZeroYaw();
 
   // get limelight network tables
   table = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
@@ -76,10 +76,10 @@ void DriveSubsystem::Periodic() {
   frc::SmartDashboard::PutNumber("Right Encoder", rEncoder);
   lEncoder = GetLeftEncoder();
   frc::SmartDashboard::PutNumber("Left Encoder", lEncoder);
-  gyroAngle = ahrs.GetYaw();
-  frc::SmartDashboard::PutNumber("gyroAngle", gyroAngle);
-  gyroRate = ahrs.GetRate();
-  frc::SmartDashboard::PutNumber("gyroRate", gyroRate);
+  //gyroAngle = ahrs.GetYaw();
+  //frc::SmartDashboard::PutNumber("gyroAngle", gyroAngle);
+  //gyroRate = ahrs.GetRate();
+  //frc::SmartDashboard::PutNumber("gyroRate", gyroRate);
   AverageEncoderDistance = GetAverageEncoderDistance();
   frc::SmartDashboard::PutNumber("Encoder Distance in:", AverageEncoderDistance);
 
@@ -115,18 +115,18 @@ void DriveSubsystem::ResetEncoders() {
 
 // return the average of the two left encoders
 double DriveSubsystem::GetLeftEncoder() { 
-  return -((LeftLead.GetSelectedSensorPosition()+LeftFollow.GetSelectedSensorPosition())/2.0);
+  //return -((LeftLead.GetSelectedSensorPosition()+LeftFollow.GetSelectedSensorPosition())/2.0);
   }
 
 // return the NEGATIVE average of the two right encoders
 // Because it's inverted.  Maybe not needed?
 double DriveSubsystem::GetRightEncoder() { 
-    return -((RightLead.GetSelectedSensorPosition()+RightFollow.GetSelectedSensorPosition())/2.0);
+    //return -((RightLead.GetSelectedSensorPosition()+RightFollow.GetSelectedSensorPosition())/2.0);
 }
 
 // return the average of left and right encoder sets, in feet
 double DriveSubsystem::GetAverageEncoderDistance() { 
-  return kEncoderDistancePerPulse*((GetLeftEncoder()+GetRightEncoder())/2.0);
+  //return kEncoderDistancePerPulse*((GetLeftEncoder()+GetRightEncoder())/2.0);
 }
 
 void DriveSubsystem::SetMaxOutput(double maxOutput) {
@@ -134,25 +134,25 @@ void DriveSubsystem::SetMaxOutput(double maxOutput) {
 }
 
 units::degree_t DriveSubsystem::Get2dAngle() {
-  return -(units::degree_t)ahrs.GetAngle();
+  //return -(units::degree_t)ahrs.GetAngle();
 }
 
 units::degree_t DriveSubsystem::GetHeading() {
   // make sure it fits in +/- 180.  Yaw does this, so should be ok.
-  return units::degree_t((gyroAngle) * (kGyroReversed ? -1.0 : 1.0));
+  //return units::degree_t((gyroAngle) * (kGyroReversed ? -1.0 : 1.0));
 }
 
 double DriveSubsystem::GetTurnRate() {
-  return gyroRate * (kGyroReversed ? -1.0 : 1.0);
+  //return gyroRate * (kGyroReversed ? -1.0 : 1.0);
 }
 
 frc::Pose2d DriveSubsystem::GetPose() {
   return m_odometry.GetPose();
 }
 
-frc::DifferentialDriveWheelSpeeds DriveSubsystem::GetWheelSpeeds() {
+frc::DifferentialDriveWheelSpeeds DriveSubsystem::GetWheelSpeeds() { /*
   return {units::meters_per_second_t(-(RightLead.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse+RightFollow.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse)/2.0),
-          units::meters_per_second_t(-(LeftLead.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse+LeftFollow.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse)/2.0)};
+          units::meters_per_second_t(-(LeftLead.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse+LeftFollow.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse)/2.0)}; */
 }
 
 void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
@@ -178,7 +178,7 @@ void DriveSubsystem::SelectLimelightPipeline(int pipeline){
 }
 
 void DriveSubsystem::ZeroGyro(){
-  ahrs.ZeroYaw();
+  //ahrs.ZeroYaw();
 }
 
 double DriveSubsystem::GetDistance() {

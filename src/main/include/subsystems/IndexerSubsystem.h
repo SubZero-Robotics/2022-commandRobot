@@ -48,13 +48,13 @@ class IndexerSubsystem : public frc2::SubsystemBase {
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  WPI_VictorSPX IndexerT{8};
-  WPI_VictorSPX IndexerB{9};
-
+  //WPI_VictorSPX IndexerT{8};
+  //WPI_VictorSPX IndexerB{9};
+  /*
   frc::DigitalInput IntakeLaser1 {0};  // eye back by shooter to prevent james
   frc::DigitalInput IntakeLaser2 {1};  // eye near front of indexer to prevent jams going that way
   frc::DigitalInput IntakeLaser3 {2};  // eye at intake, to trigger indexer and slurp ball in
-
+  */
   bool LaserState1 = 0;
   bool LaserState2 = 0;
   bool LaserState3 = 0;

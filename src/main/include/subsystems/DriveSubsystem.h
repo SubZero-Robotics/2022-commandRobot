@@ -175,11 +175,11 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
 
   // right motor controllers
-  WPI_TalonFX RightLead{3};
-  WPI_TalonFX RightFollow{4};
+  WPI_TalonFX RightLead{12};
+  WPI_TalonFX RightFollow{13};
   // left motor controllers
-  WPI_TalonFX LeftLead{1};
-  WPI_TalonFX LeftFollow{2};
+  WPI_TalonFX LeftLead{10};
+  WPI_TalonFX LeftFollow{11};
 
   frc::DifferentialDrive m_drive{RightLead, LeftLead};
 
@@ -196,13 +196,13 @@ class DriveSubsystem : public frc2::SubsystemBase {
   frc::DifferentialDriveOdometry m_odometry{currentrobotAngle,currentRobotPose};
 
   // Ultrasonic Ranger
-  frc::AnalogInput Ultrasonic{0};
+  //frc::AnalogInput Ultrasonic{0};
   double Distance = 0.0;    // the ranger distance
 
   // navx
   double gyroAngle = 0.0;   // What is the angle (degrees) from the gyro?
   double gyroRate = 0.0;    // What is angle change (deg/sec)
-  AHRS ahrs{frc::SPI::Port::kMXP};
+  //AHRS ahrs{frc::SPI::Port::kMXP};
 
 
   // limelight

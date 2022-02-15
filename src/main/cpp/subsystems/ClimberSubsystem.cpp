@@ -6,8 +6,8 @@
 
 ClimberSubsystem::ClimberSubsystem() {
   // Implementation of subsystem constructor goes here.
-  Winch.Set(ControlMode::PercentOutput, 0.0);
-  Climber.Set(ControlMode::PercentOutput, 0.0);
+  //Winch.Set(ControlMode::PercentOutput, 0.0);
+  //Climber.Set(ControlMode::PercentOutput, 0.0);
 }
 
 // Methods
@@ -19,18 +19,18 @@ void ClimberSubsystem::Periodic() {
 }
 
 void ClimberSubsystem::UpUp(){
-  Winch.Set(ControlMode::PercentOutput, 0.35);//.35, .65
+  //Winch.Set(ControlMode::PercentOutput, 0.35);//.35, .65
 }
 
 void ClimberSubsystem::DownDown(){
-  Winch.Set(ControlMode::PercentOutput, -0.35);//-.35, .65
+  //Winch.Set(ControlMode::PercentOutput, -0.35);//-.35, .65
 }
 
 void ClimberSubsystem::Climb(){
-  Climber.Set(ControlMode::PercentOutput, -0.8);//.5, .8
+  //Climber.Set(ControlMode::PercentOutput, -0.8);//.5, .8
 }
 
 void ClimberSubsystem::Stop(){
-  Climber.Set(ControlMode::PercentOutput, 0.0);
-  Winch.Set(ControlMode::PercentOutput, 0.0);
+  //Climber.Set(ControlMode::PercentOutput, 0.0);
+  //Winch.Set(ControlMode::PercentOutput, 0.0);
 }

@@ -10,6 +10,8 @@
 #include <ctre/Phoenix.h>
 #include <frc/motorcontrol/VictorSP.h>
 
+#include "rev/CANSparkMax.h"
+
 #include <frc2/command/SubsystemBase.h>
 
 #include "Constants.h"
@@ -48,7 +50,9 @@ class ShooterSubsystem : public frc2::SubsystemBase {
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  WPI_TalonSRX Shooter = WPI_TalonSRX(5); 
-  WPI_VictorSPX ShooterFollow{6};
+  WPI_TalonSRX Shooter = WPI_TalonSRX(4); 
+  WPI_VictorSPX ShooterFollow{5};
+  //rev::CANSparkMax Shooter{5, rev::CANSparkMax::MotorType::kBrushless};
+  //rev::CANSparkMax ShooterFollow{6, rev::CANSparkMax::MotorType::kBrushless};
   double RPM = 0.0;         // Shooter motor speed
 };
