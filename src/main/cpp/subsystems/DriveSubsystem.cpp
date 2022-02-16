@@ -94,6 +94,13 @@ void DriveSubsystem::Periodic() {
  m_odometry.Update(currentrobotAngle,
                     units::meter_t(lEncoder*kEncoderDistancePerPulse),
                     units::meter_t(rEncoder*kEncoderDistancePerPulse)); 
+
+  if (abs(Xbox.GetRightY())>kDeadzone && Xbox.GetPOV()==0){
+    m_drive.ArcadeDrive(Xbox.GetLeftY()/2, Xbox.GetLeftX()/2, true);
+  } else {
+    LeftLead.SetVoltage(0_V);
+    RightLead.SetVoltage(0_V);
+  }
 }
 
 void DriveSubsystem::ArcadeDrive(double fwd, double rot) {
