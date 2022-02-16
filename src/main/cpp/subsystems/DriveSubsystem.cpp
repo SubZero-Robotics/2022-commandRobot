@@ -94,16 +94,6 @@ void DriveSubsystem::Periodic() {
  m_odometry.Update(currentrobotAngle,
                     units::meter_t(lEncoder*kEncoderDistancePerPulse),
                     units::meter_t(rEncoder*kEncoderDistancePerPulse)); 
-
-  // Apply stick deadzone 
-  double XboxX = Xbox.GetRightX()/2;
-  if(abs(XboxX) < kDeadzone) XboxX = 0.0;
-  double XboxY = Xbox.GetRightY()/2;
-  if(abs(XboxY) < kDeadzone) XboxY = 0.0;
-
-  if (Xbox.GetPOV()==0){
-    m_drive.ArcadeDrive(XboxY, XboxX);
-  }
 }
 
 void DriveSubsystem::ArcadeDrive(double fwd, double rot) {
