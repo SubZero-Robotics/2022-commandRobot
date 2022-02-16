@@ -11,6 +11,7 @@
 
 #include "rev/CANSparkMax.h"
 
+#include <frc/XboxController.h>
 #include "Constants.h"
 
 class ClimberSubsystem : public frc2::SubsystemBase {
@@ -49,4 +50,6 @@ class ClimberSubsystem : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
   rev::CANSparkMax LeftArm{6, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax RightArm{14, rev::CANSparkMax::MotorType::kBrushless};
+  // The controller
+  frc::XboxController Xbox{0};
 };

@@ -28,7 +28,10 @@ void ClimberSubsystem::Down(){
 }
 
 void ClimberSubsystem::Climb(){
-  //Climber.Set(ControlMode::PercentOutput, -0.8);//.5, .8
+  if (abs(Xbox.GetRightY())>kDeadzone){
+  RightArm.Set(-Xbox.GetRightY()/2);
+  LeftArm.Set(-Xbox.GetRightY()/2);
+  } 
 }
 
 void ClimberSubsystem::Stop(){
