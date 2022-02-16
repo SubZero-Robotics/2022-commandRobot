@@ -7,9 +7,6 @@
 
 #pragma once
 
-#include <ctre/Phoenix.h>
-#include <frc/motorcontrol/VictorSP.h>
-
 #include <frc2/command/SubsystemBase.h>
 
 #include "rev/CANSparkMax.h"
@@ -50,7 +47,6 @@ class ClimberSubsystem : public frc2::SubsystemBase {
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  //WPI_VictorSPX Climber{11};   //Climber lift
-  //WPI_VictorSPX Winch{7};    //Climber
-
+  rev::CANSparkMax LeftArm{6, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax RightArm{14, rev::CANSparkMax::MotorType::kBrushless};
 };

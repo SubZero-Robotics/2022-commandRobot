@@ -7,10 +7,6 @@
 
 #pragma once
 
-#include <frc/DoubleSolenoid.h>
-#include <ctre/Phoenix.h>
-#include <frc/motorcontrol/VictorSP.h>
-
 #include "rev/CANSparkMax.h"
 
 #include <frc2/command/SubsystemBase.h>

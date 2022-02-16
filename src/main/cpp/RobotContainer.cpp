@@ -128,7 +128,7 @@ void RobotContainer::ConfigureButtonBindings() {
   // this logic will need Camden's explanation to implement
   // limelight aiming.  
   frc2::JoystickButton(&Xbox, Button::kBumperRight)
-      .WhenHeld(TurnToLimelight(&m_drive).WithTimeout(2_s));
+      .WhenHeld(ClimberDown(&m_climber, &Xbox));
 
   // unjam things
   // Run indexer and shooter backwards.  ParallelCommandGroup finishes when all of the commands finish

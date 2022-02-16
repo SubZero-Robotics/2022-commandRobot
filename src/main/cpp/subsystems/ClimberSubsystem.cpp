@@ -2,7 +2,6 @@
 
 #include "subsystems/ClimberSubsystem.h"
 
-#include "Constants.h" 
 
 ClimberSubsystem::ClimberSubsystem() {
   // Implementation of subsystem constructor goes here.
@@ -19,11 +18,13 @@ void ClimberSubsystem::Periodic() {
 }
 
 void ClimberSubsystem::Up(){
-  //Winch.Set(ControlMode::PercentOutput, 0.35);//.35, .65
+  RightArm.Set(-0.5);
+  LeftArm.Set(-0.5);
 }
 
 void ClimberSubsystem::Down(){
-  //Winch.Set(ControlMode::PercentOutput, -0.35);//-.35, .65
+  RightArm.Set(0.5);
+  LeftArm.Set(0.5);
 }
 
 void ClimberSubsystem::Climb(){
@@ -31,6 +32,6 @@ void ClimberSubsystem::Climb(){
 }
 
 void ClimberSubsystem::Stop(){
-  //Climber.Set(ControlMode::PercentOutput, 0.0);
-  //Winch.Set(ControlMode::PercentOutput, 0.0);
+  RightArm.StopMotor();
+  LeftArm.StopMotor();
 }
