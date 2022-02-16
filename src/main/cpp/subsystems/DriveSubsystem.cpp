@@ -95,11 +95,14 @@ void DriveSubsystem::Periodic() {
                     units::meter_t(lEncoder*kEncoderDistancePerPulse),
                     units::meter_t(rEncoder*kEncoderDistancePerPulse)); 
 
-  if (abs(Xbox.GetRightY())>kDeadzone && Xbox.GetPOV()==0){
-    m_drive.ArcadeDrive(Xbox.GetLeftY()/2, Xbox.GetLeftX()/2, true);
-  } else {
-    LeftLead.SetVoltage(0_V);
-    RightLead.SetVoltage(0_V);
+  // Apply stick deadzone 
+  double XboxX = Xbox.GetRightX()/2;
+  if(abs(XboxX) < kDeadzone) XboxX = 0.0;
+  double XboxY = Xbox.GetRightY()/2;
+  if(abs(XboxY) < kDeadzone) XboxY = 0.0;
+
+  if (Xbox.GetPOV()==0){
+    m_drive.ArcadeDrive(XboxY, XboxX);
   }
 }
 
