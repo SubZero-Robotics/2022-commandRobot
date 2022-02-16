@@ -13,6 +13,7 @@
 #include <networktables/NetworkTable.h>
 #include <networktables/NetworkTableInstance.h>
 #include <networktables/NetworkTableEntry.h>
+#include <frc/XboxController.h>
 
 #include <frc/drive/DifferentialDrive.h>
 
@@ -204,6 +205,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
   double gyroRate = 0.0;    // What is angle change (deg/sec)
   AHRS ahrs{frc::SPI::Port::kMXP};
 
+  // The controller
+  frc::XboxController Xbox{0};
 
   // limelight
   float tx = 0.0;           // limelight angle off left/right
