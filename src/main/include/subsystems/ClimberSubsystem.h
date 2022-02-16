@@ -30,12 +30,12 @@ class ClimberSubsystem : public frc2::SubsystemBase {
   /**
     * Raise telescoping climber hook
     */
-  void UpUp();
+  void Up();
 
   /**
     * Lower telescoping climber hook
     */
-  void DownDown();
+  void Down();
 
   /**
     * Run the winch to hoist the robot up towards the bar

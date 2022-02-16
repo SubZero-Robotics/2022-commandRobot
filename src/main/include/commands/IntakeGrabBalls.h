@@ -10,27 +10,23 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
-#include "subsystems/IndexerSubsystem.h"
+#include "subsystems/IntakeSubsystem.h"
 
 /**
- * A simple command that runs IndexerSubsystem forwards.  Written
+ * A simple command that reaches out with IntakeSubsystem.  Written
  * explicitly for pedagogical purposes.  Actual code should inline a command
  * this simple with InstantCommand.
  *
  * @see InstantCommand
  */
-class IndexerForwardCheckRPM : public frc2::CommandHelper<frc2::CommandBase, IndexerForwardCheckRPM> {
+class IntakeGrabBalls : public frc2::CommandHelper<frc2::CommandBase, IntakeGrabBalls> {
  public:
-  explicit IndexerForwardCheckRPM(IndexerSubsystem* subsystem);
+  explicit IntakeGrabBalls(IntakeSubsystem* subsystem);
 
   void Initialize() override;
 
-  void Execute() override;
-
   bool IsFinished() override;
 
-  void End(bool interrupted) override;
-
  private:
-  IndexerSubsystem* m_indexer;
+  IntakeSubsystem* m_intake;
 };

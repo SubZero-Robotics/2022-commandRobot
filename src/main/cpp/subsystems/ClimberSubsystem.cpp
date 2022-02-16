@@ -18,11 +18,11 @@ void ClimberSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
 }
 
-void ClimberSubsystem::UpUp(){
+void ClimberSubsystem::Up(){
   //Winch.Set(ControlMode::PercentOutput, 0.35);//.35, .65
 }
 
-void ClimberSubsystem::DownDown(){
+void ClimberSubsystem::Down(){
   //Winch.Set(ControlMode::PercentOutput, -0.35);//-.35, .65
 }
 

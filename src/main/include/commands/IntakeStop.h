@@ -10,23 +10,23 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
-#include "subsystems/IndexerSubsystem.h"
+#include "subsystems/IntakeSubsystem.h"
 
 /**
- * A simple command that runs IndexerSubsystem forwards.  Written
+ * A simple command that runs IntakeSubsystem forwards.  Written
  * explicitly for pedagogical purposes.  Actual code should inline a command
  * this simple with InstantCommand.
  *
  * @see InstantCommand
  */
-class IndexerBackward : public frc2::CommandHelper<frc2::CommandBase, IndexerBackward> {
+class IntakeStop : public frc2::CommandHelper<frc2::CommandBase, IntakeStop> {
  public:
-  explicit IndexerBackward(IndexerSubsystem* subsystem);
+  explicit IntakeStop(IntakeSubsystem* subsystem);
 
   void Initialize() override;
 
   bool IsFinished() override;
 
  private:
-  IndexerSubsystem* m_indexer;
+  IntakeSubsystem* m_intake;
 };

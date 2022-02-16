@@ -5,14 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/IndexerBackward.h"
+#include "commands/IntakeGrabBalls.h"
 
-IndexerBackward::IndexerBackward(IndexerSubsystem* subsystem) : m_indexer(subsystem) {
+IntakeGrabBalls::IntakeGrabBalls(IntakeSubsystem* subsystem) : m_intake(subsystem) {
   AddRequirements({subsystem});
 }
 
-void IndexerBackward::Initialize() { m_indexer->Backward(); }
+void IntakeGrabBalls::Initialize() { m_intake->GrabBalls(); }
 
 // this is a state, it lasts till it's cancelled
-// although we could check if we hit an electic eye
-bool IndexerBackward::IsFinished() { return false; }
+bool IntakeGrabBalls::IsFinished() { return false; }

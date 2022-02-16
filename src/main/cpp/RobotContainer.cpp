@@ -13,12 +13,9 @@
 #include <frc2/command/ParallelRaceGroup.h>
 
 #include "commands/DefaultDrive.h"
-#include "commands/ExtendIntake.h"
-#include "commands/RetractIntake.h"
+#include "commands/IntakeGrabBalls.h"
 #include "commands/SpitIntake.h"
-#include "commands/IndexerForward.h"
-#include "commands/IndexerBackward.h"
-#include "commands/IndexerStop.h"
+#include "commands/IntakeStop.h"
 #include "commands/ShooterShoot.h"
 #include "commands/ShooterStop.h"
 #include "commands/ShooterUnjam.h"
@@ -38,8 +35,8 @@
 
 #include <utility>
 
-#include "commands/ClimberUpUp.h"
-#include "commands/ClimberDownDown.h"
+#include "commands/ClimberUp.h"
+#include "commands/ClimberDown.h"
 #include "commands/ClimberClimb.h"
 #include "commands/ClimberStop.h"
 
@@ -66,10 +63,7 @@ RobotContainer::RobotContainer() {
       [this] { return Xbox.GetLeftX(); }));
 
 // Set default intake command.  Does this when not doing something else
-  m_intake.SetDefaultCommand(RetractIntake(&m_intake));
-
-// Set default indexer command.  Does this when not doing something else
-  m_indexer.SetDefaultCommand(IndexerStop(&m_indexer));
+  m_intake.SetDefaultCommand(IntakeStop(&m_intake));
 
 // Set default shooter command.  Does this when not doing something else
   m_shooter.SetDefaultCommand(ShooterStop(&m_shooter));
@@ -104,26 +98,26 @@ void RobotContainer::ConfigureButtonBindings() {
   // move intake arm out and spin intake wheels while A is held down,
   // return arm and stop when you let go. (the default mode for Intake)
   frc2::JoystickButton(&Xbox, Button::kA)
-      .WhenHeld(ExtendIntake(&m_intake));
+      .WhenHeld(IntakeGrabBalls(&m_intake));
 // you can stack commands like this (below).  But in this case, RetractIntake is the default anyway
 //      .WhenReleased(RetractIntake(&m_intake)); 
 
   // Run indexer forwards to suck in balls and send them to the shooter
-  frc2::JoystickButton(&Xbox, Button::kX)
-      .WhenHeld(IndexerForward(&m_indexer));
+  //frc2::JoystickButton(&Xbox, Button::kX)
+      //.WhenHeld(IndexerForward(&m_indexer));
 
   // Climber deployment and winch: Y button plus right stick
   //frc2::JoystickButton(&Xbox, Axis::kRightY) 
-      //.WhenHeld(ClimberUpUp(&m_climber, &Xbox));
+      //.WhenHeld(ClimberUp(&m_climber, &Xbox));
 
   /*if (Xbox.GetY(frc::GenericHID::kRightHand)>kDeadzone){
-    ClimberUpUp(&m_climber, &Xbox);
+    ClimberUp(&m_climber, &Xbox);
   } else if (Xbox.GetY(frc::GenericHID::kRightHand)>-kDeadzone) { //////////////////
-    ClimberDownDown(&m_climber, &Xbox);
+    ClimberDown(&m_climber, &Xbox);
   }*/
 
   frc2::JoystickButton(&Xbox, Button::kBumperLeft)
-      .WhenHeld(ClimberUpUp(&m_climber, &Xbox));
+      .WhenHeld(ClimberUp(&m_climber, &Xbox));
 
   frc2::JoystickButton(&Xbox, Button::kStickRight)
       .WhenHeld(DriveResetOdometry(&m_drive, &Xbox));
@@ -139,16 +133,16 @@ void RobotContainer::ConfigureButtonBindings() {
   // unjam things
   // Run indexer and shooter backwards.  ParallelCommandGroup finishes when all of the commands finish
   // Could change this to ParallelRaceGroup if the indexer commands exit on laserbreaks
-  frc2::JoystickButton(&Xbox, Button::kStart)
-      .WhenHeld(frc2::ParallelCommandGroup{IndexerBackward(&m_indexer),
-                                            ShooterUnjam(&m_shooter)
-                                            });
+  //frc2::JoystickButton(&Xbox, Button::kStart)
+      //.WhenHeld(frc2::ParallelCommandGroup{IndexerBackward(&m_indexer),
+                                            //ShooterUnjam(&m_shooter)
+                                            //});
   // Run indexer and shooter backwards AND burp them out the intake
-  frc2::JoystickButton(&Xbox, Button::kBack)
-      .WhenHeld(frc2::ParallelCommandGroup{IndexerForward(&m_indexer),
-                                            SpitIntake(&m_intake),
-                                            ShooterUnjam(&m_shooter)
-                                            });
+  //frc2::JoystickButton(&Xbox, Button::kBack)
+      //.WhenHeld(frc2::ParallelCommandGroup{IndexerForward(&m_indexer),
+                                            //SpitIntake(&m_intake),
+                                            //ShooterUnjam(&m_shooter)
+                                            //});
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

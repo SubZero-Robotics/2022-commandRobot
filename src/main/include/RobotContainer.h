@@ -17,7 +17,6 @@
 
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/IntakeSubsystem.h"
-#include "subsystems/IndexerSubsystem.h"
 #include "subsystems/ShooterSubsystem.h"
 #include "subsystems/ClimberSubsystem.h"
 
@@ -41,13 +40,12 @@ class RobotContainer {
   // The robot's subsystems
   DriveSubsystem m_drive;
   IntakeSubsystem m_intake;
-  IndexerSubsystem m_indexer;
   ShooterSubsystem m_shooter;
   ClimberSubsystem m_climber;
   
   // The auto routines
-  LeftAuto m_leftAuto{&m_drive, &m_shooter, &m_indexer};  // add in whichever subsystems you use in this call list
-  RightAuto m_rightAuto{&m_drive, &m_shooter, &m_indexer};
+  LeftAuto m_leftAuto{&m_drive, &m_shooter};  // add in whichever subsystems you use in this call list
+  RightAuto m_rightAuto{&m_drive, &m_shooter};
 
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;

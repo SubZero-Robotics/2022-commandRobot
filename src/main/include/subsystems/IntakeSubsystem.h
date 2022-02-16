@@ -23,9 +23,9 @@ class IntakeSubsystem : public frc2::SubsystemBase {
   // Subsystem methods go here.
 
   /**
-   * Push intake out, starts wheels
+   * Spins intake wheels
    */
-  void Spin();
+  void GrabBalls();
 
   /**
    * Pulls intake in, stops wheels
@@ -58,6 +58,27 @@ class IntakeSubsystem : public frc2::SubsystemBase {
    */
   double GetRPM();
 
+  
+  /**
+   * Move balls towards the shooter
+   */
+  void IndexForward();
+
+  /**
+   * Move balls towards the shooter only if the shooter RPM is close to target
+   */
+  void IndexForwardCheckRPM();
+
+  /**
+   * Move balls away from the shooter, towards the intake
+   */
+  void IndexBackward();
+
+  /**
+   * Stop the shooter
+   */
+  void IndexStop();
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -66,7 +87,4 @@ class IntakeSubsystem : public frc2::SubsystemBase {
   rev::CANSparkMax IntakeWheels{8, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax BottomIndexer{9, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax TopIndexer{7, rev::CANSparkMax::MotorType::kBrushless};
-
-  WPI_VictorSPX Shooter = WPI_VictorSPX(4); 
-  WPI_VictorSPX ShooterFollow{5};
 };

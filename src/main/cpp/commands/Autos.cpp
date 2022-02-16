@@ -12,7 +12,7 @@
 // Will be interrupted if m_limitSwitch.get() returns true.  eg, electric eyes and ball intake
 // command.InterruptOn([&m_limitSwitch] { return m_limitSwitch.Get(); });
 
-LeftAuto::LeftAuto(DriveSubsystem* drive, ShooterSubsystem * shooter, IndexerSubsystem* indexer) {
+LeftAuto::LeftAuto(DriveSubsystem* drive, ShooterSubsystem * shooter) {
   AddCommands(
     DriveStrajectory(drive).WithTimeout(5_s)
 //      DriveStraight(-0.5, drive).WithTimeout(0.5_s), 
@@ -34,7 +34,7 @@ LeftAuto::LeftAuto(DriveSubsystem* drive, ShooterSubsystem * shooter, IndexerSub
   );
 }
 
-RightAuto::RightAuto(DriveSubsystem* drive, ShooterSubsystem * shooter, IndexerSubsystem* indexer) {
+RightAuto::RightAuto(DriveSubsystem* drive, ShooterSubsystem * shooter) {
   AddCommands(
       // Drive back the specified time.  Positive power really is backwards
       DriveStraight(0.6, drive).WithTimeout(1_s),
@@ -43,14 +43,13 @@ RightAuto::RightAuto(DriveSubsystem* drive, ShooterSubsystem * shooter, IndexerS
       frc2::ParallelRaceGroup{ShooterShoot(shooter,NULL),
                               TurnToLimelight(drive).WithTimeout(2_s)},
       // Let's try a smarter shooting, where we check if we're at the right rpm and run the indexer
-      frc2::ParallelCommandGroup{ShooterShoot(shooter,NULL).WithTimeout(1_s),
-                                 IndexerForwardCheckRPM(indexer).WithTimeout(1_s)},
+      frc2::ParallelCommandGroup{ShooterShoot(shooter,NULL).WithTimeout(1_s)},
       // turn around 180_deg.  Timeout here is in case it doesn't settle in 2s
       TurnToAngle(90_deg, drive).WithTimeout(2_s)
   );
 }
 
-/*NoAuto::NoAuto(DriveSubsystem* drive, ShooterSubsystem* shooter, IndexerSubsystem* indexer) {
+/*NoAuto::NoAuto(DriveSubsystem* drive, ShooterSubsystem* shooter) {
   AddCommands(
 
       //DriveStraight().WithTimeout()

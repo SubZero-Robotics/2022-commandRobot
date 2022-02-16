@@ -17,8 +17,6 @@
 #include "commands/DriveStraight.h"
 #include "commands/DriveStrajectory.h"
 #include "commands/ShooterShoot.h"
-#include "commands/IndexerForward.h"
-#include "commands/IndexerForwardCheckRPM.h" 
 #include "Constants.h"
 #include <pathplanner/lib/PathPlanner.h>
 #include "subsystems/DriveSubsystem.h"
@@ -34,7 +32,7 @@ class LeftAuto
    *
    * @param drive The drive subsystem this command will run on
    */
-  LeftAuto(DriveSubsystem* drive, ShooterSubsystem* shooter, IndexerSubsystem* indexer);
+  LeftAuto(DriveSubsystem* drive, ShooterSubsystem* shooter);
 };
 
 /**
@@ -48,6 +46,6 @@ class RightAuto
    *
    * @param drive The drive subsystem this command will run on
    */
-  RightAuto(DriveSubsystem* drive, ShooterSubsystem* shooter, IndexerSubsystem* indexer);
+  RightAuto(DriveSubsystem* drive, ShooterSubsystem* shooter);
 };
 
