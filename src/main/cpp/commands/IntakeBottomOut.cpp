@@ -5,14 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/SpitIntake.h"
+#include "commands/IntakeBottomOut.h"
 
-SpitIntake::SpitIntake(IntakeSubsystem* subsystem) : m_intake(subsystem) {
+IntakeBottomOut::IntakeBottomOut(IntakeSubsystem* subsystem) : m_intake(subsystem) {
   AddRequirements({subsystem});
 }
 
-void SpitIntake::Initialize() { m_intake->Spit(); }
+void IntakeBottomOut::Initialize() { m_intake->BottomOut(); }
 
 // this is a state, it lasts till it's cancelled
 // although we could check if the piston is all the way in
-bool SpitIntake::IsFinished() { return false; }
+bool IntakeBottomOut::IsFinished() { return false; }

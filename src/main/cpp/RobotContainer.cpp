@@ -12,13 +12,23 @@
 #include <frc2/command/ParallelCommandGroup.h>
 #include <frc2/command/ParallelRaceGroup.h>
 
-#include "commands/DefaultDrive.h"
 #include "commands/IntakeGrabBalls.h"
-#include "commands/SpitIntake.h"
+#include "commands/IntakeBottomIn.h"
+#include "commands/IntakeBottomOut.h"
+#include "commands/IntakeTopIn.h"
+#include "commands/IntakeTopOut.h"
 #include "commands/IntakeStop.h"
+
 #include "commands/ShooterShoot.h"
 #include "commands/ShooterStop.h"
 #include "commands/ShooterUnjam.h"
+
+#include "commands/ClimberUp.h"
+#include "commands/ClimberDown.h"
+#include "commands/ClimberClimb.h"
+#include "commands/ClimberStop.h"
+
+#include "commands/DefaultDrive.h"
 #include "commands/TurnToLimelight.h"
 #include "commands/TurnToAngle.h"
 #include "commands/DriveResetOdometry.h"
@@ -32,14 +42,7 @@
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/SequentialCommandGroup.h>
 
-
 #include <utility>
-
-#include "commands/ClimberUp.h"
-#include "commands/ClimberDown.h"
-#include "commands/ClimberClimb.h"
-#include "commands/ClimberStop.h"
-
 
 #include "Constants.h"
 
@@ -93,7 +96,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   // Spin up shooter motor while pressed, and rumble controller if you're too close
   frc2::JoystickButton(&Xbox, Button::kB)
-      .WhenHeld(ShooterShoot(&m_shooter, &Xbox));
+      .ToggleWhenPressed(ShooterShoot(&m_shooter, &Xbox));
 
   // move intake arm out and spin intake wheels while A is held down,
   // return arm and stop when you let go. (the default mode for Intake)
@@ -109,12 +112,6 @@ void RobotContainer::ConfigureButtonBindings() {
   // Climber deployment and winch: Y button plus right stick
   //frc2::JoystickButton(&Xbox, Axis::kRightY) 
       //.WhenHeld(ClimberUp(&m_climber, &Xbox));
-
-  /*if (Xbox.GetY(frc::GenericHID::kRightHand)>kDeadzone){
-    ClimberUp(&m_climber, &Xbox);
-  } else if (Xbox.GetY(frc::GenericHID::kRightHand)>-kDeadzone) { //////////////////
-    ClimberDown(&m_climber, &Xbox);
-  }*/
 
   frc2::JoystickButton(&Xbox, Button::kBumperLeft)
       .WhenHeld(ClimberUp(&m_climber, &Xbox));
@@ -140,7 +137,7 @@ void RobotContainer::ConfigureButtonBindings() {
   // Run indexer and shooter backwards AND burp them out the intake
   //frc2::JoystickButton(&Xbox, Button::kBack)
       //.WhenHeld(frc2::ParallelCommandGroup{IndexerForward(&m_indexer),
-                                            //SpitIntake(&m_intake),
+                                            //IntakeBottomIn(&m_intake),
                                             //ShooterUnjam(&m_shooter)
                                             //});
 }

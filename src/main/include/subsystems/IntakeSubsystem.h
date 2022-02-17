@@ -29,51 +29,29 @@ class IntakeSubsystem : public frc2::SubsystemBase {
   void Retract();
 
   /**
-   * Push intake out, reverse wheels
+   * Bottom indexer wheels forward
    */
-  void Spit();
-
+  void BottomIn();
   
   /**
-   * Move balls towards the target, fast
+   * Bottom indexer wheels backward
    */
-  void Shoot(); 
-
+  void BottomOut();
+  
   /**
-   * Move balls away from the shooter, towards the intake, to clear jams
+   * Top indexer wheels forward
    */
-  void Unjam();
+  void TopIn();
+  
+  /**
+   * Top indexer wheels backward
+   */
+  void TopOut();
 
   /**
    * Stop the shooter
    */
   void Stop();
-
-  /**
-   * How fast is it going?
-   */
-  double GetRPM();
-
-  
-  /**
-   * Move balls towards the shooter
-   */
-  void IndexForward();
-
-  /**
-   * Move balls towards the shooter only if the shooter RPM is close to target
-   */
-  void IndexForwardCheckRPM();
-
-  /**
-   * Move balls away from the shooter, towards the intake
-   */
-  void IndexBackward();
-
-  /**
-   * Stop the shooter
-   */
-  void IndexStop();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be

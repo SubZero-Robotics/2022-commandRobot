@@ -62,10 +62,10 @@ constexpr double kDeadzone = 0.2;
 constexpr double kRumbleDistance = 85.0;
 
 // The indexer motor speed
-constexpr double kIndexerSpeed = 0.5;
+constexpr double kIndexerSpeed = 0.75;
 
 // The indexer motor speed
-constexpr double kIntakeSpeed = 0.75;
+constexpr double kIntakeSpeed = 0.85;
 
 //DriveSubsystem constants
 

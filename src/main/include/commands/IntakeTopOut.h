@@ -19,9 +19,9 @@
  *
  * @see InstantCommand
  */
-class SpitIntake : public frc2::CommandHelper<frc2::CommandBase, SpitIntake> {
+class IntakeTopOut : public frc2::CommandHelper<frc2::CommandBase, IntakeTopOut> {
  public:
-  explicit SpitIntake(IntakeSubsystem* subsystem);
+  explicit IntakeTopOut(IntakeSubsystem* subsystem);
 
   void Initialize() override;
 

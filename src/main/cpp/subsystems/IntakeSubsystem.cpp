@@ -11,37 +11,30 @@
 
 // Constructor, set initial state to in and stopped
 IntakeSubsystem::IntakeSubsystem() {
-    //IntakeArm.Set(frc::DoubleSolenoid::Value(1));
     IntakeWheels.StopMotor();
+    BottomIndexer.StopMotor();
+    TopIndexer.StopMotor();
 }
 
 void IntakeSubsystem::GrabBalls() {
-    //IntakeArm.Set(frc::DoubleSolenoid::Value(2));
     IntakeWheels.Set(kIntakeSpeed);
-    BottomIndexer.Set(kIntakeSpeed);
-    TopIndexer.Set(kIntakeSpeed);
 }
 
-void IntakeSubsystem::Spit() {
-    //IntakeArm.Set(frc::DoubleSolenoid::Value(2));
-    //IntakeWheels.Set(ControlMode::PercentOutput, -kIntakeSpeed);
+void IntakeSubsystem::BottomIn() {
+    BottomIndexer.Set(kIndexerSpeed);
 }
 
-
-void IntakeSubsystem::IndexForward() {
-    //IndexerB.Set(ControlMode::PercentOutput, -kIndexerSpeed);
+void IntakeSubsystem::BottomOut() {
+    BottomIndexer.Set(-kIndexerSpeed/2);
+    IntakeWheels.Set(-kIndexerSpeed/2);
 }
 
-void IntakeSubsystem::IndexForwardCheckRPM() {
-// get RPMs from network tables to avoid a ShooterSubsystem dependancy
-// Here we check that RPMS are within kRPM_OK on the low side.  Anything faster is ok
-// If you're worried about goign to fast, change this calculation
-    //if ((frc::SmartDashboard::GetNumber("RPM",0.0) + kRPM_OK) >= kTargetRPM) 
-        //IndexerB.Set(ControlMode::PercentOutput, -kIndexerSpeed);
+void IntakeSubsystem::TopIn() {
+    TopIndexer.Set(kIndexerSpeed);
 }
 
-void IntakeSubsystem::IndexBackward() {
-    //IndexerB.Set(ControlMode::PercentOutput, kIndexerSpeed);
+void IntakeSubsystem::TopOut() {
+    TopIndexer.Set(-kIndexerSpeed/2);
 }
 
 void IntakeSubsystem::Stop() {
