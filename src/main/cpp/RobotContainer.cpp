@@ -96,7 +96,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   // Spin up shooter motor while pressed, and rumble controller if you're too close
   frc2::JoystickButton(&Xbox, Button::kB)
-      .ToggleWhenPressed(ShooterShoot(&m_shooter, &Xbox));
+      .WhenHeld(ShooterShoot(&m_shooter, &Xbox));
 
   // move intake arm out and spin intake wheels while A is held down,
   // return arm and stop when you let go. (the default mode for Intake)
@@ -106,8 +106,15 @@ void RobotContainer::ConfigureButtonBindings() {
 //      .WhenReleased(RetractIntake(&m_intake)); 
 
   // Run indexer forwards to suck in balls and send them to the shooter
-  //frc2::JoystickButton(&Xbox, Button::kX)
-      //.WhenHeld(IndexerForward(&m_indexer));
+  frc2::JoystickButton(&Xbox, Button::kX)
+      .WhenHeld(frc2::ParallelCommandGroup{IntakeBottomIn(&m_intake),
+                                            IntakeTopIn(&m_intake)
+                                            });
+
+  frc2::JoystickButton(&Xbox, Button::kStart)
+      .WhenHeld(frc2::ParallelCommandGroup{IntakeBottomOut(&m_intake),
+                                            IntakeTopOut(&m_intake),
+                                            });
 
   // Climber deployment and winch: Y button plus right stick
   //frc2::JoystickButton(&Xbox, Axis::kRightY) 

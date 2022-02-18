@@ -47,6 +47,10 @@ void ShooterSubsystem::Periodic() {
 
 void ShooterSubsystem::Shoot() {
     Shooter.Set(ControlMode::Velocity, kTargetRPM);
+    if ((frc::SmartDashboard::GetNumber("RPM",0.0) + kRPM_OK) >= kTargetRPM) {
+
+    }
+
 }
 
 void ShooterSubsystem::Unjam() {
