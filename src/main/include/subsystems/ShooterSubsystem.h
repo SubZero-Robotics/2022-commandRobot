@@ -55,4 +55,5 @@ class ShooterSubsystem : public frc2::SubsystemBase {
   //rev::CANSparkMax Shooter{5, rev::CANSparkMax::MotorType::kBrushless};
   //rev::CANSparkMax ShooterFollow{6, rev::CANSparkMax::MotorType::kBrushless};
   double RPM = 0.0;         // Shooter motor speed
+  bool truth = 0;
 };

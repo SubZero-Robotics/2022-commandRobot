@@ -7,6 +7,8 @@
 
 #include "subsystems/IntakeSubsystem.h"
 
+#include <frc/smartdashboard/Smartdashboard.h>
+
 #include "Constants.h"
 
 // Constructor, set initial state to in and stopped
@@ -16,17 +18,28 @@ IntakeSubsystem::IntakeSubsystem() {
     TopIndexer.StopMotor();
 }
 
+void IntakeSubsystem::Periodic() {
+  LaserState = IntakeLaser.Get();
+  frc::SmartDashboard::PutBoolean("Intake Laser", LaserState);
+}
+
 void IntakeSubsystem::GrabBalls() {
     IntakeWheels.Set(kIntakeSpeed);
-}
+    BottomIndexer.Set(kIndexerSpeed);
+    if (LaserState) {
+        TopIndexer.Set(kIndexerSpeed);
+    } else {
+        TopIndexer.StopMotor(); }   
+    }
 
 void IntakeSubsystem::BottomIn() {
     BottomIndexer.Set(kIndexerSpeed);
 }
 
-void IntakeSubsystem::BottomOut() {
-    BottomIndexer.Set(-kIndexerSpeed/2);
-    IntakeWheels.Set(-kIndexerSpeed/2);
+void IntakeSubsystem::AllOut() {
+    TopIndexer.Set(-kIndexerSpeed);
+    BottomIndexer.Set(-kIndexerSpeed);
+    IntakeWheels.Set(-kIndexerSpeed);
 }
 
 void IntakeSubsystem::TopIn() {
@@ -34,7 +47,12 @@ void IntakeSubsystem::TopIn() {
 }
 
 void IntakeSubsystem::TopOut() {
-    TopIndexer.Set(-kIndexerSpeed/2);
+    TopIndexer.Set(-kIndexerSpeed);
+}
+
+void IntakeSubsystem::AutomaticIntake() {
+    BottomIn();
+    TopIn();
 }
 
 void IntakeSubsystem::Stop() {

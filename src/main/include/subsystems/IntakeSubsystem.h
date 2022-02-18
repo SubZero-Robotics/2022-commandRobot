@@ -11,12 +11,18 @@
 
 #include <frc2/command/SubsystemBase.h>
 
+#include <frc/DigitalInput.h>
 
 class IntakeSubsystem : public frc2::SubsystemBase {
  public:
   IntakeSubsystem();
 
   // Subsystem methods go here.
+
+  /**
+   * Will be called periodically whenever the CommandScheduler runs.
+   */
+  void Periodic() override;
 
   /**
    * Spins intake wheels
@@ -36,7 +42,7 @@ class IntakeSubsystem : public frc2::SubsystemBase {
   /**
    * Bottom indexer wheels backward
    */
-  void BottomOut();
+  void AllOut();
   
   /**
    * Top indexer wheels forward
@@ -53,6 +59,12 @@ class IntakeSubsystem : public frc2::SubsystemBase {
    */
   void Stop();
 
+  /**
+   * All index motors in
+   */
+
+  void AutomaticIntake();
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -61,4 +73,7 @@ class IntakeSubsystem : public frc2::SubsystemBase {
   rev::CANSparkMax IntakeWheels{8, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax BottomIndexer{9, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax TopIndexer{7, rev::CANSparkMax::MotorType::kBrushless};
+
+  frc::DigitalInput IntakeLaser {8};  
+  bool LaserState = 0;
 };

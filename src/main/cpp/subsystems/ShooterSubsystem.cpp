@@ -41,14 +41,17 @@ ShooterSubsystem::ShooterSubsystem() {
 // Implementation of subsystem periodic method goes here.
 // for example, publish encoder settings or motor currents to dashboard
 void ShooterSubsystem::Periodic() {
-  RPM = Shooter.GetSelectedSensorVelocity(0);
+  RPM = -Shooter.GetSelectedSensorVelocity(0);
   frc::SmartDashboard::PutNumber("RPM", (RPM*600/4096));
+  frc::SmartDashboard::PutBoolean("INTAKE WOULD BE SPINNING", truth);
 }
 
 void ShooterSubsystem::Shoot() {
     Shooter.Set(ControlMode::Velocity, kTargetRPM);
     if ((frc::SmartDashboard::GetNumber("RPM",0.0) + kRPM_OK) >= kTargetRPM) {
-
+      truth = true;
+    } else {
+      truth = 0;
     }
 
 }

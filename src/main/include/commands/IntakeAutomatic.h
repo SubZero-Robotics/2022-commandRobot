@@ -13,21 +13,17 @@
 #include "subsystems/IntakeSubsystem.h"
 
 /**
- * A simple command that reaches out with IntakeSubsystem.  Written
+ * A simple command that pulls back with IntakeSubsystem.  Written
  * explicitly for pedagogical purposes.  Actual code should inline a command
  * this simple with InstantCommand.
  *
  * @see InstantCommand
  */
-class IntakeGrabBalls : public frc2::CommandHelper<frc2::CommandBase, IntakeGrabBalls> {
+class IntakeAutomatic : public frc2::CommandHelper<frc2::CommandBase, IntakeAutomatic> {
  public:
-  explicit IntakeGrabBalls(IntakeSubsystem* subsystem);
+  explicit IntakeAutomatic(IntakeSubsystem* subsystem);
 
   void Initialize() override;
-
-  void Execute() override;
-
-  void End(bool interrupted) override;
 
   bool IsFinished() override;
 

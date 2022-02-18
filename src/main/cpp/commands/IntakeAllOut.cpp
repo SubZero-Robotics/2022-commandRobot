@@ -5,23 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/IntakeGrabBalls.h"
+#include "commands/IntakeAllOut.h"
 
-IntakeGrabBalls::IntakeGrabBalls(IntakeSubsystem* subsystem) : m_intake(subsystem) {
+IntakeAllOut::IntakeAllOut(IntakeSubsystem* subsystem) : m_intake(subsystem) {
   AddRequirements({subsystem});
 }
 
-void IntakeGrabBalls::Initialize() {
-
-}
-
-void IntakeGrabBalls::Execute() {
-  m_intake->GrabBalls();
-}
-
-void IntakeGrabBalls::End(bool interrupted) {
-  m_intake->Stop();
-}
+void IntakeAllOut::Initialize() { m_intake->AllOut(); }
 
 // this is a state, it lasts till it's cancelled
-bool IntakeGrabBalls::IsFinished() { return false; }
+// although we could check if the piston is all the way in
+bool IntakeAllOut::IsFinished() { return false; }

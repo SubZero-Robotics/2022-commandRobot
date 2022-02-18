@@ -16,8 +16,8 @@ ClimberSubsystem::ClimberSubsystem() {
 void ClimberSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
   if (abs(Xbox.GetRightY())>kDeadzone && Xbox.GetPOV()==180){
-    RightArm.Set(Xbox.GetRightY()/2);
-    LeftArm.Set(Xbox.GetRightY()/2);
+    RightArm.Set(Xbox.GetRightY()/1.5);
+    LeftArm.Set(Xbox.GetRightY()/1.5);
   } else {
     RightArm.StopMotor();
     LeftArm.StopMotor();

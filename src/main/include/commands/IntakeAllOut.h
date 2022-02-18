@@ -19,9 +19,9 @@
  *
  * @see InstantCommand
  */
-class IntakeBottomOut : public frc2::CommandHelper<frc2::CommandBase, IntakeBottomOut> {
+class IntakeAllOut : public frc2::CommandHelper<frc2::CommandBase, IntakeAllOut> {
  public:
-  explicit IntakeBottomOut(IntakeSubsystem* subsystem);
+  explicit IntakeAllOut(IntakeSubsystem* subsystem);
 
   void Initialize() override;
 
