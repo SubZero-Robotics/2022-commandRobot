@@ -86,8 +86,10 @@ class CargoSubsystem : public frc2::SubsystemBase {
   rev::CANSparkMax BottomIndexer{9, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax TopIndexer{7, rev::CANSparkMax::MotorType::kBrushless};
 
-  frc::DigitalInput IntakeLaser {8};  
-  bool LaserState = 0;
+  frc::DigitalInput TopIntakeLaser {8};  
+  frc::DigitalInput BottomIntakeLaser{6};
+  bool TopLaserState = 0;
+  bool BottomLaserState = 0;
 
   WPI_TalonSRX Shooter = WPI_TalonSRX(4); 
   WPI_VictorSPX ShooterFollow{5};

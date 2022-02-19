@@ -177,10 +177,10 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     m_drive.ResetOdometry(exampleTrajectory.InitialPose());
 
     //no auto
-    //return new frc2::SequentialCommandGroup(
-      //std::move(ScurveCommand),
-      //frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ));
+    return new frc2::SequentialCommandGroup(
+      std::move(ScurveCommand),
+      frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ));
     
   // Runs the chosen command in autonomous
-  return m_chooser.GetSelected();
+  //return m_chooser.GetSelected();
 }

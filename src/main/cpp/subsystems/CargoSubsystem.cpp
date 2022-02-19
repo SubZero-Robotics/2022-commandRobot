@@ -40,9 +40,13 @@ CargoSubsystem::CargoSubsystem() {
 }
 
 void CargoSubsystem::Periodic() {
-  LaserState = IntakeLaser.Get();
-  frc::SmartDashboard::PutBoolean("Intake Laser", LaserState);
+  TopLaserState = TopIntakeLaser.Get();
+  frc::SmartDashboard::PutBoolean("Top Intake Laser", TopLaserState);
 
+  BottomLaserState = BottomIntakeLaser.Get();
+  frc::SmartDashboard::PutBoolean("Bottom Intake Laser", BottomLaserState);
+
+  
   RPM = -Shooter.GetSelectedSensorVelocity(0);
   frc::SmartDashboard::PutNumber("RPM", (RPM*600/4096));
   frc::SmartDashboard::PutBoolean("INTAKE WOULD BE SPINNING", truth);
@@ -51,7 +55,7 @@ void CargoSubsystem::Periodic() {
 void CargoSubsystem::GrabBalls() {
     IntakeWheels.Set(kIntakeSpeed);
     BottomIndexer.Set(kIndexerSpeed);
-    if (LaserState) {
+    if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
     } else {
         TopIndexer.StopMotor(); }   
