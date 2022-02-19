@@ -8,8 +8,8 @@
 #include "commands/ShooterShoot.h"
 #include <frc/smartdashboard/Smartdashboard.h>
 
-ShooterShoot::ShooterShoot(ShooterSubsystem* subsystem, frc::XboxController* controller) 
-    : m_shooter(subsystem), m_controller(controller)  {
+ShooterShoot::ShooterShoot(CargoSubsystem* subsystem, frc::XboxController* controller) 
+    : m_cargo(subsystem), m_controller(controller)  {
   AddRequirements({subsystem});
 }
 
@@ -17,7 +17,7 @@ void ShooterShoot::Initialize() { }
  
 void ShooterShoot::Execute() {
   // tell shooter to get to set rpm
-  m_shooter->Shoot();
+  m_cargo->Shoot();
 
   // Auto commands pass in NULL for the controller as there's no need to rumble
   if (m_controller != NULL) {
@@ -34,7 +34,7 @@ void ShooterShoot::Execute() {
 // stop rumbling when the command finishes, stop shooter (redundant with default command. hopefully)
 void ShooterShoot::End(bool interrupted) {
   m_controller->SetRumble(frc::GenericHID::RumbleType::kLeftRumble,0.0);  
-  m_shooter->Stop();
+  m_cargo->Stop();
 }
 
 // this is a state, it lasts till it's cancelled

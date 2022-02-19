@@ -8,10 +8,13 @@
 #pragma once
 
 #include "rev/CANSparkMax.h"
+#include <ctre/Phoenix.h>
+#include <frc/motorcontrol/VictorSP.h>
 
 #include <frc2/command/SubsystemBase.h>
 
 #include <frc/DigitalInput.h>
+#include "Constants.h"
 
 class CargoSubsystem : public frc2::SubsystemBase {
  public:
@@ -25,14 +28,14 @@ class CargoSubsystem : public frc2::SubsystemBase {
   void Periodic() override;
 
   /**
-   * Spins intake wheels
+   * One stop solution to handle all of our intaking needs. Now with laser states!
    */
   void GrabBalls();
 
   /**
-   * Pulls intake in, stops wheels
+   * All index motors in
    */
-  void Retract();
+  void AutomaticIntake();
 
   /**
    * Bottom indexer wheels forward
@@ -40,7 +43,7 @@ class CargoSubsystem : public frc2::SubsystemBase {
   void BottomIn();
   
   /**
-   * Bottom indexer wheels backward
+   * Bottom, top, indexer wheels backward and intake wheels backwards
    */
   void AllOut();
   
@@ -55,15 +58,24 @@ class CargoSubsystem : public frc2::SubsystemBase {
   void TopOut();
 
   /**
-   * Stop the shooter
+   * Move balls towards the target, fast
    */
-  void Stop();
+  void Shoot(); 
 
   /**
-   * All index motors in
+   * Move balls away from the shooter, towards the intake, to clear jams
    */
+  void Unjam();  
 
-  void AutomaticIntake();
+  /**
+   * How fast is the shooter going?
+   */
+  double GetRPM();
+
+  /**
+   * Stop the shooter, indexer, and intake
+   */
+  void Stop();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
@@ -76,4 +88,9 @@ class CargoSubsystem : public frc2::SubsystemBase {
 
   frc::DigitalInput IntakeLaser {8};  
   bool LaserState = 0;
+
+  WPI_TalonSRX Shooter = WPI_TalonSRX(4); 
+  WPI_VictorSPX ShooterFollow{5};
+  double RPM = 0.0;         // Shooter motor speed
+  bool truth = 0;  
 };

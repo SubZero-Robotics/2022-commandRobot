@@ -32,7 +32,7 @@ class LeftAuto
    *
    * @param drive The drive subsystem this command will run on
    */
-  LeftAuto(DriveSubsystem* drive, ShooterSubsystem* shooter);
+  LeftAuto(DriveSubsystem* drive, CargoSubsystem* shooter);
 };
 
 /**
@@ -46,6 +46,6 @@ class RightAuto
    *
    * @param drive The drive subsystem this command will run on
    */
-  RightAuto(DriveSubsystem* drive, ShooterSubsystem* shooter);
+  RightAuto(DriveSubsystem* drive, CargoSubsystem* shooter);
 };
 

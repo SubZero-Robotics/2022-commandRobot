@@ -7,11 +7,11 @@
 
 #include "commands/ShooterUnjam.h"
 
-ShooterUnjam::ShooterUnjam(ShooterSubsystem* subsystem) : m_shooter(subsystem) {
+ShooterUnjam::ShooterUnjam(CargoSubsystem* subsystem) : m_cargo(subsystem) {
   AddRequirements({subsystem});
 }
 
-void ShooterUnjam::Initialize() { m_shooter->Unjam(); }
+void ShooterUnjam::Initialize() { m_cargo->Unjam(); }
 
 // this is a state, it lasts till it's cancelled
 // although we could check if we are at the right RPM or electric eye

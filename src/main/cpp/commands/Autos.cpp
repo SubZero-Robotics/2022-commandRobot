@@ -12,7 +12,7 @@
 // Will be interrupted if m_limitSwitch.get() returns true.  eg, electric eyes and ball intake
 // command.InterruptOn([&m_limitSwitch] { return m_limitSwitch.Get(); });
 
-LeftAuto::LeftAuto(DriveSubsystem* drive, ShooterSubsystem * shooter) {
+LeftAuto::LeftAuto(DriveSubsystem* drive, CargoSubsystem * shooter) {
   AddCommands(
     DriveStrajectory(drive).WithTimeout(5_s)
 //      DriveStraight(-0.5, drive).WithTimeout(0.5_s), 
@@ -34,7 +34,7 @@ LeftAuto::LeftAuto(DriveSubsystem* drive, ShooterSubsystem * shooter) {
   );
 }
 
-RightAuto::RightAuto(DriveSubsystem* drive, ShooterSubsystem * shooter) {
+RightAuto::RightAuto(DriveSubsystem* drive, CargoSubsystem * shooter) {
   AddCommands(
       // Drive back the specified time.  Positive power really is backwards
       DriveStraight(0.6, drive).WithTimeout(1_s),
@@ -49,7 +49,7 @@ RightAuto::RightAuto(DriveSubsystem* drive, ShooterSubsystem * shooter) {
   );
 }
 
-/*NoAuto::NoAuto(DriveSubsystem* drive, ShooterSubsystem* shooter) {
+/*NoAuto::NoAuto(DriveSubsystem* drive, CargoSubsystem* shooter) {
   AddCommands(
 
       //DriveStraight().WithTimeout()

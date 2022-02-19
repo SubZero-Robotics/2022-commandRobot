@@ -11,10 +11,10 @@
 #include <frc2/command/CommandHelper.h>
 #include <frc/XboxController.h>
 
-#include "subsystems/ShooterSubsystem.h"
+#include "subsystems/CargoSubsystem.h"
  
 /**
- * A simple command that runs ShooterSubsystem forwards.  Written
+ * A simple command that runs CargoSubsystem forwards.  Written
  * explicitly for pedagogical purposes.  Actual code should inline a command
  * this simple with InstantCommand.
  *
@@ -22,7 +22,7 @@
  */
 class ShooterShoot : public frc2::CommandHelper<frc2::CommandBase, ShooterShoot> {
  public:
-  explicit ShooterShoot(ShooterSubsystem* subsystem, frc::XboxController* controller);
+  explicit ShooterShoot(CargoSubsystem* subsystem, frc::XboxController* controller);
 
   void Initialize() override;
 
@@ -33,6 +33,6 @@ class ShooterShoot : public frc2::CommandHelper<frc2::CommandBase, ShooterShoot>
   bool IsFinished() override;
 
  private:
-  ShooterSubsystem* m_shooter;
+  CargoSubsystem* m_cargo;
   frc::XboxController* m_controller;
 };

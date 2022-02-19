@@ -66,11 +66,8 @@ RobotContainer::RobotContainer() {
       [this] { return Xbox.GetLeftY(); },
       [this] { return Xbox.GetLeftX(); }));
 
-// Set default intake command.  Does this when not doing something else
+// Set default intake, shooter, and indexer command.  Does this when not doing something else
   m_cargo.SetDefaultCommand(IntakeStop(&m_cargo));
-
-// Set default shooter command.  Does this when not doing something else
-  m_shooter.SetDefaultCommand(ShooterStop(&m_shooter));
 
 // Set default climber command.  Does this when not doing something else
   m_climber.SetDefaultCommand(ClimberStop(&m_climber));
@@ -97,7 +94,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   // Spin up shooter motor while pressed, and rumble controller if you're too close
   frc2::JoystickButton(&Xbox, Button::kB)
-      .WhenHeld(ShooterShoot(&m_shooter, &Xbox));
+      .WhenHeld(ShooterShoot(&m_cargo, &Xbox));
 
   // move intake arm out and spin intake wheels while A is held down,
   // return arm and stop when you let go. (the default mode for Intake)
@@ -136,13 +133,13 @@ void RobotContainer::ConfigureButtonBindings() {
   // Could change this to ParallelRaceGroup if the indexer commands exit on laserbreaks
   //frc2::JoystickButton(&Xbox, Button::kStart)
       //.WhenHeld(frc2::ParallelCommandGroup{IndexerBackward(&m_indexer),
-                                            //ShooterUnjam(&m_shooter)
+                                            //ShooterUnjam(&m_cargo)
                                             //});
   // Run indexer and shooter backwards AND burp them out the intake
   //frc2::JoystickButton(&Xbox, Button::kBack)
       //.WhenHeld(frc2::ParallelCommandGroup{IndexerForward(&m_indexer),
                                             //IntakeBottomIn(&m_cargo),
-                                            //ShooterUnjam(&m_shooter)
+                                            //ShooterUnjam(&m_cargo)
                                             //});
 }
 
