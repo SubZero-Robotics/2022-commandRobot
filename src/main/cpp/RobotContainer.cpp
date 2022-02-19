@@ -67,7 +67,7 @@ RobotContainer::RobotContainer() {
       [this] { return Xbox.GetLeftX(); }));
 
 // Set default intake command.  Does this when not doing something else
-  m_intake.SetDefaultCommand(IntakeStop(&m_intake));
+  m_cargo.SetDefaultCommand(IntakeStop(&m_cargo));
 
 // Set default shooter command.  Does this when not doing something else
   m_shooter.SetDefaultCommand(ShooterStop(&m_shooter));
@@ -102,16 +102,16 @@ void RobotContainer::ConfigureButtonBindings() {
   // move intake arm out and spin intake wheels while A is held down,
   // return arm and stop when you let go. (the default mode for Intake)
   frc2::JoystickButton(&Xbox, Button::kA)
-      .WhenHeld(IntakeGrabBalls(&m_intake));
+      .WhenHeld(IntakeGrabBalls(&m_cargo));
 // you can stack commands like this (below).  But in this case, RetractIntake is the default anyway
-//      .WhenReleased(RetractIntake(&m_intake)); 
+//      .WhenReleased(RetractIntake(&m_cargo)); 
 
   // Run indexer forwards to suck in balls and send them to the shooter
   frc2::JoystickButton(&Xbox, Button::kX)
-      .WhenHeld(IntakeAutomatic(&m_intake));
+      .WhenHeld(IntakeAutomatic(&m_cargo));
 
   frc2::JoystickButton(&Xbox, Button::kStart)
-      .WhenHeld(IntakeAllOut(&m_intake));
+      .WhenHeld(IntakeAllOut(&m_cargo));
 
   // Climber deployment and winch: Y button plus right stick
   //frc2::JoystickButton(&Xbox, Axis::kRightY) 
@@ -141,7 +141,7 @@ void RobotContainer::ConfigureButtonBindings() {
   // Run indexer and shooter backwards AND burp them out the intake
   //frc2::JoystickButton(&Xbox, Button::kBack)
       //.WhenHeld(frc2::ParallelCommandGroup{IndexerForward(&m_indexer),
-                                            //IntakeBottomIn(&m_intake),
+                                            //IntakeBottomIn(&m_cargo),
                                             //ShooterUnjam(&m_shooter)
                                             //});
 }

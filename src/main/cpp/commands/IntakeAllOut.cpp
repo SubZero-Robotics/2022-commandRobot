@@ -7,11 +7,11 @@
 
 #include "commands/IntakeAllOut.h"
 
-IntakeAllOut::IntakeAllOut(IntakeSubsystem* subsystem) : m_intake(subsystem) {
+IntakeAllOut::IntakeAllOut(CargoSubsystem* subsystem) : m_cargo(subsystem) {
   AddRequirements({subsystem});
 }
 
-void IntakeAllOut::Initialize() { m_intake->AllOut(); }
+void IntakeAllOut::Initialize() { m_cargo->AllOut(); }
 
 // this is a state, it lasts till it's cancelled
 // although we could check if the piston is all the way in

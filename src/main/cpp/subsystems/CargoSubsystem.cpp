@@ -5,25 +5,25 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/IntakeSubsystem.h"
+#include "subsystems/CargoSubsystem.h"
 
 #include <frc/smartdashboard/Smartdashboard.h>
 
 #include "Constants.h"
 
 // Constructor, set initial state to in and stopped
-IntakeSubsystem::IntakeSubsystem() {
+CargoSubsystem::CargoSubsystem() {
     IntakeWheels.StopMotor();
     BottomIndexer.StopMotor();
     TopIndexer.StopMotor();
 }
 
-void IntakeSubsystem::Periodic() {
+void CargoSubsystem::Periodic() {
   LaserState = IntakeLaser.Get();
   frc::SmartDashboard::PutBoolean("Intake Laser", LaserState);
 }
 
-void IntakeSubsystem::GrabBalls() {
+void CargoSubsystem::GrabBalls() {
     IntakeWheels.Set(kIntakeSpeed);
     BottomIndexer.Set(kIndexerSpeed);
     if (LaserState) {
@@ -32,30 +32,30 @@ void IntakeSubsystem::GrabBalls() {
         TopIndexer.StopMotor(); }   
     }
 
-void IntakeSubsystem::BottomIn() {
+void CargoSubsystem::BottomIn() {
     BottomIndexer.Set(kIndexerSpeed);
 }
 
-void IntakeSubsystem::AllOut() {
+void CargoSubsystem::AllOut() {
     TopIndexer.Set(-kIndexerSpeed);
     BottomIndexer.Set(-kIndexerSpeed);
     IntakeWheels.Set(-kIndexerSpeed);
 }
 
-void IntakeSubsystem::TopIn() {
+void CargoSubsystem::TopIn() {
     TopIndexer.Set(kIndexerSpeed);
 }
 
-void IntakeSubsystem::TopOut() {
+void CargoSubsystem::TopOut() {
     TopIndexer.Set(-kIndexerSpeed);
 }
 
-void IntakeSubsystem::AutomaticIntake() {
+void CargoSubsystem::AutomaticIntake() {
     BottomIn();
     TopIn();
 }
 
-void IntakeSubsystem::Stop() {
+void CargoSubsystem::Stop() {
     IntakeWheels.StopMotor();
     BottomIndexer.StopMotor();
     TopIndexer.StopMotor();

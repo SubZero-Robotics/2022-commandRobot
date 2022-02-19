@@ -7,11 +7,11 @@
 
 #include "commands/IntakeBottomIn.h"
 
-IntakeBottomIn::IntakeBottomIn(IntakeSubsystem* subsystem) : m_intake(subsystem) {
+IntakeBottomIn::IntakeBottomIn(CargoSubsystem* subsystem) : m_cargo(subsystem) {
   AddRequirements({subsystem});
 }
 
-void IntakeBottomIn::Initialize() { m_intake->BottomIn(); }
+void IntakeBottomIn::Initialize() { m_cargo->BottomIn(); }
 
 // this is a state, it lasts till it's cancelled
 // although we could check if the piston is all the way in

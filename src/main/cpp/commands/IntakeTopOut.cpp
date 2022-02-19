@@ -7,11 +7,11 @@
 
 #include "commands/IntakeTopOut.h"
 
-IntakeTopOut::IntakeTopOut(IntakeSubsystem* subsystem) : m_intake(subsystem) {
+IntakeTopOut::IntakeTopOut(CargoSubsystem* subsystem) : m_cargo(subsystem) {
   AddRequirements({subsystem});
 }
 
-void IntakeTopOut::Initialize() { m_intake->TopOut(); }
+void IntakeTopOut::Initialize() { m_cargo->TopOut(); }
 
 // this is a state, it lasts till it's cancelled
 // although we could check if the piston is all the way in

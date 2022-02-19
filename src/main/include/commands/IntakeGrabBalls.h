@@ -10,10 +10,10 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
-#include "subsystems/IntakeSubsystem.h"
+#include "subsystems/CargoSubsystem.h"
 
 /**
- * A simple command that reaches out with IntakeSubsystem.  Written
+ * A simple command that reaches out with CargoSubsystem.  Written
  * explicitly for pedagogical purposes.  Actual code should inline a command
  * this simple with InstantCommand.
  *
@@ -21,7 +21,7 @@
  */
 class IntakeGrabBalls : public frc2::CommandHelper<frc2::CommandBase, IntakeGrabBalls> {
  public:
-  explicit IntakeGrabBalls(IntakeSubsystem* subsystem);
+  explicit IntakeGrabBalls(CargoSubsystem* subsystem);
 
   void Initialize() override;
 
@@ -32,5 +32,5 @@ class IntakeGrabBalls : public frc2::CommandHelper<frc2::CommandBase, IntakeGrab
   bool IsFinished() override;
 
  private:
-  IntakeSubsystem* m_intake;
+  CargoSubsystem* m_cargo;
 };

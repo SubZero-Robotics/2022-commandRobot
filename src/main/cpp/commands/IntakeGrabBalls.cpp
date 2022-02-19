@@ -7,7 +7,7 @@
 
 #include "commands/IntakeGrabBalls.h"
 
-IntakeGrabBalls::IntakeGrabBalls(IntakeSubsystem* subsystem) : m_intake(subsystem) {
+IntakeGrabBalls::IntakeGrabBalls(CargoSubsystem* subsystem) : m_cargo(subsystem) {
   AddRequirements({subsystem});
 }
 
@@ -16,11 +16,11 @@ void IntakeGrabBalls::Initialize() {
 }
 
 void IntakeGrabBalls::Execute() {
-  m_intake->GrabBalls();
+  m_cargo->GrabBalls();
 }
 
 void IntakeGrabBalls::End(bool interrupted) {
-  m_intake->Stop();
+  m_cargo->Stop();
 }
 
 // this is a state, it lasts till it's cancelled

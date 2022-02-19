@@ -13,9 +13,9 @@
 
 #include <frc/DigitalInput.h>
 
-class IntakeSubsystem : public frc2::SubsystemBase {
+class CargoSubsystem : public frc2::SubsystemBase {
  public:
-  IntakeSubsystem();
+  CargoSubsystem();
 
   // Subsystem methods go here.
 

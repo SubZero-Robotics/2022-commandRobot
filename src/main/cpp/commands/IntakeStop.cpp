@@ -7,11 +7,11 @@
 
 #include "commands/IntakeStop.h"
 
-IntakeStop::IntakeStop(IntakeSubsystem* subsystem) : m_intake(subsystem) {
+IntakeStop::IntakeStop(CargoSubsystem* subsystem) : m_cargo(subsystem) {
   AddRequirements({subsystem});
 }
 
-void IntakeStop::Initialize() { m_intake->Stop(); }
+void IntakeStop::Initialize() { m_cargo->Stop(); }
 
 // this is a state, it lasts till it's cancelled
 // It is also the default state, so needs to run forever

@@ -10,10 +10,10 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
-#include "subsystems/IntakeSubsystem.h"
+#include "subsystems/CargoSubsystem.h"
 
 /**
- * A simple command that pulls back with IntakeSubsystem.  Written
+ * A simple command that pulls back with CargoSubsystem.  Written
  * explicitly for pedagogical purposes.  Actual code should inline a command
  * this simple with InstantCommand.
  *
@@ -21,12 +21,12 @@
  */
 class IntakeAllOut : public frc2::CommandHelper<frc2::CommandBase, IntakeAllOut> {
  public:
-  explicit IntakeAllOut(IntakeSubsystem* subsystem);
+  explicit IntakeAllOut(CargoSubsystem* subsystem);
 
   void Initialize() override;
 
   bool IsFinished() override;
 
  private:
-  IntakeSubsystem* m_intake;
+  CargoSubsystem* m_cargo;
 };

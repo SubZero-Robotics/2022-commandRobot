@@ -16,7 +16,7 @@
 #include "commands/DefaultDrive.h"
 
 #include "subsystems/DriveSubsystem.h"
-#include "subsystems/IntakeSubsystem.h"
+#include "subsystems/CargoSubsystem.h"
 #include "subsystems/ShooterSubsystem.h"
 #include "subsystems/ClimberSubsystem.h"
 
@@ -39,7 +39,7 @@ class RobotContainer {
   
   // The robot's subsystems
   DriveSubsystem m_drive;
-  IntakeSubsystem m_intake;
+  CargoSubsystem m_cargo;
   ShooterSubsystem m_shooter;
   ClimberSubsystem m_climber;
   
