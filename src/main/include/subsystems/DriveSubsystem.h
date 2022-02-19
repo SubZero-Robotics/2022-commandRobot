@@ -186,6 +186,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // The default (starting) values for the encoder
   double lEncoder = 0.0;
   double rEncoder = 0.0;
+  double ROffset = 0.0;
+  double LOffset = 0.0;
 
   double AverageEncoderDistance = 0.0;
 

@@ -107,21 +107,19 @@ void DriveSubsystem::TankDriveVolts(units::volt_t left, units::volt_t right) {
 }
 
 void DriveSubsystem::ResetEncoders() {
-  RightLead.SetSelectedSensorPosition(0, 0, 10);
-  RightFollow.SetSelectedSensorPosition(0, 0, 10);
-  LeftLead.SetSelectedSensorPosition(0, 0, 10);
-  LeftFollow.SetSelectedSensorPosition(0, 0, 10);
+  LOffset = -((LeftLead.GetSelectedSensorPosition()+LeftFollow.GetSelectedSensorPosition())/2.0);
+  ROffset = -((RightLead.GetSelectedSensorPosition()+RightFollow.GetSelectedSensorPosition())/2.0);
 }
 
 // return the average of the two left encoders
 double DriveSubsystem::GetLeftEncoder() { 
-  return -((LeftLead.GetSelectedSensorPosition()+LeftFollow.GetSelectedSensorPosition())/2.0);
+  return (-((LeftLead.GetSelectedSensorPosition()+LeftFollow.GetSelectedSensorPosition())/2.0)-LOffset);
   }
 
 // return the NEGATIVE average of the two right encoders
 // Because it's inverted.  Maybe not needed?
 double DriveSubsystem::GetRightEncoder() { 
-    return -((RightLead.GetSelectedSensorPosition()+RightFollow.GetSelectedSensorPosition())/2.0);
+    return (-((RightLead.GetSelectedSensorPosition()+RightFollow.GetSelectedSensorPosition())/2.0)-ROffset);
 }
 
 // return the average of left and right encoder sets, in feet
