@@ -82,10 +82,14 @@ void CargoSubsystem::AutomaticIntake() {
 
 void CargoSubsystem::Shoot() {
     Shooter.Set(ControlMode::Velocity, kTargetRPM);
-    if ((frc::SmartDashboard::GetNumber("RPM",0.0) + kRPM_OK) >= kTargetRPM) {
+    if ((-Shooter.GetSelectedSensorVelocity(0) + kRPM_OK) >= kTargetRPM) {
       truth = true;
+      BottomIndexer.Set(kIndexerSpeed);
+      TopIndexer.Set(kIndexerSpeed);
     } else {
       truth = 0;
+      BottomIndexer.StopMotor();
+      TopIndexer.StopMotor();
     }
 
 }
