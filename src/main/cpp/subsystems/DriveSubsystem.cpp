@@ -101,8 +101,8 @@ void DriveSubsystem::ArcadeDrive(double fwd, double rot) {
 }
 
 void DriveSubsystem::TankDriveVolts(units::volt_t left, units::volt_t right) {
-  LeftLead.SetVoltage(left);
-  RightLead.SetVoltage(right);
+  LeftLead.SetVoltage(-left);
+  RightLead.SetVoltage(-right);
   m_drive.Feed();
 }
 
