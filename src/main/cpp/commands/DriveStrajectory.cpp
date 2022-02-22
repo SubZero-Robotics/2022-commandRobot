@@ -15,6 +15,7 @@
 #include <frc2/command/RamseteCommand.h>
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/SequentialCommandGroup.h>
+#include <frc2/command/CommandScheduler.h>
 
 DriveStrajectory::DriveStrajectory(DriveSubsystem* subsystem) {
   AddRequirements({subsystem});
@@ -36,7 +37,6 @@ void DriveStrajectory::Initialize() {
   m_drive->ResetOdometry(exampleTrajectory.InitialPose());
 
   // this sets up the command
-  // I also think it fires it off, since this is a CommandHelper?
   frc2::RamseteCommand ScurveCommand(
       exampleTrajectory, 
       [this]() { return m_drive->GetPose(); },
@@ -51,13 +51,13 @@ void DriveStrajectory::Initialize() {
       [this](auto left, auto right) { m_drive->TankDriveVolts(left, right); },
       {m_drive});
 
-  // This might be what actually fires off the command
-   new frc2::SequentialCommandGroup(
+  // Schedule this new command we just made
+   frc2::CommandScheduler::GetInstance().Schedule(
+    new frc2::SequentialCommandGroup(
       std::move(ScurveCommand),
-      frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {}));
+      frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {}))
+    );
 }
-
-void DriveStrajectory::End(bool interrupted) { m_drive->TankDriveVolts(0_V, 0_V); }
 
 bool DriveStrajectory::IsFinished() {  
   // we could add a check in here, to see where in the trajectory we currently are?

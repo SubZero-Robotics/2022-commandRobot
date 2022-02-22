@@ -25,8 +25,6 @@ class DriveStrajectory
 
   void Initialize() override;
 
-  void End(bool interrupted) override;
-
   bool IsFinished() override;
 
  private:

@@ -144,6 +144,7 @@ void RobotContainer::ConfigureButtonBindings() {
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
+/* START COMMENT OUT EXAMPLE S-CURVE
   // An example trajectory to follow.  All units in meters.
   auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
       // Start at the origin facing the +X direction
@@ -180,7 +181,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     return new frc2::SequentialCommandGroup(
       std::move(ScurveCommand),
       frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ));
-    
+STOP COMMENT OUT EXAMPLE S-CURVE */    
   // Runs the chosen command in autonomous
-  //return m_chooser.GetSelected();
+  return m_chooser.GetSelected();
 }
