@@ -13,6 +13,7 @@
 #include <networktables/NetworkTable.h>
 #include <networktables/NetworkTableInstance.h>
 #include <networktables/NetworkTableEntry.h>
+#include <string.h>
 
 #include <frc/drive/DifferentialDrive.h>
 
@@ -190,6 +191,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
   double LOffset = 0.0;
 
   double AverageEncoderDistance = 0.0;
+  std::string SetMotorMode = "Brake or something I wish";
 
   // Odometry class for tracking robot pose
   frc::Rotation2d currentrobotAngle; // is zeroed by default

@@ -54,12 +54,19 @@ void CargoSubsystem::Periodic() {
 
 void CargoSubsystem::GrabBalls() {
     IntakeWheels.Set(kIntakeSpeed);
-    BottomIndexer.Set(kIndexerSpeed);
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
+        BottomIndexer.Set(kIndexerSpeed);
     } else {
-        TopIndexer.StopMotor(); }   
-    }
+        TopIndexer.StopMotor();
+        if (BottomLaserState)
+        {
+            BottomIndexer.Set(kIndexerSpeed);
+        } else {
+            BottomIndexer.StopMotor();
+        }
+    }   
+}
 
 void CargoSubsystem::BottomIn() {
     BottomIndexer.Set(kIndexerSpeed);
@@ -86,7 +93,7 @@ void CargoSubsystem::AutomaticIntake() {
 
 void CargoSubsystem::Shoot() {
     Shooter.Set(ControlMode::Velocity, kTargetRPM);
-    if ((-Shooter.GetSelectedSensorVelocity(0) + kRPM_OK) >= kTargetRPM) {
+    if (((-Shooter.GetSelectedSensorVelocity(0))*600/4096 + kRPM_OK) >= 4500.0) {
       truth = true;
       BottomIndexer.Set(kIndexerSpeed);
       TopIndexer.Set(kIndexerSpeed);
