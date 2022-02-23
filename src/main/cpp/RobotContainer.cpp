@@ -20,6 +20,7 @@
 #include "commands/IntakeTopOut.h"
 #include "commands/IntakeStop.h"
 
+#include "commands/ShooterLowShoot.h"
 #include "commands/ShooterShoot.h"
 #include "commands/ShooterStop.h"
 #include "commands/ShooterUnjam.h"
@@ -92,9 +93,13 @@ void RobotContainer::ConfigureButtonBindings() {
   // tied to buttons.  Answer: timeouts.
   // So, changed the .WhileHeld() to .WhenHeld()
 
-  // Spin up shooter motor while pressed, and rumble controller if you're too close
+  // Spin up shooter motor for low while pressed
   frc2::JoystickButton(&Xbox, Button::kB)
-      .WhenHeld(ShooterShoot(&m_cargo, &Xbox));
+      .WhenHeld(ShooterLowShoot(&m_cargo, &Xbox));
+
+  //Spin up shooter motor for high while pressed, and rumble controller if you're too close
+  frc2::JoystickButton(&Xbox, Button::kY)
+      .WhenHeld(ClimberClimb(&m_climber, &Xbox)); 
 
   // move intake arm out and spin intake wheels while A is held down,
   // return arm and stop when you let go. (the default mode for Intake)
@@ -104,8 +109,8 @@ void RobotContainer::ConfigureButtonBindings() {
 //      .WhenReleased(RetractIntake(&m_cargo)); 
 
   // Run indexer forwards to suck in balls and send them to the shooter
-  frc2::JoystickButton(&Xbox, Button::kX)
-      .WhenHeld(IntakeAutomatic(&m_cargo));
+  //frc2::JoystickButton(&Xbox, Button::kX)
+      //.WhenHeld(IntakeAutomatic(&m_cargo));
 
   frc2::JoystickButton(&Xbox, Button::kStart)
       .WhenHeld(IntakeAllOut(&m_cargo));
@@ -119,9 +124,6 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::JoystickButton(&Xbox, Button::kStickRight)
       .WhenHeld(DriveResetOdometry(&m_drive, &Xbox));
-  
-  frc2::JoystickButton(&Xbox, Button::kY)
-      .WhenHeld(ClimberClimb(&m_climber, &Xbox)); 
   
   // this logic will need Camden's explanation to implement
   // limelight aiming.  

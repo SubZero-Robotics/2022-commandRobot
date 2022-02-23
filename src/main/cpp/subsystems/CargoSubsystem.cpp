@@ -92,17 +92,35 @@ void CargoSubsystem::AutomaticIntake() {
 }
 
 void CargoSubsystem::Shoot() {
-    Shooter.Set(ControlMode::Velocity, kTargetRPM);
-    if (((-Shooter.GetSelectedSensorVelocity(0))*600/4096 + kRPM_OK) >= 4500.0) {
-      truth = true;
-      BottomIndexer.Set(kIndexerSpeed);
-      TopIndexer.Set(kIndexerSpeed);
+    Shooter.Set(ControlMode::Velocity, kHighTargetRPM);
+    if (TopLaserState) {
+        TopIndexer.Set(kIndexerSpeed);
+        BottomIndexer.Set(kIndexerSpeed);
+    } else if (((-Shooter.GetSelectedSensorVelocity(0))*600/4096 + kRPM_OK) >= 5300) {
+        truth = true;
+        BottomIndexer.Set(kIndexerSpeed);
+        TopIndexer.Set(kIndexerSpeed);
     } else {
-      truth = 0;
-      BottomIndexer.StopMotor();
-      TopIndexer.StopMotor();
-    }
+        truth = 0;
+        BottomIndexer.StopMotor();
+        TopIndexer.StopMotor();
+        }
+}
 
+void CargoSubsystem::LowShoot() {
+    Shooter.Set(ControlMode::Velocity, kLowTargetRPM);
+    if (TopLaserState) {
+        TopIndexer.Set(kIndexerSpeed);
+        BottomIndexer.Set(kIndexerSpeed);
+    } else if (((-Shooter.GetSelectedSensorVelocity(0))*600/4096 + kRPM_OK) >= 4000) {
+        truth = true;
+        BottomIndexer.Set(kIndexerSpeed);
+        TopIndexer.Set(kIndexerSpeed);
+    } else {
+        truth = 0;
+        BottomIndexer.StopMotor();
+        TopIndexer.StopMotor();
+        }
 }
 
 void CargoSubsystem::Unjam() {
