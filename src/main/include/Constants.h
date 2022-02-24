@@ -92,7 +92,7 @@ constexpr auto kMaxTurnAcceleration = 200_deg_per_s / 1_s;
 
 // Shooter constants
 constexpr double kHighTargetRPM = 950.0; // desired shooter wheel speed
-constexpr double kLowTargetRPM = 550.0; // desired shooter wheel speed
+constexpr double kLowTargetRPM = 590.0; // desired shooter wheel speed
 constexpr double kRPM_OK = 0.0;  // if we're within this of the target, it's ok to throw a ball
 constexpr double kShootF = 0.5; //kF for shooter velocity
 constexpr double kShootP = 0.0001;   //kP for shooter velocity
