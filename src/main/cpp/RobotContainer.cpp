@@ -12,7 +12,7 @@
 #include <frc2/command/ParallelCommandGroup.h>
 #include <frc2/command/ParallelRaceGroup.h>
 
-#include "commands/IntakeAutomatic.h"
+/*#include "commands/IntakeAutomatic.h"
 #include "commands/IntakeGrabBalls.h"
 #include "commands/IntakeBottomIn.h"
 #include "commands/IntakeAllOut.h"
@@ -28,7 +28,7 @@
 #include "commands/ClimberUp.h"
 #include "commands/ClimberDown.h"
 #include "commands/ClimberClimb.h"
-#include "commands/ClimberStop.h"
+#include "commands/ClimberStop.h" */
 
 #include "commands/DefaultDrive.h"
 #include "commands/TurnToLimelight.h"
@@ -68,10 +68,10 @@ RobotContainer::RobotContainer() {
       [this] { return Xbox.GetLeftX(); }));
 
 // Set default intake, shooter, and indexer command.  Does this when not doing something else
-  m_cargo.SetDefaultCommand(IntakeStop(&m_cargo));
+  //_cargo.SetDefaultCommand(IntakeStop(&m_cargo));
 
 // Set default climber command.  Does this when not doing something else
-  m_climber.SetDefaultCommand(ClimberStop(&m_climber));
+  //m_climber.SetDefaultCommand(ClimberStop(&m_climber));
 }
 
 // will need SelectCommand at some point:
@@ -94,17 +94,17 @@ void RobotContainer::ConfigureButtonBindings() {
   // So, changed the .WhileHeld() to .WhenHeld()
 
   // Spin up shooter motor for low while pressed
-  frc2::JoystickButton(&Xbox, Button::kB)
-      .WhenHeld(ShooterLowShoot(&m_cargo, &Xbox));
+  //frc2::JoystickButton(&Xbox, Button::kB)
+      //.WhenHeld(ShooterLowShoot(&m_cargo, &Xbox));
 
   //Spin up shooter motor for high while pressed, and rumble controller if you're too close
-  frc2::JoystickButton(&Xbox, Button::kY)
-      .WhenHeld(ClimberClimb(&m_climber, &Xbox)); 
+  //frc2::JoystickButton(&Xbox, Button::kY)
+      //.WhenHeld(ClimberClimb(&m_climber, &Xbox)); 
 
   // move intake arm out and spin intake wheels while A is held down,
   // return arm and stop when you let go. (the default mode for Intake)
-  frc2::JoystickButton(&Xbox, Button::kA)
-      .WhenHeld(IntakeGrabBalls(&m_cargo));
+  //frc2::JoystickButton(&Xbox, Button::kA)
+      //.WhenHeld(IntakeGrabBalls(&m_cargo));
 // you can stack commands like this (below).  But in this case, RetractIntake is the default anyway
 //      .WhenReleased(RetractIntake(&m_cargo)); 
 
@@ -112,23 +112,23 @@ void RobotContainer::ConfigureButtonBindings() {
   //frc2::JoystickButton(&Xbox, Button::kX)
       //.WhenHeld(IntakeAutomatic(&m_cargo));
 
-  frc2::JoystickButton(&Xbox, Button::kStart)
-      .WhenHeld(IntakeAllOut(&m_cargo));
+  //frc2::JoystickButton(&Xbox, Button::kStart)
+      //.WhenHeld(IntakeAllOut(&m_cargo));
 
   // Climber deployment and winch: Y button plus right stick
   //frc2::JoystickButton(&Xbox, Axis::kRightY) 
       //.WhenHeld(ClimberUp(&m_climber, &Xbox));
 
-  frc2::JoystickButton(&Xbox, Button::kBumperLeft)
-      .WhenHeld(ClimberUp(&m_climber, &Xbox));
+  //frc2::JoystickButton(&Xbox, Button::kBumperLeft)
+      //.WhenHeld(ClimberUp(&m_climber, &Xbox));
 
   frc2::JoystickButton(&Xbox, Button::kStickRight)
       .WhenHeld(DriveResetOdometry(&m_drive, &Xbox));
   
   // this logic will need Camden's explanation to implement
   // limelight aiming.  
-  frc2::JoystickButton(&Xbox, Button::kBumperRight)
-      .WhenHeld(ClimberDown(&m_climber, &Xbox));
+  //frc2::JoystickButton(&Xbox, Button::kBumperRight)
+      //.WhenHeld(ClimberDown(&m_climber, &Xbox));
 
   // unjam things
   // Run indexer and shooter backwards.  ParallelCommandGroup finishes when all of the commands finish
@@ -146,7 +146,7 @@ void RobotContainer::ConfigureButtonBindings() {
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
-/* START COMMENT OUT EXAMPLE S-CURVE
+ //START COMMENT OUT EXAMPLE S-CURVE
   // An example trajectory to follow.  All units in meters.
   auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
       // Start at the origin facing the +X direction
@@ -183,7 +183,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     return new frc2::SequentialCommandGroup(
       std::move(ScurveCommand),
       frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ));
-STOP COMMENT OUT EXAMPLE S-CURVE */    
+//STOP COMMENT OUT EXAMPLE S-CURVE */    
   // Runs the chosen command in autonomous
   return m_chooser.GetSelected();
 }

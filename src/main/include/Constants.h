@@ -83,10 +83,10 @@ constexpr double kTurnD = 0.01; //Finaly tune this to fix final error  .01
 constexpr auto kTurnTolerance = 5_deg;
 constexpr auto kTurnRateTolerance = 10_deg_per_s;
 
-constexpr auto kMaxSpeed = 1_mps;
-constexpr auto kMaxAcceleration = 3_mps_sq;
+constexpr auto kMaxSpeed = 2_mps;
+constexpr auto kMaxAcceleration = 5_mps_sq;
 
-constexpr auto kMaxTurnRate = 70_deg_per_s;
+constexpr auto kMaxTurnRate = 120_deg_per_s;
 constexpr auto kMaxTurnAcceleration = 200_deg_per_s / 1_s;
 
 
