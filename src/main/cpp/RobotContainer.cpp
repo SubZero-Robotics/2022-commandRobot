@@ -149,7 +149,7 @@ void RobotContainer::ConfigureButtonBindings() {
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
- //START COMMENT OUT EXAMPLE S-CURVE
+/* //START COMMENT OUT EXAMPLE S-CURVE
   // An example trajectory to follow.  All units in meters.
   auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
       // Start at the origin facing the +X direction

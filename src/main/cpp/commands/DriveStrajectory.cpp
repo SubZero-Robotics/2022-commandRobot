@@ -15,7 +15,6 @@
 #include <frc2/command/RamseteCommand.h>
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/SequentialCommandGroup.h>
-#include <frc2/command/CommandScheduler.h>
 
 DriveStrajectory::DriveStrajectory(DriveSubsystem* subsystem) {
   AddRequirements({subsystem});
@@ -51,15 +50,9 @@ void DriveStrajectory::Initialize() {
       [this](auto left, auto right) { m_drive->TankDriveVolts(left, right); },
       {m_drive});
 
-  // Schedule this new command we just made
-   frc2::CommandScheduler::GetInstance().Schedule(
-    new frc2::SequentialCommandGroup(
+ // Schedule this new command we just made, followed by a "stop the robot"
+    frc2::SequentialCommandGroup(
       std::move(ScurveCommand),
-      frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {}))
-    );
-}
-
-bool DriveStrajectory::IsFinished() {  
-  // we could add a check in here, to see where in the trajectory we currently are?
-  return false;
+      frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {})
+                                  ).Schedule();
 }

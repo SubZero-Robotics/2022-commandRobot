@@ -25,8 +25,6 @@ class DriveStrajectory
 
   void Initialize() override;
 
-  bool IsFinished() override;
-
  private:
   DriveSubsystem* m_drive;
 };
