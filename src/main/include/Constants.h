@@ -51,7 +51,7 @@ namespace DriveConstants {
   constexpr auto ka = 0.30552 * 1_V * 1_s * 1_s / 1_m;
   extern const frc::DifferentialDriveKinematics kDriveKinematics;
 
-  constexpr double kPDriveVel = 1.894;
+  constexpr double kPDriveVel = 0.894;
 
   constexpr double kRamseteB = 2.0;
   constexpr double kRamseteZeta = 0.7;
@@ -83,11 +83,11 @@ constexpr double kTurnD = 0.01; //Finaly tune this to fix final error  .01
 constexpr auto kTurnTolerance = 5_deg;
 constexpr auto kTurnRateTolerance = 10_deg_per_s;
 
-constexpr auto kMaxSpeed = 1_mps;
-constexpr auto kMaxAcceleration = 3_mps_sq;
+constexpr auto kMaxSpeed = 0.5_mps;
+constexpr auto kMaxAcceleration = 1_mps_sq;
 
-constexpr auto kMaxTurnRate = 50_deg_per_s;
-constexpr auto kMaxTurnAcceleration = 100_deg_per_s / 1_s;
+constexpr auto kMaxTurnRate = 30_deg_per_s;
+constexpr auto kMaxTurnAcceleration = 60_deg_per_s / 1_s;
 
 
 // Shooter constants

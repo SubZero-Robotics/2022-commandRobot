@@ -152,13 +152,14 @@ void RobotContainer::ConfigureButtonBindings() {
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
- //START COMMENT OUT EXAMPLE S-CURVE
- frc::Trajectory trajectory;
+  frc::Trajectory trajectory;
    fs::path deployDirectory = frc::filesystem::GetDeployDirectory();
    deployDirectory = deployDirectory / "paths" / "TopAuto.wpilib.json";
    trajectory = frc::TrajectoryUtil::FromPathweaverJson(deployDirectory.string());
+ /*
+ //START COMMENT OUT EXAMPLE S-CURVE
   // An example trajectory to follow.  All units in meters.
-  /*auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
+  auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
       // Start at the origin facing the +X direction
       frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
       // Pass through these two interior waypoints, making an 's' curve path
@@ -166,7 +167,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       // End 3 meters straight ahead of where we started, facing forward
       frc::Pose2d(3_m, 1_m, frc::Rotation2d(0_deg)),
       // Pass the config
-      *m_drive.GetTrajectoryConfig());*/
+      *m_drive.GetTrajectoryConfig());
 
   // Reset odometry to the starting pose of the trajectory.
   m_drive.ResetOdometry(trajectory.InitialPose());
@@ -195,5 +196,5 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ));
 //STOP COMMENT OUT EXAMPLE S-CURVE */    
   // Runs the chosen command in autonomous
-  //return m_chooser.GetSelected();
+  return m_chooser.GetSelected();
 }

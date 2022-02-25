@@ -14,8 +14,9 @@
 
 LeftAuto::LeftAuto(DriveSubsystem* drive) {
   AddCommands(
-    DriveStrajectory(drive).WithTimeout(5_s)
-//      DriveStraight(-0.5, drive).WithTimeout(0.5_s), 
+    DriveStraight(-0.5, drive).WithTimeout(0.5_s), 
+    DriveStrajectory(drive)
+//      
 //      TurnToAngle(0_deg, drive).WithTimeout(5_s)
       //TurnToLimelight(drive).WithTimeout(2_s)
       /*// Drive back the specified time.  Positive power really is backwards
