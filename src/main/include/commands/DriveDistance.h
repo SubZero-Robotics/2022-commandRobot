@@ -18,19 +18,17 @@ class DriveDistance
   /**
    * Creates a new DriveDistance.
    *
-   * @param feet The number of feet the robot will drive
-   * @param drive The drive subsystem on which this command will run
+   * @param target The number of meters to drive
+   * @param drive  The drive subsystem on which this command will run
    */
-  DriveDistance(double feet, double speed, DriveSubsystem* subsystem);
+  DriveDistance(units::meter_t target, DriveSubsystem* subsystem);
 
   void Initialize() override;
 
-  void End(bool interrupted) override;
-
-  bool IsFinished() override;
-
  private:
   DriveSubsystem* m_drive;
-  double m_distance;
-  double m_speed;
+  units::meter_t m_distance;
+  // Leaving this here: once we figure out how to attach a speed scaling to a 
+  // RamsetesCommand, we can put it back as a parameter
+  double m_speed;  
 };

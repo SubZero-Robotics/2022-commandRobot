@@ -7,27 +7,58 @@
 
 #include "commands/DriveDistance.h"
 
-#include <cmath> 
+#include <frc/controller/PIDController.h>
+#include <frc/controller/RamseteController.h>
+#include <frc/trajectory/Trajectory.h>
+#include <frc/trajectory/TrajectoryGenerator.h>
+#include <frc/trajectory/constraint/DifferentialDriveVoltageConstraint.h>
+#include <frc2/command/RamseteCommand.h>
+#include <frc2/command/InstantCommand.h>
+#include <frc2/command/SequentialCommandGroup.h>
 
-/* right now this command doesn't do anything.  It needs an Execute() method to 
-   check the encoders to see if it's gone the requested distance.
+/* Take a distance in meters, create a pose with the target location that far 
+  straight ahead, then schedule a RamsetesCommand to go to that new place */
 
-   Once we've got the Ramsetes stuff all working, this should create a pose with 
-   the target location and use a RamsetesCommand to go to that */
-
-DriveDistance::DriveDistance(double feet, double speed,
+DriveDistance::DriveDistance(units::meter_t target, 
                              DriveSubsystem* subsystem)
-    : m_drive(subsystem), m_distance(feet), m_speed(speed) {
+    : m_drive(subsystem), m_distance(target) {
   AddRequirements({subsystem});
 }
 
 void DriveDistance::Initialize() {
-  m_drive->ResetEncoders();
-  m_drive->ArcadeDrive(m_speed, 0);
-}
+  // Create a trajectory starting right where we are now and ending m_distance
+  // straight ahead
+  auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
+      // Start at the origin facing the +X direction
+      frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
+      // Pass through this interior waypoint, halfway there
+      {frc::Translation2d(m_distance/2.0, 0_m)},
+      // End m_distance straight ahead of where we started, facing forward
+      frc::Pose2d(m_distance, 0_m, frc::Rotation2d(0_deg)),
+      // Pass the config
+      *m_drive->GetTrajectoryConfig());
 
-void DriveDistance::End(bool interrupted) { m_drive->ArcadeDrive(0, 0); }
+  // Reset odometry to the starting pose of the trajectory.
+  m_drive->ResetOdometry(exampleTrajectory.InitialPose());
 
-bool DriveDistance::IsFinished() {  
-  return false;
+  // this sets up the command
+  frc2::RamseteCommand DriveDistanceCommand(
+      exampleTrajectory, 
+      [this]() { return m_drive->GetPose(); },
+      frc::RamseteController(DriveConstants::kRamseteB,
+                             DriveConstants::kRamseteZeta),
+      frc::SimpleMotorFeedforward<units::meters>(
+          DriveConstants::ks, DriveConstants::kv, DriveConstants::ka),
+      DriveConstants::kDriveKinematics,
+      [this] { return m_drive->GetWheelSpeeds(); },
+      frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
+      frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
+      [this](auto left, auto right) { m_drive->TankDriveVolts(left, right); },
+      {m_drive});
+
+  // Schedule this new command we just made, followed by a "stop the robot"
+    frc2::SequentialCommandGroup(
+      std::move(DriveDistanceCommand),
+      frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {})
+                                  ).Schedule();
 }

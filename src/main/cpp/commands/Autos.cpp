@@ -14,7 +14,12 @@
 
 LeftAuto::LeftAuto(DriveSubsystem* drive, CargoSubsystem * shooter) {
   AddCommands(
-    DriveStrajectory(drive).WithTimeout(5_s)
+ // try just this
+    DriveStrajectory(drive)
+// Next, try adding this second one.  Commented out for now in case there's a 
+// sequencing problem
+//    DriveDistance(2.0_m,drive)
+
 //      DriveStraight(-0.5, drive).WithTimeout(0.5_s), 
 //      TurnToAngle(0_deg, drive).WithTimeout(5_s)
       //TurnToLimelight(drive).WithTimeout(2_s)

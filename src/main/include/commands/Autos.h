@@ -17,6 +17,7 @@
 #include "commands/DriveStraight.h"
 #include "commands/DriveStrajectory.h"
 #include "commands/ShooterShoot.h"
+#include "commands/DriveDistance.h"
 #include "Constants.h"
 #include <pathplanner/lib/PathPlanner.h>
 #include "subsystems/DriveSubsystem.h"
