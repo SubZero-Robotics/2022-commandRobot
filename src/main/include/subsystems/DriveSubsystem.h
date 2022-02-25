@@ -175,11 +175,11 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
 
   // right motor controllers
-  WPI_TalonFX RightLead{12};
-  WPI_TalonFX RightFollow{13};
+  WPI_TalonFX RightLead{3};
+  WPI_TalonFX RightFollow{4};
   // left motor controllers
-  WPI_TalonFX LeftLead{10};
-  WPI_TalonFX LeftFollow{11};
+  WPI_TalonFX LeftLead{1};
+  WPI_TalonFX LeftFollow{2};
 
   frc::DifferentialDrive m_drive{RightLead, LeftLead};
 
