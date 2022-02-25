@@ -9,6 +9,12 @@
 
 #include <cmath> 
 
+/* right now this command doesn't do anything.  It needs an Execute() method to 
+   check the encoders to see if it's gone the requested distance.
+
+   Once we've got the Ramsetes stuff all working, this should create a pose with 
+   the target location and use a RamsetesCommand to go to that */
+
 DriveDistance::DriveDistance(double feet, double speed,
                              DriveSubsystem* subsystem)
     : m_drive(subsystem), m_distance(feet), m_speed(speed) {
