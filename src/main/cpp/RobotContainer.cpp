@@ -155,10 +155,10 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
  //START COMMENT OUT EXAMPLE S-CURVE
  frc::Trajectory trajectory;
    fs::path deployDirectory = frc::filesystem::GetDeployDirectory();
-   deployDirectory = deployDirectory / "paths" / "YourPath.wpilib.json";
+   deployDirectory = deployDirectory / "paths" / "TopAuto.wpilib.json";
    trajectory = frc::TrajectoryUtil::FromPathweaverJson(deployDirectory.string());
   // An example trajectory to follow.  All units in meters.
-  auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
+  /*auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
       // Start at the origin facing the +X direction
       frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
       // Pass through these two interior waypoints, making an 's' curve path
@@ -166,7 +166,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       // End 3 meters straight ahead of where we started, facing forward
       frc::Pose2d(3_m, 1_m, frc::Rotation2d(0_deg)),
       // Pass the config
-      *m_drive.GetTrajectoryConfig());
+      *m_drive.GetTrajectoryConfig());*/
 
   // Reset odometry to the starting pose of the trajectory.
   m_drive.ResetOdometry(trajectory.InitialPose());
@@ -174,7 +174,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   // this sets up the command
   // I also think it fires it off, since this is a CommandHelper?
   frc2::RamseteCommand ScurveCommand(
-      exampleTrajectory, 
+      trajectory, 
       [this]() { return m_drive.GetPose(); },
       frc::RamseteController(DriveConstants::kRamseteB,
                              DriveConstants::kRamseteZeta),
@@ -187,7 +187,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       [this](auto left, auto right) { m_drive.TankDriveVolts(left, right); },
       {&m_drive});
 
-    m_drive.ResetOdometry(exampleTrajectory.InitialPose());
+    m_drive.ResetOdometry(trajectory.InitialPose());
 
     //no auto
     return new frc2::SequentialCommandGroup(
@@ -195,5 +195,5 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ));
 //STOP COMMENT OUT EXAMPLE S-CURVE */    
   // Runs the chosen command in autonomous
-  return m_chooser.GetSelected();
+  //return m_chooser.GetSelected();
 }
