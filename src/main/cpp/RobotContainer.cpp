@@ -45,6 +45,9 @@
 #include <frc2/command/SequentialCommandGroup.h>
 
 #include <utility>
+#include <frc/Filesystem.h>
+#include <frc/trajectory/TrajectoryUtil.h>
+#include <wpi/fs.h>
 
 #include "Constants.h"
 
@@ -149,7 +152,11 @@ void RobotContainer::ConfigureButtonBindings() {
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
-/* //START COMMENT OUT EXAMPLE S-CURVE
+ //START COMMENT OUT EXAMPLE S-CURVE
+ frc::Trajectory trajectory;
+   fs::path deployDirectory = frc::filesystem::GetDeployDirectory();
+   deployDirectory = deployDirectory / "paths" / "YourPath.wpilib.json";
+   trajectory = frc::TrajectoryUtil::FromPathweaverJson(deployDirectory.string());
   // An example trajectory to follow.  All units in meters.
   auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
       // Start at the origin facing the +X direction
@@ -162,7 +169,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       *m_drive.GetTrajectoryConfig());
 
   // Reset odometry to the starting pose of the trajectory.
-  m_drive.ResetOdometry(exampleTrajectory.InitialPose());
+  m_drive.ResetOdometry(trajectory.InitialPose());
 
   // this sets up the command
   // I also think it fires it off, since this is a CommandHelper?
