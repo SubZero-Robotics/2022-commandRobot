@@ -209,7 +209,7 @@ void DriveSubsystem::ConfigureMotor(WPI_TalonFX *_talon) {
                                         0, 
                                         10);
 
-  _talon->SetNeutralMode(Brake);
+  _talon->SetNeutralMode(Coast);
 
 // The commented out commands below are for setting up MotionMagic PIDs
 // to run on the motor controller.  Since we're using Ramsete on the RIO

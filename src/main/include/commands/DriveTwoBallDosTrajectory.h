@@ -10,18 +10,22 @@
 #include <frc2/command/CommandBase.h> 
 #include <frc2/command/CommandHelper.h>
 
+#include <frc/Filesystem.h>
+#include <frc/trajectory/TrajectoryUtil.h>
+#include <wpi/fs.h>
+
 #include "subsystems/DriveSubsystem.h"
 
-class DriveStrajectory
-    : public frc2::CommandHelper<frc2::CommandBase, DriveStrajectory> {
+class DriveTwoBallDosTrajectory
+    : public frc2::CommandHelper<frc2::CommandBase, DriveTwoBallDosTrajectory> {
  public:
   /**
-   * Creates a new DriveStrajectory.
+   * Creates a new DriveTwoBallDosTrajectory.
    *
    * takes no parameters: the trajectory is hardcoded in here
    * 
    */
-  DriveStrajectory(DriveSubsystem* subsystem);
+  DriveTwoBallDosTrajectory(DriveSubsystem* subsystem);
 
   void Initialize() override;
 

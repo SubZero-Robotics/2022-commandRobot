@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/DriveStrajectory.h"
+#include "commands/DriveTwoBallUnoTrajectory.h"
 
 #include <frc/controller/PIDController.h>
 #include <frc/controller/RamseteController.h>
@@ -16,29 +16,24 @@
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/SequentialCommandGroup.h>
 
-DriveStrajectory::DriveStrajectory(DriveSubsystem* subsystem)
+DriveTwoBallUnoTrajectory::DriveTwoBallUnoTrajectory(DriveSubsystem* subsystem)
     : m_drive(subsystem) {
   AddRequirements({subsystem});
 }
 
-void DriveStrajectory::Initialize() {
-  // An example trajectory to follow.  All units in meters.
-  auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
-      // Start at the origin facing the +X direction
-      frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
-      // Pass through these two interior waypoints, making an 's' curve path
-      {frc::Translation2d(1_m, 1_m), frc::Translation2d(2_m, -1_m)},
-      // End 3 meters straight ahead of where we started, facing forward
-      frc::Pose2d(3_m, 0_m, frc::Rotation2d(0_deg)),
-      // Pass the config
-      *m_drive->GetTrajectoryConfig());
+void DriveTwoBallUnoTrajectory::Initialize() {
+  // An 2BallsLowPart1 Trajectory
+  frc::Trajectory tooballlowpartuno;
+   fs::path deployDirectoryuno = frc::filesystem::GetDeployDirectory();
+   deployDirectoryuno = deployDirectoryuno / "pathplanner" / "generatedJSON" / "2BallsLowPart1.wpilib.json";
+   tooballlowpartuno = frc::TrajectoryUtil::FromPathweaverJson(deployDirectoryuno.string());
 
   // Reset odometry to the starting pose of the trajectory.
-  m_drive->ResetOdometry(exampleTrajectory.InitialPose());
+  m_drive->ResetOdometry(tooballlowpartuno.InitialPose());
 
   // this sets up the command
-  frc2::RamseteCommand ScurveCommand = RamseteCommand(
-      exampleTrajectory, 
+  frc2::RamseteCommand TwoBallUnoCommand = frc2::RamseteCommand(
+      tooballlowpartuno, 
       [this]() { return m_drive->GetPose(); },
       frc::RamseteController(DriveConstants::kRamseteB,
                              DriveConstants::kRamseteZeta),
@@ -53,7 +48,7 @@ void DriveStrajectory::Initialize() {
 
   // Schedule this new command we just made, followed by a "stop the robot"
     frc2::SequentialCommandGroup* myCommandGroup = new frc2::SequentialCommandGroup(
-      std::move(ScurveCommand),
+      std::move(TwoBallUnoCommand),
       frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {})
                                   );
     myCommandGroup->Schedule();
