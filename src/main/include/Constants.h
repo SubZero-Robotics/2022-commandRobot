@@ -46,12 +46,12 @@ namespace DriveConstants {
 // theoretically for *your* robot's drive. The Robot Characterization
 // Toolsuite provides a convenient tool for obtaining these values for your
 // robot.
-  constexpr auto ks = 0.6134_V;
-  constexpr auto kv = 3.1236 * 1_V * 1_s / 1_m;
-  constexpr auto ka = 0.30552 * 1_V * 1_s * 1_s / 1_m;
+  constexpr auto ks = 0.64669_V;
+  constexpr auto kv = 3.1182 * 1_V * 1_s / 1_m;
+  constexpr auto ka = 0.25148 * 1_V * 1_s * 1_s / 1_m;
   extern const frc::DifferentialDriveKinematics kDriveKinematics;
 
-  constexpr double kPDriveVel = 0.894;
+  constexpr double kPDriveVel = 1.6686;
 
   constexpr double kRamseteB = 2.0;
   constexpr double kRamseteZeta = 0.7;
@@ -83,11 +83,11 @@ constexpr double kTurnD = 0.01; //Finaly tune this to fix final error  .01
 constexpr auto kTurnTolerance = 5_deg;
 constexpr auto kTurnRateTolerance = 10_deg_per_s;
 
-constexpr auto kMaxSpeed = 0.5_mps;
-constexpr auto kMaxAcceleration = 1_mps_sq;
+constexpr auto kMaxSpeed = 1_mps;
+constexpr auto kMaxAcceleration = 3_mps_sq;
 
-constexpr auto kMaxTurnRate = 30_deg_per_s;
-constexpr auto kMaxTurnAcceleration = 60_deg_per_s / 1_s;
+constexpr auto kMaxTurnRate = 70_deg_per_s;
+constexpr auto kMaxTurnAcceleration = 200_deg_per_s / 1_s;
 
 
 // Shooter constants

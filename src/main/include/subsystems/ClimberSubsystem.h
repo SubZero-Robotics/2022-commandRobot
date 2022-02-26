@@ -38,18 +38,21 @@ class ClimberSubsystem : public frc2::SubsystemBase {
   /**
     * Run the winch to hoist the robot up towards the bar
     */
-  void Climb();
+  void HighClimb();
 
   /**
     * Stops the climber
     */
   void Stop();
 
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
   rev::CANSparkMax LeftArm{6, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax RightArm{14, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax MiddleArm{22, rev::CANSparkMax::MotorType::kBrushless};
+  
   // The controller
   frc::XboxController Xbox{0};
 };
