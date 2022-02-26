@@ -45,6 +45,9 @@
 #include <frc2/command/SequentialCommandGroup.h>
 
 #include <utility>
+#include <frc/Filesystem.h>
+#include <frc/trajectory/TrajectoryUtil.h>
+#include <wpi/fs.h>
 
 #include "Constants.h"
 
