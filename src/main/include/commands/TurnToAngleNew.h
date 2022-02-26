@@ -27,7 +27,7 @@ class TurnToAngleNew
 
  private:
   DriveSubsystem* m_drive;
-  units::degrees_t m_angle;
+  units::degree_t m_angle;
   // Leaving this here: once we figure out how to attach a speed scaling to a 
   // RamsetesCommand, we can put it back as a parameter
   double m_speed;  
