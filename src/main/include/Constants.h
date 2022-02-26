@@ -51,7 +51,7 @@ namespace DriveConstants {
   constexpr auto ka = 0.25148 * 1_V * 1_s * 1_s / 1_m;
   extern const frc::DifferentialDriveKinematics kDriveKinematics;
 
-  constexpr double kPDriveVel = 3.6686;
+  constexpr double kPDriveVel = 1.6686;
 
   constexpr double kRamseteB = 2.0;
   constexpr double kRamseteZeta = 0.7;

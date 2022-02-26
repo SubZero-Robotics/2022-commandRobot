@@ -102,7 +102,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   //Spin up shooter motor for high while pressed, and rumble controller if you're too close
   frc2::JoystickButton(&Xbox, Button::kY)
-      .WhenHeld(ClimberHighClimb(&m_climber, &Xbox)); 
+      .WhenHeld(ShooterShoot(&m_cargo, &Xbox)); 
 
   // move intake arm out and spin intake wheels while A is held down,
   // return arm and stop when you let go. (the default mode for Intake)
@@ -154,7 +154,7 @@ void RobotContainer::ConfigureButtonBindings() {
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   frc::Trajectory trajectory;
    fs::path deployDirectory = frc::filesystem::GetDeployDirectory();
-   deployDirectory = deployDirectory / "pathplanner" / "generatedJSON" / "Cheeks.wpilib.json";
+   deployDirectory = deployDirectory / "pathplanner" / "generatedJSON" / "Top Auto.wpilib.json";
    trajectory = frc::TrajectoryUtil::FromPathweaverJson(deployDirectory.string());
 
   // An example trajectory to follow.  All units in meters.
@@ -190,10 +190,15 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     m_drive.ResetOdometry(trajectory.InitialPose());
 //START COMMENT OUT EXAMPLE S-CURVE
     //no auto 
-    /*return new frc2::SequentialCommandGroup(
-      std::move(ScurveCommand),
-      frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ));*/
+    return new frc2::SequentialCommandGroup(
+      frc2::ParallelCommandGroup( 
+        std::move(ScurveCommand),     
+        IntakeGrabBalls(&m_cargo).WithTimeout(4_s)),
+      frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ),
+      ShooterShoot(&m_cargo, &Xbox).WithTimeout(4_s));
+
+
 //STOP COMMENT OUT EXAMPLE S-CURVE     
   // Runs the chosen command in autonomous
-  return m_chooser.GetSelected();
+  //return m_chooser.GetSelected();
 }
