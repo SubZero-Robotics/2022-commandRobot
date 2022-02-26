@@ -21,7 +21,7 @@ LeftAuto::LeftAuto(DriveSubsystem* drive, CargoSubsystem * cargo) {
       frc2::ParallelRaceGroup( 
         DriveTwoBallDosTrajectory(drive),     
         IntakeGrabBalls(cargo)),
-      ShooterShoot(cargo, NULL).WithTimeout(4_s));
+      ShooterShoot(cargo, NULL).WithTimeout(4_s),
 // Next, try adding this second one.  Commented out for now in case there's a 
 // sequencing problem
     DriveDistance(1.0_m,drive)
@@ -42,6 +42,7 @@ LeftAuto::LeftAuto(DriveSubsystem* drive, CargoSubsystem * cargo) {
       TurnToAngle(180_deg, drive).WithTimeout(2_s),
       // drive forward one more second
       DriveStraight(-0.6, drive).WithTimeout(1_s)*/
+);
 }
 
 RightAuto::RightAuto(DriveSubsystem* drive, CargoSubsystem * cargo) {
