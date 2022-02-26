@@ -190,10 +190,10 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     m_drive.ResetOdometry(trajectory.InitialPose());
 //START COMMENT OUT EXAMPLE S-CURVE
     //no auto 
-    return new frc2::SequentialCommandGroup(
+    /*return new frc2::SequentialCommandGroup(
       std::move(ScurveCommand),
-      frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ));
+      frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ));*/
 //STOP COMMENT OUT EXAMPLE S-CURVE     
   // Runs the chosen command in autonomous
-  //return m_chooser.GetSelected();
+  return m_chooser.GetSelected();
 }
