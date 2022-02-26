@@ -52,8 +52,9 @@ void DriveStrajectory::Initialize() {
       {m_drive});
 
   // Schedule this new command we just made, followed by a "stop the robot"
-    frc2::SequentialCommandGroup(
+    frc2::SequentialCommandGroup* myCommandGroup = new frc2::SequentialCommandGroup(
       std::move(ScurveCommand),
       frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {})
-                                  ).Schedule();
+                                  );
+    myCommandGroup->Schedule();
 }
