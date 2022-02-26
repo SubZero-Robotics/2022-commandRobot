@@ -16,7 +16,8 @@
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/SequentialCommandGroup.h>
 
-DriveStrajectory::DriveStrajectory(DriveSubsystem* subsystem) {
+DriveStrajectory::DriveStrajectory(DriveSubsystem* subsystem)
+    : m_drive(subsystem) {
   AddRequirements({subsystem});
 }
 
