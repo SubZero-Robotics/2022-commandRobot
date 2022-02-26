@@ -5,25 +5,25 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ClimberClimb.h"
+#include "commands/ClimberHighClimb.h"
 
-ClimberClimb::ClimberClimb(ClimberSubsystem* subsystem, frc::XboxController* controller) 
+ClimberHighClimb::ClimberHighClimb(ClimberSubsystem* subsystem, frc::XboxController* controller) 
     : m_climber(subsystem), m_controller(controller)  {
   AddRequirements({subsystem});
 }
 
-void ClimberClimb::Initialize() {
+void ClimberHighClimb::Initialize() {
 
 }
 
-void ClimberClimb::Execute() {
-  m_climber->Climb();
+void ClimberHighClimb::Execute() {
+  m_climber->HighClimb();
 }
 
-void ClimberClimb::End(bool interrupted) {
+void ClimberHighClimb::End(bool interrupted) {
  m_climber->Stop(); //should do this anyways with m_climber.SetDefaultCommand
 }
 
-bool ClimberClimb::IsFinished() {
+bool ClimberHighClimb::IsFinished() {
   return false;
 }

@@ -13,10 +13,10 @@
 
 #include "subsystems/ClimberSubsystem.h"
 
-class ClimberClimb 
-        : public frc2::CommandHelper<frc2::CommandBase, ClimberClimb> {   // this line builds fine
+class ClimberHighClimb 
+        : public frc2::CommandHelper<frc2::CommandBase, ClimberHighClimb> {   // this line builds fine
     public: 
-     explicit ClimberClimb(ClimberSubsystem* subsystem, frc::XboxController* controller);
+     explicit ClimberHighClimb(ClimberSubsystem* subsystem, frc::XboxController* controller);
 
      void Initialize() override;
      

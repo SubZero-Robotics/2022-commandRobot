@@ -27,7 +27,7 @@
 
 #include "commands/ClimberUp.h"
 #include "commands/ClimberDown.h"
-#include "commands/ClimberClimb.h"
+#include "commands/ClimberHighClimb.h"
 #include "commands/ClimberStop.h"
 
 #include "commands/DefaultDrive.h"
@@ -99,7 +99,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   //Spin up shooter motor for high while pressed, and rumble controller if you're too close
   frc2::JoystickButton(&Xbox, Button::kY)
-      .WhenHeld(ClimberClimb(&m_climber, &Xbox)); 
+      .WhenHeld(ClimberHighClimb(&m_climber, &Xbox)); 
 
   // move intake arm out and spin intake wheels while A is held down,
   // return arm and stop when you let go. (the default mode for Intake)

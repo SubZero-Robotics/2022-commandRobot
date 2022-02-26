@@ -20,8 +20,15 @@ void ClimberSubsystem::Periodic() {
     LeftArm.Set(Xbox.GetRightY()/1.5);
   } else {
     RightArm.StopMotor();
-    LeftArm.StopMotor();
+    LeftArm.StopMotor(); 
   }
+
+  if (abs(Xbox.GetRightY())>kDeadzone && Xbox.GetPOV()==0){
+    MiddleArm.Set(Xbox.GetRightY()/1.5);
+  } else {
+    MiddleArm.StopMotor();
+  }
+
 }
 
 void ClimberSubsystem::Up(){
@@ -34,8 +41,8 @@ void ClimberSubsystem::Down(){
   LeftArm.Set(0.5);
 }
 
-void ClimberSubsystem::Climb(){
-
+void ClimberSubsystem::HighClimb(){
+  MiddleArm.Set(0.5);
 }
 
 void ClimberSubsystem::Stop(){
