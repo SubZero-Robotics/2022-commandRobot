@@ -108,9 +108,12 @@ void RobotContainer::ConfigureButtonBindings() {
 // you can stack commands like this (below).  But in this case, RetractIntake is the default anyway
 //      .WhenReleased(RetractIntake(&m_cargo)); 
 
-  // Run indexer forwards to suck in balls and send them to the shooter
-  //frc2::JoystickButton(&Xbox, Button::kX)
-      //.WhenHeld(IntakeAutomatic(&m_cargo));
+  // While held, drive robot slower
+  frc2::JoystickButton(&Xbox, Button::kX)
+      .WhenHeld(DefaultDrive(
+      &m_drive,
+      [this] { return Xbox.GetLeftY()/2; },
+      [this] { return Xbox.GetLeftX()/2; }));
 
   frc2::JoystickButton(&Xbox, Button::kStart)
       .WhenHeld(IntakeAllOut(&m_cargo));
