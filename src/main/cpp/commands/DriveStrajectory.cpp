@@ -37,7 +37,7 @@ void DriveStrajectory::Initialize() {
   m_drive->ResetOdometry(exampleTrajectory.InitialPose());
 
   // this sets up the command
-  frc2::RamseteCommand ScurveCommand(
+  frc2::RamseteCommand ScurveCommand = RamseteCommand(
       exampleTrajectory, 
       [this]() { return m_drive->GetPose(); },
       frc::RamseteController(DriveConstants::kRamseteB,
