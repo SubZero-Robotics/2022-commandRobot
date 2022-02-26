@@ -42,7 +42,7 @@ void DriveDistance::Initialize() {
   m_drive->ResetOdometry(exampleTrajectory.InitialPose());
 
   // this sets up the command
-  frc2::RamseteCommand DriveDistanceCommand(
+  frc2::RamseteCommand DriveDistanceCommand = frc2::RamseteCommand(
       exampleTrajectory, 
       [this]() { return m_drive->GetPose(); },
       frc::RamseteController(DriveConstants::kRamseteB,
@@ -57,8 +57,9 @@ void DriveDistance::Initialize() {
       {m_drive});
 
   // Schedule this new command we just made, followed by a "stop the robot"
-    frc2::SequentialCommandGroup(
+    frc2::SequentialCommandGroup *myCommandGroup = new frc2::SequentialCommandGroup(
       std::move(DriveDistanceCommand),
       frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {})
-                                  ).Schedule();
+                                  );
+    myCommandGroup->Schedule();
 }
