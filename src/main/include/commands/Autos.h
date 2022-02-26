@@ -15,8 +15,14 @@
 #include "commands/TurnToAngle.h"
 #include "commands/TurnToLimelight.h"
 #include "commands/DriveStraight.h"
-#include "commands/DriveStrajectory.h"
+#include "commands/DriveTwoBallUnoTrajectory.h"
+#include "commands/DriveTwoBallDosTrajectory.h"
+
+#include "commands/IntakeGrabBalls.h"
+
 #include "commands/ShooterShoot.h"
+#include "commands/ShooterLowShoot.h"
+
 #include "commands/DriveDistance.h"
 #include "Constants.h"
 #include <pathplanner/lib/PathPlanner.h>
@@ -33,7 +39,7 @@ class LeftAuto
    *
    * @param drive The drive subsystem this command will run on
    */
-  LeftAuto(DriveSubsystem* drive, CargoSubsystem* shooter);
+  LeftAuto(DriveSubsystem* drive, CargoSubsystem* cargo);
 };
 
 /**
@@ -47,6 +53,6 @@ class RightAuto
    *
    * @param drive The drive subsystem this command will run on
    */
-  RightAuto(DriveSubsystem* drive, CargoSubsystem* shooter);
+  RightAuto(DriveSubsystem* drive, CargoSubsystem* cargo);
 };
 

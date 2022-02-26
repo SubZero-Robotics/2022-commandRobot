@@ -39,7 +39,11 @@ class ClimberSubsystem : public frc2::SubsystemBase {
     * Run the winch to hoist the robot up towards the bar
     */
   void HighClimb();
-
+  
+  /**
+    * Adjust middle arm angle
+    */
+  void HighClimbAngle();
   /**
     * Stops the climber
     */
@@ -51,8 +55,8 @@ class ClimberSubsystem : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
   rev::CANSparkMax LeftArm{6, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax RightArm{14, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax MiddleArm{22, rev::CANSparkMax::MotorType::kBrushless};
-  
+  rev::CANSparkMax MiddleArmOut{22, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax MiddleArmAngle{23, rev::CANSparkMax::MotorType::kBrushless};
   // The controller
   frc::XboxController Xbox{0};
 };

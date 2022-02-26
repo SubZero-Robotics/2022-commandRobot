@@ -152,53 +152,10 @@ void RobotContainer::ConfigureButtonBindings() {
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
-  frc::Trajectory trajectory;
-   fs::path deployDirectory = frc::filesystem::GetDeployDirectory();
-   deployDirectory = deployDirectory / "pathplanner" / "generatedJSON" / "Top Auto.wpilib.json";
-   trajectory = frc::TrajectoryUtil::FromPathweaverJson(deployDirectory.string());
 
-  // An example trajectory to follow.  All units in meters.
-  auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
-      // Start at the origin facing the +X direction
-      frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
-      // Pass through these two interior waypoints, making an 's' curve path
-      {frc::Translation2d(1_m, 1_m), frc::Translation2d(2_m, 1_m)},
-      // End 3 meters straight ahead of where we started, facing forward
-      frc::Pose2d(3_m, 1_m, frc::Rotation2d(0_deg)),
-      // Pass the config
-      *m_drive.GetTrajectoryConfig());
-
-  // Reset odometry to the starting pose of the trajectory.
-  m_drive.ResetOdometry(trajectory.InitialPose());
-
-  // this sets up the command
-  // I also think it fires it off, since this is a CommandHelper?
-  frc2::RamseteCommand ScurveCommand(
-      trajectory, 
-      [this]() { return m_drive.GetPose(); },
-      frc::RamseteController(DriveConstants::kRamseteB,
-                             DriveConstants::kRamseteZeta),
-      frc::SimpleMotorFeedforward<units::meters>(
-          DriveConstants::ks, DriveConstants::kv, DriveConstants::ka),
-      DriveConstants::kDriveKinematics,
-      [this] { return m_drive.GetWheelSpeeds(); },
-      frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
-      frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
-      [this](auto left, auto right) { m_drive.TankDriveVolts(left, right); },
-      {&m_drive});
-
-    m_drive.ResetOdometry(trajectory.InitialPose());
 //START COMMENT OUT EXAMPLE S-CURVE
-    //no auto 
-    return new frc2::SequentialCommandGroup(
-      frc2::ParallelCommandGroup( 
-        std::move(ScurveCommand),     
-        IntakeGrabBalls(&m_cargo).WithTimeout(4_s)),
-      frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ),
-      ShooterShoot(&m_cargo, &Xbox).WithTimeout(4_s));
-
 
 //STOP COMMENT OUT EXAMPLE S-CURVE     
   // Runs the chosen command in autonomous
-  //return m_chooser.GetSelected();
+  return m_chooser.GetSelected();
 }
