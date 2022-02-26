@@ -154,7 +154,7 @@ void RobotContainer::ConfigureButtonBindings() {
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   frc::Trajectory trajectory;
    fs::path deployDirectory = frc::filesystem::GetDeployDirectory();
-   deployDirectory = deployDirectory / "pathplanner" / "generatedJSON" / "Top Auto.wpilib.json";
+   deployDirectory = deployDirectory / "pathplanner" / "generatedJSON" / "Cheeks.wpilib.json";
    trajectory = frc::TrajectoryUtil::FromPathweaverJson(deployDirectory.string());
 
   // An example trajectory to follow.  All units in meters.
