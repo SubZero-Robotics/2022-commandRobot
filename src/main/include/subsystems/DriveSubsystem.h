@@ -24,6 +24,7 @@
 #include <frc/kinematics/DifferentialDriveOdometry.h>
 
 #include <frc/trajectory/TrajectoryGenerator.h>
+#include <frc2/command/RamseteCommand.h>
 
 class DriveSubsystem : public frc2::SubsystemBase {
  public:
@@ -107,7 +108,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
 /**
    * Returns the currently-estimated pose of the robot.
    *
-   * @return The pose.
+   * @return The current pose of the robot
    */
   frc::Pose2d GetPose();
 
@@ -135,6 +136,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
   /**
    *
    * Chooses the active limelight pipeline
+   * 
+   * @param pipeline which limlelight pipeline to turn on
    */
   void SelectLimelightPipeline(int pipeline);
 
@@ -150,8 +153,6 @@ class DriveSubsystem : public frc2::SubsystemBase {
    * @return The range from the ultrasonic sensor, in inches
    */
   double GetDistance();
-
-
   
  /**
    * make sure target angle is in the right range
@@ -170,7 +171,15 @@ class DriveSubsystem : public frc2::SubsystemBase {
    */
   frc::TrajectoryConfig *GetTrajectoryConfig();
 
-  private:
+ /**
+   * Choose a path
+   * 
+   * @param drivePath the path you're picking
+   * @return a RamseteCommand to drive that path
+  */
+  frc2::RamseteCommand *GetRamseteCommand(enum Paths drivePath);
+  
+    private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 

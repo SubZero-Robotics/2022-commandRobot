@@ -112,3 +112,15 @@ enum  	Axis {
   kLeftX = 0, kRightX = 4, kLeftY = 1, kRightY = 5,
   kLeftTrigger = 2, kRightTrigger = 3
 };
+
+// A list of paths to pick from
+// Note that you don't have to manually set them equal to a number like "Axis" above,
+// that happens automaticall if you're ok with starting at 0 and counting up
+// So, perfectly ok to just throw kJacksMostExcellentPath on the end of this list
+// and you'll be able to use it later
+//
+// Why start the names with "k"?  that doesn't actually do anything, just reminds us that
+// the thing is a constant so you should probably look for it in this file
+enum    Paths {
+  kScurvePath, kStraight1Path, kTwoBallsUnoPath, kTwoBallsDosPath
+};

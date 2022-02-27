@@ -47,9 +47,9 @@ LeftAuto::LeftAuto(DriveSubsystem* drive, CargoSubsystem * cargo) {
 
 RightAuto::RightAuto(DriveSubsystem* drive, CargoSubsystem * cargo) {
   AddCommands(
-      DriveDistance(-1.0_m, drive),
+      std::move(*drive->GetRamseteCommand(kScurvePath)),
       frc2::ParallelRaceGroup( 
-        DriveDistance(-1.0_m,drive),     
+        std::move(*drive->GetRamseteCommand(kStraight1Path)),     
         IntakeGrabBalls(cargo))
   );
 }
