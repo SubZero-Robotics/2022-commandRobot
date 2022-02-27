@@ -101,8 +101,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   //Spin up shooter motor for high while pressed, and rumble controller if you're too close
   frc2::JoystickButton(&Xbox, Button::kY)
-      .WhenHeld(frc2::ParallelCommandGroup{ShooterShoot(&m_cargo, &Xbox), 
-                                            TurnToLimelight(&m_drive)});
+      .WhenHeld(ShooterShoot(&m_cargo, &Xbox));
 
   // move intake arm out and spin intake wheels while A is held down,
   // return arm and stop when you let go. (the default mode for Intake)
@@ -118,23 +117,22 @@ void RobotContainer::ConfigureButtonBindings() {
       [this] { return Xbox.GetLeftY()/2; },
       [this] { return Xbox.GetLeftX()/2; }));
 
+  // this logic will need Camden's explanation to implement
+  // limelight aiming. 
+  frc2::JoystickButton(&Xbox, Button::kBack)
+    .WhenHeld(TurnToLimelight(&m_drive));
+
   frc2::JoystickButton(&Xbox, Button::kStart)
       .WhenHeld(IntakeAllOut(&m_cargo));
 
-  // Climber deployment and winch: Y button plus right stick
-  //frc2::JoystickButton(&Xbox, Axis::kRightY) 
-      //.WhenHeld(ClimberUp(&m_climber, &Xbox));
-
   frc2::JoystickButton(&Xbox, Button::kBumperLeft)
       .WhenHeld(ClimberUp(&m_climber, &Xbox));
+         
+  frc2::JoystickButton(&Xbox, Button::kBumperRight)
+      .WhenHeld(ClimberDown(&m_climber, &Xbox));
 
   frc2::JoystickButton(&Xbox, Button::kStickRight)
       .WhenHeld(DriveResetOdometry(&m_drive, &Xbox));
-  
-  // this logic will need Camden's explanation to implement
-  // limelight aiming.  
-  frc2::JoystickButton(&Xbox, Button::kBumperRight)
-      .WhenHeld(ClimberDown(&m_climber, &Xbox));
 
   // unjam things
   // Run indexer and shooter backwards.  ParallelCommandGroup finishes when all of the commands finish
