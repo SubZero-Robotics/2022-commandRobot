@@ -12,6 +12,11 @@
 
 #include "subsystems/DriveSubsystem.h"
 
+#include <networktables/NetworkTable.h>
+#include <networktables/NetworkTableInstance.h>
+#include <networktables/NetworkTableEntry.h>
+
+
 class TurnToAngleNew
     : public frc2::CommandHelper<frc2::CommandBase, TurnToAngleNew> {
  public:
@@ -21,7 +26,7 @@ class TurnToAngleNew
    * @param target The number of degrees to turn
    * @param drive  The drive subsystem on which this command will run
    */
-  TurnToAngleNew(units::degree_t target, DriveSubsystem* subsystem);
+  TurnToAngleNew(units::degree_t target);
 
   void Initialize() override;
 

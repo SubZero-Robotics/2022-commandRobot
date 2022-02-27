@@ -35,21 +35,13 @@ void ClimberSubsystem::Periodic() {
 }
 
 void ClimberSubsystem::Up(){
-  RightArm.Set(-0.5);
+  RightArm.Follow(LeftArm);
   LeftArm.Set(-0.5);
 }
 
 void ClimberSubsystem::Down(){
   RightArm.Set(0.5);
   LeftArm.Set(0.5);
-}
-
-void ClimberSubsystem::HighClimb(){
-  MiddleArmOut.Set(0.5);
-}
-
-void ClimberSubsystem::HighClimbAngle(){
-  MiddleArmAngle.Set(0.5);
 }
 
 void ClimberSubsystem::Stop(){
