@@ -27,6 +27,7 @@ CargoSubsystem::CargoSubsystem() {
   Shooter.ConfigFactoryDefault();
   
   Shooter.ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10); 
+  Shooter.ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 1, 10); 
 
   Shooter.SetSensorPhase(true);
   
