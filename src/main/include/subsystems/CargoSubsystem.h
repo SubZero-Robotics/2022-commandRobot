@@ -62,6 +62,11 @@ class CargoSubsystem : public frc2::SubsystemBase {
    */
   void Shoot(); 
 
+    /**
+   * Move balls towards the high target, fast
+   */
+  void AutoShoot(); 
+
   /**
    * Move balls towards the low target, less fast
    */

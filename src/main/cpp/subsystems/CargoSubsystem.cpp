@@ -7,8 +7,6 @@
 
 #include "subsystems/CargoSubsystem.h"
 
-#include "subsystems/DriveSubsystem.h"
-
 #include <frc/smartdashboard/Smartdashboard.h>
 
 #include "Constants.h"
@@ -100,6 +98,22 @@ void CargoSubsystem::Shoot() {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);
     } else if (((-Shooter.GetSelectedSensorVelocity(0))*600/4096 + kRPM_OK) >= 5800) {
+        truth = true;
+        BottomIndexer.Set(kIndexerSpeed);
+        TopIndexer.Set(kIndexerSpeed);
+    } else {
+        truth = 0;
+        BottomIndexer.StopMotor();
+        TopIndexer.StopMotor();
+        }
+}
+
+void CargoSubsystem::AutoShoot() {
+    Shooter.Set(ControlMode::Velocity, 950);
+    if (TopLaserState) {
+        TopIndexer.Set(kIndexerSpeed);
+        BottomIndexer.Set(kIndexerSpeed);
+    } else if (((-Shooter.GetSelectedSensorVelocity(0))*600/4096 + kRPM_OK) >= 5300) {
         truth = true;
         BottomIndexer.Set(kIndexerSpeed);
         TopIndexer.Set(kIndexerSpeed);

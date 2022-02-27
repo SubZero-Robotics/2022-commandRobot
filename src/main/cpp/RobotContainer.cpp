@@ -22,6 +22,7 @@
 
 #include "commands/ShooterLowShoot.h"
 #include "commands/ShooterShoot.h"
+#include "commands/ShooterAutoShoot.h"
 #include "commands/ShooterStop.h"
 #include "commands/ShooterUnjam.h"
 
@@ -199,12 +200,12 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
         std::move(tooballlowpartunoCommand),     
         IntakeGrabBalls(&m_cargo).WithTimeout(2_s)),
       frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ),
-      ShooterShoot(&m_cargo, &Xbox).WithTimeout(2_s),
+      ShooterAutoShoot(&m_cargo, &Xbox).WithTimeout(2_s),
       frc2::ParallelCommandGroup( 
         std::move(tooballlowpartdosCommand),     
         IntakeGrabBalls(&m_cargo).WithTimeout(8_s)),
       frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ),
-      ShooterShoot(&m_cargo, &Xbox).WithTimeout(4_s));
+      ShooterAutoShoot(&m_cargo, &Xbox).WithTimeout(4_s));
 
 
 //STOP COMMENT OUT EXAMPLE S-CURVE     
