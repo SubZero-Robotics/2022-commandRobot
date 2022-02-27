@@ -26,7 +26,7 @@ class TurnToAngleNew
    * @param target The number of degrees to turn
    * @param drive  The drive subsystem on which this command will run
    */
-  TurnToAngleNew(units::degree_t target);
+  TurnToAngleNew(units::degree_t target, DriveSubsystem* subsystem);
 
   void Initialize() override;
 

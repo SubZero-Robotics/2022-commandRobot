@@ -36,12 +36,12 @@ void ClimberSubsystem::Periodic() {
 
 void ClimberSubsystem::Up(){
   RightArm.Follow(LeftArm);
-  LeftArm.Set(-0.5);
+  LeftArm.Set(-1);
 }
 
 void ClimberSubsystem::Down(){
-  RightArm.Set(0.5);
-  LeftArm.Set(0.5);
+  RightArm.Follow(LeftArm);
+  LeftArm.Set(1);
 }
 
 void ClimberSubsystem::Stop(){
