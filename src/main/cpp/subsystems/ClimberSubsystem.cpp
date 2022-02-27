@@ -20,21 +20,17 @@ void ClimberSubsystem::Periodic() {
     LeftArm.Set(Xbox.GetRightY()/1.5);
   } else {
     RightArm.StopMotor();
+    
     LeftArm.StopMotor(); 
   }
 
-  if (abs(Xbox.GetRightY())>kDeadzone && Xbox.GetPOV()==0){
-    MiddleArmAngle.Set(Xbox.GetRightY()/1.5);
+  if (Xbox.GetPOV()==0){
+    MiddleArmAngle.Set(-Xbox.GetRightX()/3.5);
+    MiddleArmOut.Set(Xbox.GetRightY()/1.5);
   } else {
     MiddleArmAngle.StopMotor();
-  }
-  
-  if (abs(Xbox.GetRightX())>kDeadzone && Xbox.GetPOV()==0){
-    MiddleArmOut.Set(Xbox.GetRightX()/1.5);
-  } else {
     MiddleArmOut.StopMotor();
   }
-  
 
 }
 

@@ -67,8 +67,8 @@ RobotContainer::RobotContainer() {
 // Set up default drive command.  Does this whenever the DriveSubSystem isn't doing anything else
   m_drive.SetDefaultCommand(DefaultDrive(
       &m_drive,
-      [this] { return Xbox.GetLeftY(); },
-      [this] { return Xbox.GetLeftX(); }));
+      [this] { return Xbox.GetLeftY()*0.8; },
+      [this] { return Xbox.GetLeftX()*0.8; }));
 
 // Set default intake, shooter, and indexer command.  Does this when not doing something else
   m_cargo.SetDefaultCommand(IntakeStop(&m_cargo));
@@ -152,10 +152,64 @@ void RobotContainer::ConfigureButtonBindings() {
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
+  frc::Trajectory tooballlowpartuno;
+   fs::path deployDirectoryuno = frc::filesystem::GetDeployDirectory();
+   deployDirectoryuno = deployDirectoryuno / "pathplanner" / "generatedJSON" / "2BallsLowPart1.wpilib.json";
+   tooballlowpartuno = frc::TrajectoryUtil::FromPathweaverJson(deployDirectoryuno.string());
+
+  frc::Trajectory tooballlowpartdos;
+   fs::path deployDirectorydos = frc::filesystem::GetDeployDirectory();
+   deployDirectorydos = deployDirectorydos / "pathplanner" / "generatedJSON" / "2BallsLowPart2.wpilib.json";
+   tooballlowpartdos = frc::TrajectoryUtil::FromPathweaverJson(deployDirectorydos.string());
+
+  // this sets up the command
+  // I also think it fires it off, since this is a CommandHelper?
+  frc2::RamseteCommand tooballlowpartunoCommand(
+      tooballlowpartuno, 
+      [this]() { return m_drive.GetPose(); },
+      frc::RamseteController(DriveConstants::kRamseteB,
+                             DriveConstants::kRamseteZeta),
+      frc::SimpleMotorFeedforward<units::meters>(
+          DriveConstants::ks, DriveConstants::kv, DriveConstants::ka),
+      DriveConstants::kDriveKinematics,
+      [this] { return m_drive.GetWheelSpeeds(); },
+      frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
+      frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
+      [this](auto left, auto right) { m_drive.TankDriveVolts(left, right); },
+      {&m_drive});
+    //Reset odometry to starting pose
+    m_drive.ResetOdometry(tooballlowpartuno.InitialPose());
+
+  frc2::RamseteCommand tooballlowpartdosCommand(
+      tooballlowpartdos, 
+      [this]() { return m_drive.GetPose(); },
+      frc::RamseteController(DriveConstants::kRamseteB,
+                             DriveConstants::kRamseteZeta),
+      frc::SimpleMotorFeedforward<units::meters>(
+          DriveConstants::ks, DriveConstants::kv, DriveConstants::ka),
+      DriveConstants::kDriveKinematics,
+      [this] { return m_drive.GetWheelSpeeds(); },
+      frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
+      frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
+      [this](auto left, auto right) { m_drive.TankDriveVolts(left, right); },
+      {&m_drive});
 
 //START COMMENT OUT EXAMPLE S-CURVE
+    //no auto 
+    return new frc2::SequentialCommandGroup(
+      frc2::ParallelCommandGroup( 
+        std::move(tooballlowpartunoCommand),     
+        IntakeGrabBalls(&m_cargo).WithTimeout(2_s)),
+      frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ),
+      ShooterShoot(&m_cargo, &Xbox).WithTimeout(2_s),
+      frc2::ParallelCommandGroup( 
+        std::move(tooballlowpartdosCommand),     
+        IntakeGrabBalls(&m_cargo).WithTimeout(8_s)),
+      frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ),
+      ShooterShoot(&m_cargo, &Xbox).WithTimeout(4_s));
+
 
 //STOP COMMENT OUT EXAMPLE S-CURVE     
   // Runs the chosen command in autonomous
-  return m_chooser.GetSelected();
+  //return m_chooser.GetSelected();
 }

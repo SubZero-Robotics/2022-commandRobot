@@ -14,6 +14,9 @@
 #include <frc/XboxController.h>
 #include "Constants.h"
 
+#include <ctre/Phoenix.h>
+#include <frc/motorcontrol/VictorSP.h>
+
 class ClimberSubsystem : public frc2::SubsystemBase {
  public: 
   ClimberSubsystem();
@@ -55,8 +58,7 @@ class ClimberSubsystem : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
   rev::CANSparkMax LeftArm{6, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax RightArm{14, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax MiddleArmOut{22, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax MiddleArmAngle{23, rev::CANSparkMax::MotorType::kBrushless};
-  // The controller
-  frc::XboxController Xbox{0};
+  rev::CANSparkMax MiddleArmOut{15, rev::CANSparkMax::MotorType::kBrushless};
+  WPI_VictorSPX MiddleArmAngle{16};
+frc::XboxController Xbox{0};
 };

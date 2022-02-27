@@ -72,6 +72,8 @@ void DriveSubsystem::Periodic() {
   frc::SmartDashboard::PutNumber("Pose X", (double)m_odometry.GetPose().X());
   frc::SmartDashboard::PutNumber("Pose Y", (double)m_odometry.GetPose().Y());
   frc::SmartDashboard::PutNumber("Pose Degrees", (double)m_odometry.GetPose().Rotation().Degrees());
+  frc::SmartDashboard::PutNumber("Wheel Speeds Meters", (double)((-(RightLead.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse+RightFollow.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse)/2.0)
+                                  +(-(LeftLead.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse+LeftFollow.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse)/2.0))/2);
   rEncoder = GetRightEncoder();
   frc::SmartDashboard::PutNumber("Right Encoder", rEncoder);
   lEncoder = GetLeftEncoder();
@@ -209,7 +211,7 @@ void DriveSubsystem::ConfigureMotor(WPI_TalonFX *_talon) {
                                         0, 
                                         10);
 
-  _talon->SetNeutralMode(Coast);
+  _talon->SetNeutralMode(Brake);
 
 // The commented out commands below are for setting up MotionMagic PIDs
 // to run on the motor controller.  Since we're using Ramsete on the RIO
