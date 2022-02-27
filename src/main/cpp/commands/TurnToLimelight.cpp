@@ -26,7 +26,7 @@ void TurnToLimelight::Initialize() {
 }
 
 void TurnToLimelight::Execute() {
-  TurnToAngleNew(units::degree_t(m_drive->GetLimelightTargetAngle()), m_drive);
+    TurnToAngle(m_drive->GetLimelightTargetAngle(), m_drive);
 }
 
 void TurnToLimelight::End(bool interrupted) {
