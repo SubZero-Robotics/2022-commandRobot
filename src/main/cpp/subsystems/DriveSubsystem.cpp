@@ -247,10 +247,12 @@ void DriveSubsystem::ConfigureMotor(WPI_TalonFX *_talon) {
  }
 
 frc2::RamseteCommand *DriveSubsystem::GetRamseteCommand(enum Paths drivePath) {
+  // get a pointer to the driveSubsystem, because we need to use it in the command later
   frc2::SubsystemBase driveSubSystem = *this;
 
-// make an empty Trjactory, will fill it later
+// make an empty Trjactory, we will fill it later
 frc::Trajectory chosenTrajectory;
+
 // Use the drivePath to pick one of the following trajectories
 switch(drivePath) {
   case kScurvePath: // if drivePath == kScurvePath, do the stuff from here to "break"
