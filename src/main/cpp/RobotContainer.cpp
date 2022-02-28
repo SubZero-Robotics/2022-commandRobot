@@ -153,12 +153,12 @@ void RobotContainer::ConfigureButtonBindings() {
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   frc::Trajectory tooballlowpartuno;
    fs::path deployDirectoryuno = frc::filesystem::GetDeployDirectory();
-   deployDirectoryuno = deployDirectoryuno / "pathplanner" / "generatedJSON" / "2BallsLowPart1.wpilib.json";
+   deployDirectoryuno = deployDirectoryuno / "pathplanner" / "generatedJSON" / "Top Auto.wpilib.json";
    tooballlowpartuno = frc::TrajectoryUtil::FromPathweaverJson(deployDirectoryuno.string());
 
   frc::Trajectory tooballlowpartdos;
    fs::path deployDirectorydos = frc::filesystem::GetDeployDirectory();
-   deployDirectorydos = deployDirectorydos / "pathplanner" / "generatedJSON" / "2BallsLowPart2.wpilib.json";
+   deployDirectorydos = deployDirectorydos / "pathplanner" / "generatedJSON" / "Top Auto Two.wpilib.json";
    tooballlowpartdos = frc::TrajectoryUtil::FromPathweaverJson(deployDirectorydos.string());
 
   // this sets up the command
@@ -196,16 +196,16 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 //START COMMENT OUT EXAMPLE S-CURVE
     //no auto 
     return new frc2::SequentialCommandGroup(
-      frc2::ParallelCommandGroup( 
+      frc2::ParallelRaceGroup( 
         std::move(tooballlowpartunoCommand),     
-        IntakeGrabBalls(&m_cargo).WithTimeout(2_s)),
+        IntakeGrabBalls(&m_cargo)),
       frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ),
-      ShooterAutoShoot(&m_cargo, &Xbox).WithTimeout(2_s),
-      frc2::ParallelCommandGroup( 
+      ShooterAutoShoot(&m_cargo, &Xbox).WithTimeout(3_s),
+      frc2::ParallelRaceGroup( 
         std::move(tooballlowpartdosCommand),     
-        IntakeGrabBalls(&m_cargo).WithTimeout(8_s)),
+        IntakeGrabBalls(&m_cargo)),
       frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ),
-      ShooterAutoShoot(&m_cargo, &Xbox).WithTimeout(4_s));
+      ShooterAutoShoot(&m_cargo, &Xbox).WithTimeout(3_s));
 
 
 //STOP COMMENT OUT EXAMPLE S-CURVE     
