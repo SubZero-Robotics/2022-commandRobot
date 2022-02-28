@@ -51,6 +51,7 @@ void CargoSubsystem::Periodic() {
   RPM = -Shooter.GetSelectedSensorVelocity(0);
   frc::SmartDashboard::PutNumber("RPM", (RPM*600/4096));
   frc::SmartDashboard::PutBoolean("INTAKE WOULD BE SPINNING", truth);
+  led_lights.Set(0.59);
 }
 
 void CargoSubsystem::GrabBalls() {

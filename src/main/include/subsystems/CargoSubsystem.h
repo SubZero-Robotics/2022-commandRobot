@@ -14,6 +14,7 @@
 #include <frc2/command/SubsystemBase.h>
 
 #include <frc/DigitalInput.h>
+#include <frc/motorcontrol/Spark.h>
 #include "Constants.h"
 
 class CargoSubsystem : public frc2::SubsystemBase {
@@ -98,11 +99,12 @@ class CargoSubsystem : public frc2::SubsystemBase {
 
   frc::DigitalInput TopIntakeLaser {8};  
   frc::DigitalInput BottomIntakeLaser{6};
+  frc::Spark led_lights{5};
   bool TopLaserState = 0;
   bool BottomLaserState = 0;
 
   WPI_TalonSRX Shooter = WPI_TalonSRX(4); 
   WPI_VictorSPX ShooterFollow{5};
   double RPM = 0.0;         // Shooter motor speed
-  bool truth = 0;  
+  bool truth = 0;
 };
