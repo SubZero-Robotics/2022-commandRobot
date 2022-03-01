@@ -7,33 +7,22 @@
 
 #pragma once
 
-#include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc2/command/PIDCommand.h>
 
-#include "commands/TurnToAngle.h"
 #include "subsystems/DriveSubsystem.h"
 
 /**
- * A command that will turn the robot to the limelight's target
+ * A command that will turn the robot to the TargetAngle saved by the drive system
  */
-class TurnToLimelight : public frc2::CommandHelper<frc2::CommandBase, TurnToLimelight> {
+class TurnToSavedAngle : public frc2::CommandHelper<frc2::PIDCommand, TurnToSavedAngle> {
  public:
   /**
-   * Turns to robot to where the limelight is pointing
+   * Turns to robot to the specified angle.
    *
    * @param drive              The drive subsystem to use
    */
-  explicit TurnToLimelight(DriveSubsystem* drive);
-
-  void Initialize() override;
-
-  void Execute() override;
-
-  void End(bool interrupted) override;
+  TurnToSavedAngle(DriveSubsystem* drive);
 
   bool IsFinished() override;
-
-  private:
-    DriveSubsystem* m_drive;
-    bool finished = false;
 };

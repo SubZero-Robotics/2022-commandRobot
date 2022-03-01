@@ -133,6 +133,28 @@ class DriveSubsystem : public frc2::SubsystemBase {
    */
   units::degree_t GetLimelightTargetAngle();
 
+/**
+   * Returns the heading to the limelight target
+   *
+   * @return The heading at which saved limelight target is
+   */
+  units::degree_t GetTargetAngle();
+
+/**
+   * Sets the heading to the limelight target
+   *
+   * @param target The heading at which saved limelight target is
+   */
+  void SetTargetAngle(units::degree_t target);
+
+
+/**
+   * Returns if the limelight has a target
+   *
+   * @return 1 for target, 0 for not
+   */
+  int GetLimelightTargetValid();
+
   /**
    *
    * Chooses the active limelight pipeline
@@ -218,6 +240,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // limelight
   float tx = 0.0;           // limelight angle off left/right
   int tv = 1;               // does the limelight have a target?
+  units::degree_t TargetAngle = 0.0_deg;  // Saved value of an angle to turn to
+
   // pointer to network tables for limelight stuff
   std::shared_ptr<nt::NetworkTable> table;
 

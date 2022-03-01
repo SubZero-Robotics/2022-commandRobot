@@ -172,6 +172,18 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
   return target; 
 }
 
+ int DriveSubsystem::GetLimelightTargetValid() {
+  return tv; 
+}
+
+units::degree_t DriveSubsystem::GetTargetAngle() {
+  return TargetAngle;
+}
+
+void DriveSubsystem::SetTargetAngle(units::degree_t target) {
+  TargetAngle = target;
+}
+
 void DriveSubsystem::SelectLimelightPipeline(int pipeline){
   // 0 is targeting, 1 is camera
   table->PutNumber("pipeline", pipeline);
