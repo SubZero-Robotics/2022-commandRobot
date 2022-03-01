@@ -20,10 +20,10 @@ DriveSubsystem::DriveSubsystem()
 
   // Initialize each motor with MotionMagic settings
   // Made this a function since we do the same thing four times
-  ConfigureMotor(&RightLead);
-  ConfigureMotor(&RightFollow);
-  ConfigureMotor(&LeftLead);
-  ConfigureMotor(&LeftFollow);
+  SetCoast(&RightLead);
+  SetCoast(&RightFollow);
+  SetCoast(&LeftLead);
+  SetCoast(&LeftFollow);
 
   // Invert left side, since DifferentialDrive no longer does it for us
   LeftLead.SetInverted(true);
@@ -61,6 +61,26 @@ DriveSubsystem::DriveSubsystem()
   trajectoryConfig->AddConstraint(autoVoltageConstraint);
 
 }
+
+void DriveSubsystem::DisabledInit() {
+  SetCoast(&RightLead);
+  SetCoast(&RightFollow);
+  SetCoast(&LeftLead);
+  SetCoast(&LeftFollow);
+}
+
+void DriveSubsystem::TeleopInit() {
+  ConfigureMotor(&RightLead);
+  ConfigureMotor(&RightFollow);
+  ConfigureMotor(&LeftLead);
+  ConfigureMotor(&LeftFollow);
+}
+
+void DriveSubsystem::SetCoast(WPI_TalonFX *_talon) {
+   _talon->SetNeutralMode(Brake);
+
+}
+
 
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.

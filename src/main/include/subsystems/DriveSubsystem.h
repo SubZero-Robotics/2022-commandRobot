@@ -30,6 +30,12 @@ class DriveSubsystem : public frc2::SubsystemBase {
  public:
   DriveSubsystem();
 
+  void DisabledInit();
+
+  void TeleopInit();
+
+  void SetCoast(WPI_TalonFX *_talon);
+
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
