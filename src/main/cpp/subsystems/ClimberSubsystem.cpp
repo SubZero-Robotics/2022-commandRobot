@@ -24,24 +24,16 @@ void ClimberSubsystem::Periodic() {
     LeftArm.StopMotor(); 
   }
 
-  if (Xbox.GetPOV()==0){
-    MiddleArmAngle.Set(-Xbox.GetRightX()/3.5);
-    MiddleArmOut.Set(Xbox.GetRightY()/1.5);
-  } else {
-    MiddleArmAngle.StopMotor();
-    MiddleArmOut.StopMotor();
-  }
-
 }
 
 void ClimberSubsystem::Up(){
-  RightArm.Follow(LeftArm);
-  LeftArm.Set(-1);
+  RightArm.Set(-1);
+  LeftArm.Set(1);
 }
 
 void ClimberSubsystem::Down(){
-  RightArm.Follow(LeftArm);
-  LeftArm.Set(1);
+  RightArm.Set(1);
+  LeftArm.Set(-1);
 }
 
 void ClimberSubsystem::Stop(){

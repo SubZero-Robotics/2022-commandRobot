@@ -17,6 +17,8 @@
 #include <frc/motorcontrol/Spark.h>
 #include "Constants.h"
 
+#include "subsystems/DriveSubsystem.h"
+
 class CargoSubsystem : public frc2::SubsystemBase {
  public:
   CargoSubsystem();
@@ -107,4 +109,5 @@ class CargoSubsystem : public frc2::SubsystemBase {
   WPI_VictorSPX ShooterFollow{5};
   double RPM = 0.0;         // Shooter motor speed
   bool truth = 0;
+  DriveSubsystem* m_drive;
 };

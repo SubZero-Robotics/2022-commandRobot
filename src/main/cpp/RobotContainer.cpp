@@ -33,6 +33,7 @@
 #include "commands/DefaultDrive.h"
 #include "commands/TurnToLimelight.h"
 #include "commands/TurnToAngle.h"
+#include "commands/TurnToSavedAngle.h"
 #include "commands/DriveResetOdometry.h"
 
 #include <frc/controller/PIDController.h>
@@ -121,7 +122,8 @@ void RobotContainer::ConfigureButtonBindings() {
   // this logic will need Camden's explanation to implement
   // limelight aiming. 
   frc2::JoystickButton(&Xbox, Button::kBack)
-    .WhenHeld(TurnToLimelight(&m_drive));
+    .WhenHeld(frc2::SequentialCommandGroup{TurnToLimelight(&m_drive), 
+                                           TurnToSavedAngle(&m_drive)});
 
   frc2::JoystickButton(&Xbox, Button::kStart)
       .WhenHeld(IntakeAllOut(&m_cargo));
