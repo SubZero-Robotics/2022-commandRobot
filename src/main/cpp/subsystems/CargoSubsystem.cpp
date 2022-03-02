@@ -37,7 +37,12 @@ CargoSubsystem::CargoSubsystem() {
   Shooter.Config_kF(0, kShootF, 10);
   Shooter.Config_kP(0, kShootP, 10);
   Shooter.Config_kI(0, kShootI, 10);
-  Shooter.Config_kD(0, kShootD, 10);     
+  Shooter.Config_kD(0, kShootD, 10);    
+
+  Shooter.Config_kF(1, kShootF, 10);
+  Shooter.Config_kP(1, kShootP, 10);
+  Shooter.Config_kI(1, kShootI1, 10);
+  Shooter.Config_kD(1, kShootD, 10); 
 }
 
 void CargoSubsystem::Periodic() {
@@ -49,7 +54,7 @@ void CargoSubsystem::Periodic() {
 
   
   RPM = -Shooter.GetSelectedSensorVelocity(0);
-  frc::SmartDashboard::PutNumber("RPM", (RPM*600/4096));
+  frc::SmartDashboard::PutNumber("RPM", (RPM));
   frc::SmartDashboard::PutBoolean("INTAKE WOULD BE SPINNING", truth);
   led_lights.Set(0.59);
 }
@@ -93,11 +98,13 @@ void CargoSubsystem::AutomaticIntake() {
 }
 
 void CargoSubsystem::Shoot() {
-    Shooter.Set(ControlMode::Velocity, -39000);
+    Shooter.SelectProfileSlot(0, 0);
+    Shooter.SelectProfileSlot(0, 1);
+    Shooter.Set(ControlMode::Velocity, -39500);
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);
-    } else if (((-Shooter.GetSelectedSensorVelocity(0))*600/4096 + kRPM_OK) >= 5800) {
+    } else if (-Shooter.GetSelectedSensorVelocity(0) >= 39100 && -Shooter.GetSelectedSensorVelocity(0) <= 39650) {
         truth = true;
         BottomIndexer.Set(kIndexerSpeed);
         TopIndexer.Set(kIndexerSpeed);
@@ -125,11 +132,13 @@ void CargoSubsystem::AutoShoot() {
 }
 
 void CargoSubsystem::LowShoot() {
+    Shooter.SelectProfileSlot(1, 0);
+    Shooter.SelectProfileSlot(1, 1);
     Shooter.Set(ControlMode::Velocity, -20000);
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);
-    } else if (((-Shooter.GetSelectedSensorVelocity(0))*600/4096 + kRPM_OK) >= 3050) {
+    } else if (-Shooter.GetSelectedSensorVelocity(0) >= 19900 && -Shooter.GetSelectedSensorVelocity(0) <= 21000) {
         truth = true;
         BottomIndexer.Set(kIndexerSpeed);
         TopIndexer.Set(kIndexerSpeed);
