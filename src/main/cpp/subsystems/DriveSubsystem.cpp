@@ -88,6 +88,7 @@ void DriveSubsystem::Periodic() {
 
   currentrobotAngle = Get2dAngle();
   //Display encoder values in SmartDashboard
+  frc::SmartDashboard::PutNumber("TargetAngle", (double)TargetAngle);
   frc::SmartDashboard::PutNumber("2d Angle", (double)currentrobotAngle.Degrees());
   frc::SmartDashboard::PutNumber("Pose X", (double)m_odometry.GetPose().X());
   frc::SmartDashboard::PutNumber("Pose Y", (double)m_odometry.GetPose().Y());
@@ -181,7 +182,6 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
 }
 
  units::degree_t DriveSubsystem::GetLimelightTargetAngle() {
-  //SelectLimelightPipeline(0);
   units::degree_t target = 0_deg;
   // give a number if we have a target, else just return where we're already heading
   // could change this to turn and seek a target
