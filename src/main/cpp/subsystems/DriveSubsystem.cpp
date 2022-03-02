@@ -281,7 +281,7 @@ void DriveSubsystem::ConfigureMotor(WPI_TalonFX *_talon) {
 
 frc2::RamseteCommand *DriveSubsystem::GetRamseteCommand(enum Paths drivePath) {
   // get a pointer to the driveSubsystem, because we need to use it in the command later
-  frc2::SubsystemBase driveSubSystem = *this;
+  DriveSubsystem *driveSubSystem = this;
 
 // make an empty Trjactory, we will fill it later
 frc::Trajectory chosenTrajectory;
@@ -298,7 +298,7 @@ switch(drivePath) {
       // End 3 meters straight ahead of where we started, facing forward
       frc::Pose2d(3_m, 0_m, frc::Rotation2d(0_deg)),
       // Pass the config
-      *trajectoryConfig);
+      *driveSubSystem->GetTrajectoryConfig());
     break;  // you've chosen one now, "break" gets you out of the "switch"
 
   case kStraight1Path:
@@ -311,7 +311,7 @@ switch(drivePath) {
       // End 3 meters straight ahead of where we started, facing forward
       frc::Pose2d(1_m, 0_m, frc::Rotation2d(0_deg)),
       // Pass the config
-      *trajectoryConfig);
+      *driveSubSystem->GetTrajectoryConfig());
     break;  // always remember the "break:!
   
    default: // default is when the selected drivePath doesn't exist in the list above
@@ -325,7 +325,7 @@ switch(drivePath) {
       // End 3 meters straight ahead of where we started, facing forward
       frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
       // Pass the config
-      *trajectoryConfig);
+      *driveSubSystem->GetTrajectoryConfig());
       // you don't need a "break" at the end of "default" because you're done anyway
 }
 
@@ -345,7 +345,7 @@ switch(drivePath) {
       frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
       frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
       [this](auto left, auto right) { TankDriveVolts(left, right); },
-      {&driveSubSystem});
+      {driveSubSystem});
 
     return chosenCommand;
   // you might want to put frc2::InstantCommand([this] { TankDriveVolts(0_V, 0_V); }, {})
