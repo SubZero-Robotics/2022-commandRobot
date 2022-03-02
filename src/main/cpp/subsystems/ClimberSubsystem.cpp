@@ -15,24 +15,15 @@ ClimberSubsystem::ClimberSubsystem() {
 // for example, publish encoder settings or motor currents to dashboard
 void ClimberSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
-  if (abs(Xbox.GetRightY())>kDeadzone && Xbox.GetPOV()==180){
-    RightArm.Set(Xbox.GetRightY()/1.5);
-    LeftArm.Set(Xbox.GetRightY()/1.5);
-  } else {
-    RightArm.StopMotor();
-    
-    LeftArm.StopMotor(); 
-  }
-
 }
 
 void ClimberSubsystem::Up(){
-  RightArm.Set(-1);
+  RightArm.Follow(LeftArm, true);
   LeftArm.Set(1);
 }
 
 void ClimberSubsystem::Down(){
-  RightArm.Set(1);
+  RightArm.Follow(LeftArm, true);
   LeftArm.Set(-1);
 }
 
