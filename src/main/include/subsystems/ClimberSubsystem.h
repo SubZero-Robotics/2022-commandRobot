@@ -49,7 +49,6 @@ class ClimberSubsystem : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
   rev::CANSparkMax LeftArm{6, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax RightArm{14, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax MiddleArmOut{15, rev::CANSparkMax::MotorType::kBrushless};
   WPI_VictorSPX MiddleArmAngle{16};
 frc::XboxController Xbox{0};
 };

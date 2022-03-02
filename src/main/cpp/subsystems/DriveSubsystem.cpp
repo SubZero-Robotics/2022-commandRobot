@@ -181,6 +181,7 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
 }
 
  units::degree_t DriveSubsystem::GetLimelightTargetAngle() {
+  SelectLimelightPipeline(0);
   units::degree_t target = 0_deg;
   // give a number if we have a target, else just return where we're already heading
   // could change this to turn and seek a target
