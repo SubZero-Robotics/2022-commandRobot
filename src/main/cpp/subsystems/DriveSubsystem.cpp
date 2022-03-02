@@ -185,9 +185,9 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
   // give a number if we have a target, else just return where we're already heading
   // could change this to turn and seek a target
   if (tv) {
-    units::degree_t((gyroAngle+tx) * (kGyroReversed ? -1.0 : 1.0));
+    target = units::degree_t((gyroAngle+tx) * (kGyroReversed ? -1.0 : 1.0));
   } else {
-    units::degree_t((gyroAngle) * (kGyroReversed ? -1.0 : 1.0)); //improvemnet is to remove this have return error so it doesnt turn
+    target = units::degree_t((gyroAngle) * (kGyroReversed ? -1.0 : 1.0)); //improvemnet is to remove this have return error so it doesnt turn
   }
   return target; 
 }
