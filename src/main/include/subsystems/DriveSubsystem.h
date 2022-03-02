@@ -144,7 +144,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
    *
    * @return The heading at which saved limelight target is
    */
-  units::degree_t GetTargetAngle();
+  double GetGyroAngle();
 
 /**
    * Sets the heading to the limelight target

@@ -88,7 +88,7 @@ void DriveSubsystem::Periodic() {
 
   currentrobotAngle = Get2dAngle();
   //Display encoder values in SmartDashboard
-  frc::SmartDashboard::PutNumber("TargetAngle", (double)TargetAngle);
+  frc::SmartDashboard::PutNumber("TargetAngle", (double)(gyroAngle+tx));
   frc::SmartDashboard::PutNumber("2d Angle", (double)currentrobotAngle.Degrees());
   frc::SmartDashboard::PutNumber("Pose X", (double)m_odometry.GetPose().X());
   frc::SmartDashboard::PutNumber("Pose Y", (double)m_odometry.GetPose().Y());
@@ -197,8 +197,8 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
   return tv; 
 }
 
-units::degree_t DriveSubsystem::GetTargetAngle() {
-  return TargetAngle;
+double DriveSubsystem::GetGyroAngle() {
+  return ahrs.GetYaw();
 }
 
 void DriveSubsystem::SetTargetAngle(units::degree_t target) {

@@ -122,8 +122,7 @@ void RobotContainer::ConfigureButtonBindings() {
   // this logic will need Camden's explanation to implement
   // limelight aiming. 
   frc2::JoystickButton(&Xbox, Button::kBack)
-    .WhenHeld(frc2::SequentialCommandGroup{TurnToLimelight(&m_drive), 
-                                           TurnToSavedAngle(&m_drive)});
+    .WhileHeld(TurnToLimelight(&m_drive));
 
   frc2::JoystickButton(&Xbox, Button::kStart)
       .WhenHeld(IntakeAllOut(&m_cargo));

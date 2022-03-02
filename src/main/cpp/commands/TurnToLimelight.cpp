@@ -6,7 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/TurnToLimeLight.h"
-
+#include <frc2/command/WaitCommand.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <cmath>
 
 // This doesn't really turn to limelight.  
@@ -23,11 +24,11 @@ void TurnToLimelight::Initialize() {
 }
 
 void TurnToLimelight::Execute() {
-  if (m_drive->GetLimelightTargetValid()) {
-    m_drive->SetTargetAngle(m_drive->GetLimelightTargetAngle());
-    finished = true;
+  turntothis = (m_drive->GetGyroAngle() + nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx", 0.0));
+  frc::SmartDashboard::PutNumber("turntothis", turntothis);
+  TurnToAngle((units::degree_t)turntothis, m_drive);
+    //finished = true;
   }
-}
 
 bool TurnToLimelight::IsFinished() { return finished; }
 

@@ -36,4 +36,5 @@ class TurnToLimelight : public frc2::CommandHelper<frc2::CommandBase, TurnToLime
   private:
     DriveSubsystem* m_drive;
     bool finished = false;
+    double turntothis = 0.0;
 };

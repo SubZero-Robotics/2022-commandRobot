@@ -94,10 +94,10 @@ constexpr auto kMaxTurnAcceleration = 200_deg_per_s / 1_s;
 constexpr double kHighTargetRPM = 1150.0; // desired shooter wheel speed
 constexpr double kLowTargetRPM = 690.0; // desired shooter wheel speed
 constexpr double kRPM_OK = 0.0;  // if we're within this of the target, it's ok to throw a ball
-constexpr double kShootF = 0.5; //kF for shooter velocity
-constexpr double kShootP = 0.0001;   //kP for shooter velocity
-constexpr double kShootI = 0.0;    //kI for shooter velocity
-constexpr double kShootD = 0.0;    //kD for shooter velocity
+constexpr double kShootF = 0.01; //kF for shooter velocity
+constexpr double kShootP = 0.07;   //kP for shooter velocity
+constexpr double kShootI = 0.00004;    //kI for shooter velocity
+constexpr double kShootD = 4.0;    //kD for shooter velocity
 
 // XboxController enums.  Since the Trigger stuff works on the base Joystick class, not the
 // Xbox extension, these are undefined where we want to use them.  So, flat-out copied them 

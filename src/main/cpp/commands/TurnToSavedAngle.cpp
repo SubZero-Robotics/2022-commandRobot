@@ -20,7 +20,7 @@ TurnToSavedAngle::TurnToSavedAngle(DriveSubsystem* drive)
                     // Close loop on heading
                     [drive] { return drive->GetHeading().to<double>(); },
                     // Set reference to target.  Make sure it fits in -180,180
-                    drive->SanitizeAngle(drive->GetTargetAngle()).to<double>(),
+                    drive->SanitizeAngle(drive->GetLimelightTargetAngle()).to<double>(),
                     // Pipe output to turn robot
                     [drive](double output) { drive->ArcadeDrive(0, output); },
                     // Require the drive
