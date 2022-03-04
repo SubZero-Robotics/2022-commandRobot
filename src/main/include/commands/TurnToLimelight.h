@@ -23,7 +23,8 @@ class TurnToLimelight : public frc2::CommandHelper<frc2::CommandBase, TurnToLime
    *
    * @param drive              The drive subsystem to use
    */
-  explicit TurnToLimelight(DriveSubsystem* drive);
+  explicit TurnToLimelight(DriveSubsystem* subsystem, std::function<double()> forward,
+               std::function<double()> rotation);
 
   void Initialize() override;
 
@@ -37,4 +38,7 @@ class TurnToLimelight : public frc2::CommandHelper<frc2::CommandBase, TurnToLime
     DriveSubsystem* m_drive;
     bool finished = false;
     double turntothis = 0.0;
+
+  std::function<double()> m_forward;
+  std::function<double()> m_rotation;
 };

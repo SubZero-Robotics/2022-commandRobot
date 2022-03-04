@@ -15,7 +15,9 @@
 #include <cameraserver/CameraServer.h>
 
 void Robot::RobotInit() {
-  frc::CameraServer::StartAutomaticCapture();
+  cs::UsbCamera camera = frc::CameraServer::StartAutomaticCapture();
+  camera.SetResolution(190,120); // could go lower
+  camera.SetFPS(15); // could go lower
 }
 /**
  * This function is called every robot packet, no matter the mode. Use
@@ -33,7 +35,7 @@ void Robot::RobotPeriodic() { frc2::CommandScheduler::GetInstance().Run(); }
  * robot is disabled.
  */
 void Robot::DisabledInit() {
-
+  m_drive.DisabledInit();
 }
 
 void Robot::DisabledPeriodic() {}
@@ -43,6 +45,7 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
+  m_drive.TeleopInit();
   m_autonomousCommand = m_container.GetAutonomousCommand();
 
   if (m_autonomousCommand != nullptr) {
@@ -61,6 +64,7 @@ void Robot::TeleopInit() {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
   }
+  m_drive.TeleopInit();
 }
 
 /**

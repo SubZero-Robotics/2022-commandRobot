@@ -77,7 +77,7 @@ void DriveSubsystem::TeleopInit() {
 }
 
 void DriveSubsystem::SetCoast(WPI_TalonFX *_talon) {
-   _talon->SetNeutralMode(Brake);
+   _talon->SetNeutralMode(Coast);
 
 }
 

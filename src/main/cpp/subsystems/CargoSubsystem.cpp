@@ -25,7 +25,6 @@ CargoSubsystem::CargoSubsystem() {
   Shooter.ConfigFactoryDefault();
   
   Shooter.ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10); 
-  Shooter.ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 1, 10); 
 
   Shooter.SetSensorPhase(true);
   
@@ -38,11 +37,6 @@ CargoSubsystem::CargoSubsystem() {
   Shooter.Config_kP(0, kShootP, 10);
   Shooter.Config_kI(0, kShootI, 10);
   Shooter.Config_kD(0, kShootD, 10);    
-
-  Shooter.Config_kF(1, kShootF, 10);
-  Shooter.Config_kP(1, kShootP, 10);
-  Shooter.Config_kI(1, kShootI1, 10);
-  Shooter.Config_kD(1, kShootD, 10); 
 }
 
 void CargoSubsystem::Periodic() {
@@ -98,13 +92,11 @@ void CargoSubsystem::AutomaticIntake() {
 }
 
 void CargoSubsystem::Shoot() {
-    Shooter.SelectProfileSlot(0, 0);
-    Shooter.SelectProfileSlot(0, 1);
-    Shooter.Set(ControlMode::Velocity, -39500);
+    Shooter.Set(ControlMode::Velocity, -39600);
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);
-    } else if (-Shooter.GetSelectedSensorVelocity(0) >= 39100 && -Shooter.GetSelectedSensorVelocity(0) <= 39650) {
+    } else if (-Shooter.GetSelectedSensorVelocity(0) >= 39000 && -Shooter.GetSelectedSensorVelocity(0) <= 39750) {
         truth = true;
         BottomIndexer.Set(kIndexerSpeed);
         TopIndexer.Set(kIndexerSpeed);
@@ -132,13 +124,11 @@ void CargoSubsystem::AutoShoot() {
 }
 
 void CargoSubsystem::LowShoot() {
-    Shooter.SelectProfileSlot(1, 0);
-    Shooter.SelectProfileSlot(1, 1);
-    Shooter.Set(ControlMode::Velocity, -20000);
+    Shooter.Set(ControlMode::Velocity, -22000);
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);
-    } else if (-Shooter.GetSelectedSensorVelocity(0) >= 19900 && -Shooter.GetSelectedSensorVelocity(0) <= 21000) {
+    } else if (-Shooter.GetSelectedSensorVelocity(0) >= 19900) {
         truth = true;
         BottomIndexer.Set(kIndexerSpeed);
         TopIndexer.Set(kIndexerSpeed);

@@ -48,6 +48,7 @@ LeftAuto::LeftAuto(DriveSubsystem* drive, CargoSubsystem * cargo) {
 RightAuto::RightAuto(DriveSubsystem* drive, CargoSubsystem * cargo) {
   AddCommands(
       std::move(*drive->GetRamseteCommand(kScurvePath)),
+      ShooterShoot(cargo, NULL).WithTimeout(4_s),
       frc2::ParallelRaceGroup( 
         std::move(*drive->GetRamseteCommand(kStraight1Path)),     
         IntakeGrabBalls(cargo))

@@ -17,6 +17,7 @@
 #include <frc/motorcontrol/Spark.h>
 #include "Constants.h"
 
+#include <frc/XboxController.h>
 #include "subsystems/DriveSubsystem.h"
 
 class CargoSubsystem : public frc2::SubsystemBase {
@@ -96,14 +97,15 @@ class CargoSubsystem : public frc2::SubsystemBase {
   //frc::DoubleSolenoid IntakeArm {frc::PneumaticsModuleType::CTREPCM,2,3};
   //WPI_VictorSPX IntakeWheels{10};
   rev::CANSparkMax IntakeWheels{8, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax BottomIndexer{9, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax TopIndexer{7, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax BottomIndexer{7, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax TopIndexer{9, rev::CANSparkMax::MotorType::kBrushless};
 
   frc::DigitalInput TopIntakeLaser {8};  
   frc::DigitalInput BottomIntakeLaser{6};
   frc::Spark led_lights{5};
   bool TopLaserState = 0;
   bool BottomLaserState = 0;
+  frc::XboxController Xbox{0};
 
   WPI_TalonSRX Shooter = WPI_TalonSRX(4); 
   WPI_VictorSPX ShooterFollow{5};

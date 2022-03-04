@@ -113,16 +113,19 @@ void RobotContainer::ConfigureButtonBindings() {
 //      .WhenReleased(RetractIntake(&m_cargo)); 
 
   // While held, drive robot slower
-  frc2::JoystickButton(&Xbox, Button::kX)
+  frc2::JoystickButton(&Xbox, Button::kBack)
       .WhenHeld(DefaultDrive(
       &m_drive,
-      [this] { return Xbox.GetLeftY()/2; },
-      [this] { return Xbox.GetLeftX()/2; }));
+      [this] { return Xbox.GetLeftY(); },
+      [this] { return Xbox.GetLeftX(); }));
 
   // this logic will need Camden's explanation to implement
   // limelight aiming. 
-  frc2::JoystickButton(&Xbox, Button::kBack)
-    .WhileHeld(TurnToLimelight(&m_drive));
+  frc2::JoystickButton(&Xbox, Button::kX)
+    .WhenHeld(TurnToLimelight(
+    &m_drive,
+    [this] { return Xbox.GetLeftY()/2; },
+    [this] { return Xbox.GetLeftX()/2.5; }));
 
   frc2::JoystickButton(&Xbox, Button::kStart)
       .WhenHeld(IntakeAllOut(&m_cargo));
@@ -159,7 +162,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
   frc::Trajectory tooballlowpartdos;
    fs::path deployDirectorydos = frc::filesystem::GetDeployDirectory();
-   deployDirectorydos = deployDirectorydos / "pathplanner" / "generatedJSON" / "Top Auto Two.wpilib.json";
+   deployDirectorydos = deployDirectorydos / "pathplanner" / "generatedJSON" / "ThreeBallTwo.wpilib.json";
    tooballlowpartdos = frc::TrajectoryUtil::FromPathweaverJson(deployDirectorydos.string());
 
   // this sets up the command
@@ -201,15 +204,15 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
         std::move(tooballlowpartunoCommand),     
         IntakeGrabBalls(&m_cargo)),
       frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ),
-      ShooterAutoShoot(&m_cargo, &Xbox).WithTimeout(3_s),
-      frc2::ParallelRaceGroup( 
+      ShooterShoot(&m_cargo, &Xbox).WithTimeout(3_s));
+      /*frc2::ParallelRaceGroup( 
         std::move(tooballlowpartdosCommand),     
         IntakeGrabBalls(&m_cargo)),
       frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ),
-      ShooterAutoShoot(&m_cargo, &Xbox).WithTimeout(3_s));
+      ShooterShoot(&m_cargo, &Xbox).WithTimeout(3_s));*/
 
 
 //STOP COMMENT OUT EXAMPLE S-CURVE     
   // Runs the chosen command in autonomous
-  //return m_chooser.GetSelected();
+  return m_chooser.GetSelected();
 }

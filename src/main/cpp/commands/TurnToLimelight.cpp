@@ -14,8 +14,11 @@
 // It turns on the limelight, waits till it gets a lock on the target, then
 // sets the target location and finishes.
 
-TurnToLimelight::TurnToLimelight(DriveSubsystem* subsystem) : m_drive(subsystem) { 
-        AddRequirements({subsystem});
+TurnToLimelight::TurnToLimelight(DriveSubsystem* subsystem,
+                           std::function<double()> forward,
+                           std::function<double()> rotation)
+    : m_drive{subsystem}, m_forward{forward}, m_rotation{rotation} {
+  AddRequirements({subsystem});
 }
 
 void TurnToLimelight::Initialize() {
@@ -28,6 +31,16 @@ void TurnToLimelight::Execute() {
   frc::SmartDashboard::PutNumber("turntothis", turntothis);
   TurnToAngle((units::degree_t)turntothis, m_drive);
     //finished = true;
+
+  
+  // Apply stick deadzone 
+  double XboxX = m_rotation();
+  if(abs(XboxX) < kDeadzone/2) XboxX = 0.0;
+  double XboxY = m_forward();
+  if(abs(XboxY) < kDeadzone/2) XboxY = 0.0;
+
+  // drive it
+  m_drive->ArcadeDrive(XboxY, XboxX);
   }
 
 bool TurnToLimelight::IsFinished() { return finished; }
