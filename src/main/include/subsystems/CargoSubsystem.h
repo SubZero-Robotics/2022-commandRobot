@@ -91,6 +91,12 @@ class CargoSubsystem : public frc2::SubsystemBase {
    */
   void Stop();
 
+  /**
+   * Stop the shooter, indexer, and intake
+   * @param nextRPM the next RPM vaule to take the rolling average of
+   */
+  double rollingRPMs(double nextRPM);
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -111,5 +117,8 @@ class CargoSubsystem : public frc2::SubsystemBase {
   WPI_VictorSPX ShooterFollow{5};
   double RPM = 0.0;         // Shooter motor speed
   bool truth = 0;
-  DriveSubsystem* m_drive;
+
+  #define numRPMs 10
+  double recentRPMs[numRPMs];
+  double averageRPMs = 0.0;
 };

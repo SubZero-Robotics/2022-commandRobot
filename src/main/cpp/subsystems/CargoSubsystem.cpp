@@ -50,6 +50,11 @@ void CargoSubsystem::Periodic() {
   RPM = -Shooter.GetSelectedSensorVelocity(0);
   frc::SmartDashboard::PutNumber("RPM", (RPM));
   frc::SmartDashboard::PutBoolean("INTAKE WOULD BE SPINNING", truth);
+
+  averageRPMs = rollingRPMs(RPM); 
+  frc::SmartDashboard::PutNumber("AvgRPM", (averageRPMs));
+
+
   led_lights.Set(0.59);
 }
 
@@ -152,4 +157,21 @@ void CargoSubsystem::Stop() {
 
 double CargoSubsystem::GetRPM() {
     return RPM;
+}
+
+double CargoSubsystem::rollingRPMs(double nextRPM) {
+    // first thing, move all stored RPMs down one, losing the oldest one
+    for (int i=(numRPMs - 2); i<0; i--) {
+        recentRPMs[i+1] = recentRPMs[i];
+    }
+    // store new RPM in the newest place
+    recentRPMs[0] = nextRPM;
+
+    // get an average
+    double average = 0.0;
+    for (int i=0; i<numRPMs; i++) {
+        average += recentRPMs[i];
+    }
+    average = average / (double)numRPMs;
+    return average;
 }
