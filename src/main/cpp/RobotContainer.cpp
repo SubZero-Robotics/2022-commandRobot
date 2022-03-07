@@ -99,11 +99,13 @@ void RobotContainer::ConfigureButtonBindings() {
 
   // Spin up shooter motor for low while pressed
   frc2::JoystickButton(&Xbox, Button::kB)
-      .WhenHeld(ShooterLowShoot(&m_cargo, &Xbox));
+      .WhenHeld(frc2::SequentialCommandGroup(IntakeAllOut(&m_cargo).WithTimeout(0.05_s),
+                                            ShooterLowShoot(&m_cargo, &Xbox)));
 
   //Spin up shooter motor for high while pressed, and rumble controller if you're too close
   frc2::JoystickButton(&Xbox, Button::kY)
-      .WhenHeld(ShooterShoot(&m_cargo, &Xbox));
+      .WhenHeld(frc2::SequentialCommandGroup(IntakeAllOut(&m_cargo).WithTimeout(0.05_s),
+                                            ShooterShoot(&m_cargo, &Xbox)));
 
   // move intake arm out and spin intake wheels while A is held down,
   // return arm and stop when you let go. (the default mode for Intake)
@@ -157,7 +159,7 @@ void RobotContainer::ConfigureButtonBindings() {
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   frc::Trajectory tooballlowpartuno;
    fs::path deployDirectoryuno = frc::filesystem::GetDeployDirectory();
-   deployDirectoryuno = deployDirectoryuno / "pathplanner" / "generatedJSON" / "Top Auto.wpilib.json";
+   deployDirectoryuno = deployDirectoryuno / "pathplanner" / "generatedJSON" / "ThreeBallOne.wpilib.json";
    tooballlowpartuno = frc::TrajectoryUtil::FromPathweaverJson(deployDirectoryuno.string());
 
   frc::Trajectory tooballlowpartdos;
@@ -204,12 +206,13 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
         std::move(tooballlowpartunoCommand),     
         IntakeGrabBalls(&m_cargo)),
       frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ),
-      ShooterShoot(&m_cargo, &Xbox).WithTimeout(3_s));
-      /*frc2::ParallelRaceGroup( 
+      ShooterAutoShoot(&m_cargo, &Xbox).WithTimeout(3_s),
+      frc2::ParallelRaceGroup( 
         std::move(tooballlowpartdosCommand),     
         IntakeGrabBalls(&m_cargo)),
       frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ),
-      ShooterShoot(&m_cargo, &Xbox).WithTimeout(3_s));*/
+      IntakeAllOut(&m_cargo).WithTimeout(0.1_s),
+      ShooterAutoShoot(&m_cargo, &Xbox).WithTimeout(4_s));
 
 
 //STOP COMMENT OUT EXAMPLE S-CURVE     

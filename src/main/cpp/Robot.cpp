@@ -14,11 +14,7 @@
 #include <frc2/command/CommandScheduler.h>
 #include <cameraserver/CameraServer.h>
 
-void Robot::RobotInit() {
-  cs::UsbCamera camera = frc::CameraServer::StartAutomaticCapture();
-  camera.SetResolution(190,120); // could go lower
-  camera.SetFPS(15); // could go lower
-}
+void Robot::RobotInit() {}
 /**
  * This function is called every robot packet, no matter the mode. Use
  * this for items like diagnostics that you want to run during disabled,
@@ -35,7 +31,7 @@ void Robot::RobotPeriodic() { frc2::CommandScheduler::GetInstance().Run(); }
  * robot is disabled.
  */
 void Robot::DisabledInit() {
-  m_drive.DisabledInit();
+ // m_drive.DisabledInit();
 }
 
 void Robot::DisabledPeriodic() {}
@@ -45,7 +41,7 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
-  m_drive.TeleopInit();
+ // m_drive.TeleopInit();
   m_autonomousCommand = m_container.GetAutonomousCommand();
 
   if (m_autonomousCommand != nullptr) {
@@ -64,7 +60,7 @@ void Robot::TeleopInit() {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
   }
-  m_drive.TeleopInit();
+  //m_drive.TeleopInit();
 }
 
 /**

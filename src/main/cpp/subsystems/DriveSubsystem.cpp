@@ -20,10 +20,10 @@ DriveSubsystem::DriveSubsystem()
 
   // Initialize each motor with MotionMagic settings
   // Made this a function since we do the same thing four times
-  SetCoast(&RightLead);
-  SetCoast(&RightFollow);
-  SetCoast(&LeftLead);
-  SetCoast(&LeftFollow);
+  ConfigureMotor(&RightLead);
+  ConfigureMotor(&RightFollow);
+  ConfigureMotor(&LeftLead);
+  ConfigureMotor(&LeftFollow);
 
   // Invert left side, since DifferentialDrive no longer does it for us
   LeftLead.SetInverted(true);
