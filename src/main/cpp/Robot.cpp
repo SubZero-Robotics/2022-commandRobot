@@ -31,7 +31,7 @@ void Robot::RobotPeriodic() { frc2::CommandScheduler::GetInstance().Run(); }
  * robot is disabled.
  */
 void Robot::DisabledInit() {
- // m_drive.DisabledInit();
+  m_drive.DisabledInit();
 }
 
 void Robot::DisabledPeriodic() {}
@@ -41,7 +41,7 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
- // m_drive.TeleopInit();
+  m_drive.TeleopInit();
   m_autonomousCommand = m_container.GetAutonomousCommand();
 
   if (m_autonomousCommand != nullptr) {
@@ -60,7 +60,7 @@ void Robot::TeleopInit() {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
   }
-  //m_drive.TeleopInit();
+  m_drive.TeleopInit();
 }
 
 /**
