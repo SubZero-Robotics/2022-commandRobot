@@ -201,7 +201,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
 //START COMMENT OUT EXAMPLE S-CURVE
     //no auto 
-    return new frc2::SequentialCommandGroup(
+    /*return new frc2::SequentialCommandGroup(
       frc2::ParallelRaceGroup( 
         std::move(tooballlowpartunoCommand),     
         IntakeGrabBalls(&m_cargo)),
@@ -212,7 +212,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
         IntakeGrabBalls(&m_cargo)),
       frc2::InstantCommand([this] { m_drive.TankDriveVolts(0_V, 0_V); }, {} ),
       IntakeAllOut(&m_cargo).WithTimeout(0.1_s),
-      ShooterAutoShoot(&m_cargo, &Xbox).WithTimeout(4_s));
+      ShooterAutoShoot(&m_cargo, &Xbox).WithTimeout(4_s));*/
 
 
 //STOP COMMENT OUT EXAMPLE S-CURVE     

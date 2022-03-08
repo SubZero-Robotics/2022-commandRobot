@@ -25,7 +25,7 @@ void DriveTwoBallUnoTrajectory::Initialize() {
   // An 2BallsLowPart1 Trajectory
   frc::Trajectory tooballlowpartuno;
    fs::path deployDirectoryuno = frc::filesystem::GetDeployDirectory();
-   deployDirectoryuno = deployDirectoryuno / "pathplanner" / "generatedJSON" / "2BallsLowPart1.wpilib.json";
+   deployDirectoryuno = deployDirectoryuno / "pathplanner" / "generatedJSON" / "ThreeBallOne.wpilib.json";
    tooballlowpartuno = frc::TrajectoryUtil::FromPathweaverJson(deployDirectoryuno.string());
 
   // Reset odometry to the starting pose of the trajectory.

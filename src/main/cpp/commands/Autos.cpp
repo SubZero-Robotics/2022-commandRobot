@@ -17,11 +17,13 @@ LeftAuto::LeftAuto(DriveSubsystem* drive, CargoSubsystem * cargo) {
     frc2::ParallelRaceGroup( 
         DriveTwoBallUnoTrajectory(drive),     
         IntakeGrabBalls(cargo)),
-      ShooterShoot(cargo, NULL).WithTimeout(2_s),
+      IntakeAllOut(cargo).WithTimeout(0.1_s),
+      ShooterAutoShoot(cargo, NULL).WithTimeout(3_s),
       frc2::ParallelRaceGroup( 
         DriveTwoBallDosTrajectory(drive),     
         IntakeGrabBalls(cargo)),
-      ShooterShoot(cargo, NULL).WithTimeout(4_s),
+      IntakeAllOut(cargo).WithTimeout(0.1_s),
+      ShooterAutoShoot(cargo, NULL).WithTimeout(4_s),
 // Next, try adding this second one.  Commented out for now in case there's a 
 // sequencing problem
     DriveDistance(1.0_m,drive)

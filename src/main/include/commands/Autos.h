@@ -20,8 +20,10 @@
 #include "commands/DriveTwoBallDosTrajectory.h"
 
 #include "commands/IntakeGrabBalls.h"
+#include "commands/IntakeAllOut.h"
 
 #include "commands/ShooterShoot.h"
+#include "commands/ShooterAutoShoot.h"
 #include "commands/ShooterLowShoot.h"
 
 #include "commands/DriveDistance.h"
