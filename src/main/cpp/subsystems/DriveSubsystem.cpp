@@ -227,6 +227,7 @@ void DriveSubsystem::ConfigureMotor(WPI_TalonFX *_talon) {
   // https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/blob/master/C%2B%2B%20Talon%20FX%20(Falcon%20500)/MotionMagic/src/main/cpp/Robot.cpp
   // Sets up MotionMagic parameters inside the motor
   // The exact numbers need to be determined!
+  // we're not playing with MotionMagic here though, this comment left in in case we do later
 
   // A reference to all the methods you could call in these motors is:
   // https://store.ctr-electronics.com/content/api/cpp/html/classctre_1_1phoenix_1_1motorcontrol_1_1can_1_1_talon_f_x.html
@@ -242,31 +243,6 @@ void DriveSubsystem::ConfigureMotor(WPI_TalonFX *_talon) {
                                         10);
 
   _talon->SetNeutralMode(Brake);
-
-// The commented out commands below are for setting up MotionMagic PIDs
-// to run on the motor controller.  Since we're using Ramsete on the RIO
-// instead, commenting these out now just in case they cause problems
-// although it shouldn't matter
-/* Set relevant frame periods to be at least as fast as periodic rate */
-//    _talon->SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0, 10, 10);
-//    _talon->SetStatusFramePeriod(StatusFrameEnhanced::Status_10_MotionMagic, 10, 10);
-
-    /* Set the peak and nominal outputs */
-//    _talon->ConfigNominalOutputForward(0, 10);
-//    _talon->ConfigNominalOutputReverse(0, 10);
-//    _talon->ConfigPeakOutputForward(1, 10);
-//    _talon->ConfigPeakOutputReverse(-1, 10);
-
-    /* Set Motion Magic gains in slot0 - see documentation */
-//    _talon->SelectProfileSlot(0, 0);
-//    _talon->Config_kF(0, 0.3, 10);
-//    _talon->Config_kP(0, 0.1, 10);
-//    _talon->Config_kI(0, 0.0, 10);
-//    _talon->Config_kD(0, 0.0, 10);
-
-    /* Set acceleration and vcruise velocity - see documentation */
-//    _talon->ConfigMotionCruiseVelocity(1500, 10);
-//    _talon->ConfigMotionAcceleration(1500, 10);
 
     /* Zero the sensor */
     _talon->SetSelectedSensorPosition(0, 0, 10);
@@ -303,9 +279,9 @@ switch(drivePath) {
     chosenTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
       // Start at the origin facing the +X direction
       frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
-      // Pass through these two interior waypoints, making an 's' curve path
+      // Pass through these this interior waypoint, just going straight
       {frc::Translation2d(0.5_m, 0_m)},
-      // End 3 meters straight ahead of where we started, facing forward
+      // End 1 meter straight ahead of where we started, facing forward
       frc::Pose2d(1_m, 0_m, frc::Rotation2d(0_deg)),
       // Pass the config
       *driveSubSystem->GetTrajectoryConfig());
@@ -317,9 +293,9 @@ switch(drivePath) {
     chosenTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
       // Start at the origin facing the +X direction
       frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
-      // Pass through these two interior waypoints, making an 's' curve path
+      // Pass through these this interior waypoint, going nowhere
       {frc::Translation2d(0.0_m, 0_m)},
-      // End 3 meters straight ahead of where we started, facing forward
+      // End 0 meters straight ahead of where we started, facing forward
       frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
       // Pass the config
       *driveSubSystem->GetTrajectoryConfig());
