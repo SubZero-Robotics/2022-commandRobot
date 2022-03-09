@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/DriveTwoBallDosTrajectory.h"
+#include "commands/autos/DriveTwoBallUnoTrajectory.h"
 
 #include <frc/controller/PIDController.h>
 #include <frc/controller/RamseteController.h>
@@ -16,24 +16,24 @@
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/SequentialCommandGroup.h>
 
-DriveTwoBallDosTrajectory::DriveTwoBallDosTrajectory(DriveSubsystem* subsystem)
+DriveTwoBallUnoTrajectory::DriveTwoBallUnoTrajectory(DriveSubsystem* subsystem)
     : m_drive(subsystem) {
   AddRequirements({subsystem});
 }
 
-void DriveTwoBallDosTrajectory::Initialize() {
-  // An 2BallsLowPart2 Trajectory
-  frc::Trajectory tooballlowpartdos;
-   fs::path deployDirectorydos = frc::filesystem::GetDeployDirectory();
-   deployDirectorydos = deployDirectorydos / "pathplanner" / "generatedJSON" / "ThreeBallTwo.wpilib.json";
-   tooballlowpartdos = frc::TrajectoryUtil::FromPathweaverJson(deployDirectorydos.string());
+void DriveTwoBallUnoTrajectory::Initialize() {
+  // An 2BallsLowPart1 Trajectory
+  frc::Trajectory tooballlowpartuno;
+   fs::path deployDirectoryuno = frc::filesystem::GetDeployDirectory();
+   deployDirectoryuno = deployDirectoryuno / "pathplanner" / "generatedJSON" / "ThreeBallOne.wpilib.json";
+   tooballlowpartuno = frc::TrajectoryUtil::FromPathweaverJson(deployDirectoryuno.string());
 
   // Reset odometry to the starting pose of the trajectory.
-  m_drive->ResetOdometry(tooballlowpartdos.InitialPose());
+  m_drive->ResetOdometry(tooballlowpartuno.InitialPose());
 
   // this sets up the command
-  frc2::RamseteCommand TwoBallDosCommand = frc2::RamseteCommand(
-      tooballlowpartdos, 
+  frc2::RamseteCommand TwoBallUnoCommand = frc2::RamseteCommand(
+      tooballlowpartuno, 
       [this]() { return m_drive->GetPose(); },
       frc::RamseteController(DriveConstants::kRamseteB,
                              DriveConstants::kRamseteZeta),
@@ -48,7 +48,7 @@ void DriveTwoBallDosTrajectory::Initialize() {
 
   // Schedule this new command we just made, followed by a "stop the robot"
     frc2::SequentialCommandGroup* myCommandGroup = new frc2::SequentialCommandGroup(
-      std::move(TwoBallDosCommand),
+      std::move(TwoBallUnoCommand),
       frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {})
                                   );
     myCommandGroup->Schedule();

@@ -16,8 +16,9 @@
 #include "commands/TurnToAngleNew.h"
 #include "commands/TurnToLimelight.h"
 #include "commands/DriveStraight.h"
-#include "commands/DriveTwoBallUnoTrajectory.h"
-#include "commands/DriveTwoBallDosTrajectory.h"
+
+#include "commands/autos/DriveTwoBallUnoTrajectory.h"
+#include "commands/autos/DriveTwoBallDosTrajectory.h"
 
 #include "commands/IntakeGrabBalls.h"
 #include "commands/IntakeAllOut.h"
