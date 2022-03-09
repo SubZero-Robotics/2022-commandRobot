@@ -344,6 +344,27 @@ switch(drivePath) {
       [driveSubSystem](auto left, auto right) { driveSubSystem->TankDriveVolts(left, right); },
       {driveSubSystem});
 
+// The RamseteCommand takes several std::functions as arguments, and
+// in what looks like a wierd way.
+// So, here's what's going on.  We are tying to pass the methods GetPose, 
+// GetWheelSpeeds, and TankDriveVolts to RamseteCommand as std::function
+// That way, the command can call these DriveSubSystem methods to talk
+// to the odometry, speeds, and set the wheel power.
+// At the top of this method, we make note of where the real DriveSubSystem is:
+//   DriveSubsystem *driveSubSystem = this;
+// So, driveSubSystem is a pointer to the robot's actual drive.
+//
+// Look at the first place we try and pass a function using a lambda:
+//
+//   [driveSubSystem]() { return driveSubSystem->GetPose(); },
+//
+// The [] brackets grab something local to use, in this case, the
+// pointer to the drive we saved earlier.  
+// The () enclose parameters we're passing to the function.  None
+// here, but later you see us making temporary left and right for the volts
+// The {} enclose what the function is doing.  In our case, it's 
+// calling the GetPose so the RamseteCommand knows the current odometry
+
     return chosenCommand;
   // you might want to put frc2::InstantCommand([this] { TankDriveVolts(0_V, 0_V); }, {})
   // in after calling this command if the robot doesn't stop
