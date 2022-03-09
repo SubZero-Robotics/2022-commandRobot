@@ -332,16 +332,16 @@ switch(drivePath) {
   // create a new RamseteCommand with the chosenTrajectory
   frc2::RamseteCommand *chosenCommand = new frc2::RamseteCommand(
       chosenTrajectory, 
-      [this]() { return GetPose(); },
+      [driveSubSystem]() { return driveSubSystem->GetPose(); },
       frc::RamseteController(DriveConstants::kRamseteB,
                              DriveConstants::kRamseteZeta),
       frc::SimpleMotorFeedforward<units::meters>(
           DriveConstants::ks, DriveConstants::kv, DriveConstants::ka),
       DriveConstants::kDriveKinematics,
-      [this] { return GetWheelSpeeds(); },
+      [driveSubSystem] { return driveSubSystem->GetWheelSpeeds(); },
       frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
       frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
-      [this](auto left, auto right) { TankDriveVolts(left, right); },
+      [driveSubSystem](auto left, auto right) { driveSubSystem->TankDriveVolts(left, right); },
       {driveSubSystem});
 
     return chosenCommand;
