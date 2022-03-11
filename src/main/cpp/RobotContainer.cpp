@@ -31,6 +31,7 @@
 #include "commands/ClimberStop.h"
 
 #include "commands/DefaultDrive.h"
+#include "commands/DriveDistance.h"
 #include "commands/TurnToLimelight.h"
 #include "commands/TurnToAngle.h"
 #include "commands/TurnToSavedAngle.h"
@@ -114,12 +115,13 @@ void RobotContainer::ConfigureButtonBindings() {
 // you can stack commands like this (below).  But in this case, RetractIntake is the default anyway
 //      .WhenReleased(RetractIntake(&m_cargo)); 
 
-  // While held, drive robot slower
+  // While held, drive robot faster
   frc2::JoystickButton(&Xbox, Button::kBack)
-      .WhenHeld(DefaultDrive(
+      .WhenHeld(DriveDistance(0.5_m, &m_drive));
+        /*DefaultDrive(
       &m_drive,
       [this] { return Xbox.GetLeftY(); },
-      [this] { return Xbox.GetLeftX(); }));
+      [this] { return Xbox.GetLeftX(); }));*/
 
   // this logic will need Camden's explanation to implement
   // limelight aiming. 
