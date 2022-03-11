@@ -56,7 +56,7 @@ namespace DriveConstants {
   constexpr double kRamseteB = 2.0;
   constexpr double kRamseteZeta = 0.7;
 }
-constexpr double kDeadzone = 0.2;
+constexpr double kDeadzone = 0.1;
 
 // How close in inches to rumble while shooting?
 constexpr double kRumbleDistance = 85.0;

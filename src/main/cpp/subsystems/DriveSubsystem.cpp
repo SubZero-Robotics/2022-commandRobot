@@ -117,7 +117,7 @@ void DriveSubsystem::Periodic() {
 }
 
 void DriveSubsystem::ArcadeDrive(double fwd, double rot) {
-  m_drive.ArcadeDrive(fwd, rot, true);
+  m_drive.ArcadeDrive(pow(fwd, 3), pow(rot, 3), false);
 }
 
 void DriveSubsystem::TankDriveVolts(units::volt_t left, units::volt_t right) {
