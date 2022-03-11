@@ -163,7 +163,7 @@ double CargoSubsystem::GetRPM() {
 
 double CargoSubsystem::rollingRPMs(double nextRPM) {
     // first thing, move all stored RPMs down one, losing the oldest one
-    for (int i=(numRPMs - 2); i<0; i--) {
+    for (int i=(numRPMs - 2); i>=0; i--) {
         recentRPMs[i+1] = recentRPMs[i];
     }
     // store new RPM in the newest place
