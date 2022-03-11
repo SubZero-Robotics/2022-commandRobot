@@ -13,6 +13,10 @@ IntakeAllOut::IntakeAllOut(CargoSubsystem* subsystem) : m_cargo(subsystem) {
 
 void IntakeAllOut::Initialize() { m_cargo->AllOut(); }
 
+void IntakeAllOut::End(bool interrupted) {
+  m_cargo->Stop();
+}
+
 // this is a state, it lasts till it's cancelled
 // although we could check if the piston is all the way in
 bool IntakeAllOut::IsFinished() { return false; }
