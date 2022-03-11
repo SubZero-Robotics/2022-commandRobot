@@ -53,3 +53,9 @@ void DriveTwoBallDosTrajectory::Initialize() {
                                   );
     myCommandGroup->Schedule();
 }
+
+bool DriveTwoBallDosTrajectory::IsFinished() { return finished; }
+
+void DriveTwoBallDosTrajectory::End(bool interrupted) {
+  
+}
