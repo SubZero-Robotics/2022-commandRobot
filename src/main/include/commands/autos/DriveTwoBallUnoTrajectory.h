@@ -29,6 +29,11 @@ class DriveTwoBallUnoTrajectory
 
   void Initialize() override;
 
+  void End(bool interrupted) override;
+
+  bool IsFinished() override;
+
  private:
   DriveSubsystem* m_drive;
+  bool finished = false;
 };

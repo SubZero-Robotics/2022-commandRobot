@@ -52,4 +52,12 @@ void DriveTwoBallUnoTrajectory::Initialize() {
       frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {})
                                   );
     myCommandGroup->Schedule();
+    
+  finished =true;
+}
+
+bool DriveTwoBallUnoTrajectory::IsFinished() { return finished; }
+
+void DriveTwoBallUnoTrajectory::End(bool interrupted) {
+  
 }
