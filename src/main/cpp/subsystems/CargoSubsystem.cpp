@@ -53,9 +53,6 @@ void CargoSubsystem::Periodic() {
 
   averageRPMs = rollingRPMs(RPM); 
   frc::SmartDashboard::PutNumber("AvgRPM", (averageRPMs));
-
-
-  PutLED(0.61);
 }
 
 double CargoSubsystem::PutLED(double ledMotorValue) {
