@@ -25,6 +25,8 @@
 
 #include <frc/trajectory/TrajectoryGenerator.h>
 #include <frc2/command/RamseteCommand.h>
+#include <frc2/command/InstantCommand.h>
+#include <frc2/command/SequentialCommandGroup.h>
 
 class DriveSubsystem : public frc2::SubsystemBase {
  public:
@@ -205,7 +207,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
    * @param drivePath the path you're picking
    * @return a RamseteCommand to drive that path
   */
-  frc2::RamseteCommand *GetRamseteCommand(enum Paths drivePath);
+  frc2::SequentialCommandGroup GetRamseteCommand(enum Paths drivePath);
   
     private:
   // Components (e.g. motor controllers and sensors) should generally be

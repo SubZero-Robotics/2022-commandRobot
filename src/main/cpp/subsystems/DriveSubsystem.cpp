@@ -252,7 +252,7 @@ void DriveSubsystem::ConfigureMotor(WPI_TalonFX *_talon) {
    return trajectoryConfig;
  }
 
-frc2::RamseteCommand *DriveSubsystem::GetRamseteCommand(enum Paths drivePath) {
+frc2::SequentialCommandGroup DriveSubsystem::GetRamseteCommand(enum Paths drivePath) {
   // get a pointer to the driveSubsystem, because we need to use it in the command later
   DriveSubsystem *driveSubSystem = this;
 
@@ -271,7 +271,7 @@ switch(drivePath) {
       // End 3 meters straight ahead of where we started, facing forward
       frc::Pose2d(3_m, 0_m, frc::Rotation2d(0_deg)),
       // Pass the config
-      *driveSubSystem->GetTrajectoryConfig());
+      *trajectoryConfig);
     break;  // you've chosen one now, "break" gets you out of the "switch"
 
   case kStraight1Path:
@@ -284,7 +284,7 @@ switch(drivePath) {
       // End 1 meter straight ahead of where we started, facing forward
       frc::Pose2d(1_m, 0_m, frc::Rotation2d(0_deg)),
       // Pass the config
-      *driveSubSystem->GetTrajectoryConfig());
+      *trajectoryConfig);
     break;  // always remember the "break:!
   
    default: // default is when the selected drivePath doesn't exist in the list above
@@ -298,7 +298,7 @@ switch(drivePath) {
       // End 0 meters straight ahead of where we started, facing forward
       frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
       // Pass the config
-      *driveSubSystem->GetTrajectoryConfig());
+      *trajectoryConfig);
       // you don't need a "break" at the end of "default" because you're done anyway
 }
 
@@ -306,18 +306,18 @@ switch(drivePath) {
   ResetOdometry(chosenTrajectory.InitialPose());
 
   // create a new RamseteCommand with the chosenTrajectory
-  frc2::RamseteCommand *chosenCommand = new frc2::RamseteCommand(
+  frc2::RamseteCommand chosenCommand(
       chosenTrajectory, 
-      [driveSubSystem]() { return driveSubSystem->GetPose(); },
+      [this]() { return GetPose(); },
       frc::RamseteController(DriveConstants::kRamseteB,
                              DriveConstants::kRamseteZeta),
       frc::SimpleMotorFeedforward<units::meters>(
           DriveConstants::ks, DriveConstants::kv, DriveConstants::ka),
       DriveConstants::kDriveKinematics,
-      [driveSubSystem] { return driveSubSystem->GetWheelSpeeds(); },
+      [this] { return GetWheelSpeeds(); },
       frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
       frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
-      [driveSubSystem](auto left, auto right) { driveSubSystem->TankDriveVolts(left, right); },
+      [this](auto left, auto right) { TankDriveVolts(left, right); },
       {driveSubSystem});
 
 // The RamseteCommand takes several std::functions as arguments, and
@@ -328,20 +328,25 @@ switch(drivePath) {
 // to the odometry, speeds, and set the wheel power.
 // At the top of this method, we make note of where the real DriveSubSystem is:
 //   DriveSubsystem *driveSubSystem = this;
-// So, driveSubSystem is a pointer to the robot's actual drive.
+// So, driveSubSystem is a pointer to the robot's actual drive for the 
+// final argument as the command subSystem requirements
 //
 // Look at the first place we try and pass a function using a lambda:
 //
-//   [driveSubSystem]() { return driveSubSystem->GetPose(); },
+//   [this]() { return GetPose(); },
 //
-// The [] brackets grab something local to use, in this case, the
-// pointer to the drive we saved earlier.  
+// The [] brackets grab something local to use, in this case, it has access to 
+// "this", which is the whole local scope.
 // The () enclose parameters we're passing to the function.  None
 // here, but later you see us making temporary left and right for the volts
 // The {} enclose what the function is doing.  In our case, it's 
 // calling the GetPose so the RamseteCommand knows the current odometry
 
-    return chosenCommand;
+  // return the chosen command in a SequentialCommandGroup with a "stop" afterards
+  return frc2::SequentialCommandGroup(
+    std::move(chosenCommand),
+    frc2::InstantCommand([this] { TankDriveVolts(0_V, 0_V); }, {} )
+    );
   // you might want to put frc2::InstantCommand([this] { TankDriveVolts(0_V, 0_V); }, {})
   // in after calling this command if the robot doesn't stop
 }
