@@ -22,6 +22,12 @@ DriveTwoBallUnoTrajectory::DriveTwoBallUnoTrajectory(DriveSubsystem* subsystem)
 }
 
 void DriveTwoBallUnoTrajectory::Initialize() {
+  finished = true;
+}
+
+bool DriveTwoBallUnoTrajectory::IsFinished() { return finished; }
+
+void DriveTwoBallUnoTrajectory::End(bool interrupted) {
   // An 2BallsLowPart1 Trajectory
   frc::Trajectory tooballlowpartuno;
    fs::path deployDirectoryuno = frc::filesystem::GetDeployDirectory();
@@ -52,12 +58,4 @@ void DriveTwoBallUnoTrajectory::Initialize() {
       frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {})
                                   );
     myCommandGroup->Schedule();
-    
-  finished =true;
-}
-
-bool DriveTwoBallUnoTrajectory::IsFinished() { return finished; }
-
-void DriveTwoBallUnoTrajectory::End(bool interrupted) {
-  
 }
