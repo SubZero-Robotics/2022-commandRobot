@@ -25,6 +25,8 @@ class IntakeAllOut : public frc2::CommandHelper<frc2::CommandBase, IntakeAllOut>
 
   void Initialize() override;
 
+  void End(bool interrupted) override;
+
   bool IsFinished() override;
 
  private:
