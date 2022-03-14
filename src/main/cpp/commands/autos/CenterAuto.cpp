@@ -78,8 +78,6 @@ void CenterAutoRun::Initialize() {
       std::move(TwoBallUnoCommand),     
       IntakeGrabBalls(m_cargo)),
     frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {} ),
-    ShooterAutoShoot(m_cargo, NULL).WithTimeout(3_s));
-  frc2::SequentialCommandGroup* myCenterAuto2 = new frc2::SequentialCommandGroup(
     frc2::ParallelRaceGroup( 
       std::move(TwoBallDosCommand),     
       IntakeGrabBalls(m_cargo)),
@@ -87,7 +85,6 @@ void CenterAutoRun::Initialize() {
     IntakeAllOut(m_cargo).WithTimeout(0.1_s),
     ShooterAutoShoot(m_cargo, NULL).WithTimeout(4_s));
   myCenterAuto->Schedule();
-  myCenterAuto2->Schedule();
 }
 
 bool CenterAutoRun::IsFinished() { return finished; }
