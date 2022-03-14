@@ -78,12 +78,13 @@ void CenterAutoRun::Initialize() {
       std::move(TwoBallUnoCommand),     
       IntakeGrabBalls(m_cargo)),
     frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {} ),
+    ShooterAutoShoot(m_cargo, &Xbox).WithTimeout(3_s),
     frc2::ParallelRaceGroup( 
       std::move(TwoBallDosCommand),     
       IntakeGrabBalls(m_cargo)),
     frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {} ),
     IntakeAllOut(m_cargo).WithTimeout(0.1_s),
-    ShooterAutoShoot(m_cargo, NULL).WithTimeout(4_s));
+    ShooterAutoShoot(m_cargo, &Xbox).WithTimeout(4_s));
   myCenterAuto->Schedule();
 }
 

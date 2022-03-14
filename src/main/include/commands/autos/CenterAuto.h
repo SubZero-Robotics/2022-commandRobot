@@ -9,6 +9,7 @@
 
 #include <frc2/command/CommandBase.h> 
 #include <frc2/command/CommandHelper.h>
+#include <frc/XboxController.h>
 
 #include <frc/Filesystem.h>
 #include <frc/trajectory/TrajectoryUtil.h>
@@ -38,4 +39,6 @@ class CenterAutoRun
   DriveSubsystem* m_drive;
   CargoSubsystem* m_cargo;
   bool finished = false;
+  // The controller
+  frc::XboxController Xbox{0};
 };
