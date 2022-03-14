@@ -58,7 +58,7 @@ void CargoSubsystem::Periodic() {
   PutLED(0.61);
 }
 
-double CargoSubsystem::PutLED(double ledMotorValue) {
+void CargoSubsystem::PutLED(double ledMotorValue) {
     //I WOULD create an enum for this, except that the list of values would take me all day, and is not worth typing out
     //PLUS you'd have to find the table anyways to know how to enter the values
     led_lights.Set(ledMotorValue);

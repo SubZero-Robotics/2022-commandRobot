@@ -39,7 +39,7 @@ class CargoSubsystem : public frc2::SubsystemBase {
   /**
    * @param ledMotorValue the value in percent out to be sent to the Blinkin
    */
-  double PutLED(double ledMotorValue);
+  void PutLED(double ledMotorValue);
 
   /**
    * All index motors in
