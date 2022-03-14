@@ -19,6 +19,7 @@
 
 #include "commands/autos/DriveTwoBallUnoTrajectory.h"
 #include "commands/autos/DriveTwoBallDosTrajectory.h"
+#include "commands/autos/CenterAuto.h"
 
 #include "commands/IntakeGrabBalls.h"
 #include "commands/IntakeAllOut.h"
@@ -33,7 +34,7 @@
 #include "subsystems/DriveSubsystem.h"
 
 /**
- * An auto for starting on the left
+ * An auto for declaring individual move commands, leaving the rest the same
  */
 class LeftAuto
     : public frc2::CommandHelper<frc2::SequentialCommandGroup, LeftAuto> {
@@ -47,7 +48,21 @@ class LeftAuto
 };
 
 /**
- * An auto for starting on the right
+ * An auto for jamming everything into one file. Like RobotContainer.cpp
+ */
+class CenterAuto
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup, CenterAuto> {
+ public:
+  /**
+   * Creates a new LeftAuto.
+   *
+   * @param drive The drive subsystem this command will run on
+   */
+  CenterAuto(DriveSubsystem* drive, CargoSubsystem* cargo);
+};
+
+/**
+ * An auto for declaring move commands in DriveSubsystem.cpp method
  */
 class RightAuto
     : public frc2::CommandHelper<frc2::SequentialCommandGroup, RightAuto> {
