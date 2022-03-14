@@ -47,12 +47,6 @@ LeftAuto::LeftAuto(DriveSubsystem* drive, CargoSubsystem * cargo) {
 );
 }
 
-CenterAuto::CenterAuto(DriveSubsystem* drive, CargoSubsystem* cargo) {
-  AddCommands(
-    CenterAutoRun(drive, cargo)
-  );
-}
-
 RightAuto::RightAuto(DriveSubsystem* drive, CargoSubsystem * cargo) {
   AddCommands(
       std::move(*drive->GetRamseteCommand(kScurvePath)),
