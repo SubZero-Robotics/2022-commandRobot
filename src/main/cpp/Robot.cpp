@@ -32,8 +32,6 @@ void Robot::RobotPeriodic() { frc2::CommandScheduler::GetInstance().Run(); }
  */
 void Robot::DisabledInit() {
   m_drive.DisabledInit();
-  m_cargo.PutLED(0.00);
-  //DriverStation.GetAlliance();
 }
 
 void Robot::DisabledPeriodic() {}
@@ -54,7 +52,6 @@ void Robot::AutonomousInit() {
 void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {
-  m_drive.TeleopInit();
   // This makes sure that the autonomous stops running when
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
@@ -63,6 +60,7 @@ void Robot::TeleopInit() {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
   }
+  m_drive.TeleopInit();
 }
 
 /**

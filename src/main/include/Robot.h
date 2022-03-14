@@ -8,7 +8,6 @@
 #pragma once
 
 #include <frc/TimedRobot.h>
-#include <frc/DriverStation.h>
 #include <frc2/command/Command.h>
 
 #include "RobotContainer.h"
@@ -33,5 +32,4 @@ class Robot : public frc::TimedRobot {
   RobotContainer m_container;
 
   DriveSubsystem m_drive;
-  CargoSubsystem m_cargo;
 };
