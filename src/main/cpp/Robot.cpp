@@ -32,7 +32,6 @@ void Robot::RobotPeriodic() { frc2::CommandScheduler::GetInstance().Run(); }
  */
 void Robot::DisabledInit() {
   m_drive.DisabledInit();
-  m_cargo.PutLED(0.00);
   //DriverStation.GetAlliance();
 }
 
