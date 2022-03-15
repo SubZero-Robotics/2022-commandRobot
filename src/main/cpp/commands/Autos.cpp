@@ -27,6 +27,13 @@
   );
 } */
 
+StraightBackAuto::StraightBackAuto(DriveSubsystem* drive, CargoSubsystem* cargo) {
+  AddCommands(
+    StraightBackRun(drive, cargo)
+  );
+}
+
+
 TwoBallUpAuto::TwoBallUpAuto(DriveSubsystem* drive, CargoSubsystem* cargo) {
   AddCommands(
     TwoBallUpRun(drive, cargo)

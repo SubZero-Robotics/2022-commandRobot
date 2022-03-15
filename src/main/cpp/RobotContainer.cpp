@@ -61,6 +61,7 @@ RobotContainer::RobotContainer() {
   m_chooser.AddOption("Three Ball - Lower", &m_threeballdownAuto);
   m_chooser.AddOption("Three Ball*UNTESTED* - Upper", &m_threeballupAuto);
   m_chooser.AddOption("Two Ball - Upper", &m_twoballupAuto);
+  m_chooser.AddOption("Straight Back", &m_straightbackAuto);
 
   // Put the chooser on the dashboard
   frc::Shuffleboard::GetTab("Autonomous").Add(m_chooser);
