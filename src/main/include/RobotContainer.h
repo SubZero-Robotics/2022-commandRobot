@@ -42,10 +42,10 @@ class RobotContainer {
   ClimberSubsystem m_climber;
   
   // The auto routines
-  LeftAuto m_leftAuto{&m_drive, &m_cargo};  // add in whichever subsystems you use in this call list
+ // add in whichever subsystems you use in this call list
   CenterAuto m_centerAuto{&m_drive, &m_cargo};
-  RightAuto m_rightAuto{&m_drive, &m_cargo};
-
+  FourBallFeedAuto m_fourballfeedAuto{&m_drive, &m_cargo};
+  ThreeBallUpAuto m_threeballupAuto{&m_drive, &m_cargo};
 
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;
