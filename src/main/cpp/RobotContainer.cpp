@@ -59,7 +59,8 @@ RobotContainer::RobotContainer() {
   // Add commands to the autonomous command chooser
   m_chooser.SetDefaultOption("Four Ball - Kaiden Feed", &m_fourballfeedAuto);
   m_chooser.AddOption("Three Ball - Lower", &m_threeballdownAuto);
-  m_chooser.AddOption("Three Ball** - Upper", &m_threeballupAuto);
+  m_chooser.AddOption("Three Ball*UNTESTED* - Upper", &m_threeballupAuto);
+  m_chooser.AddOption("Two Ball - Upper", &m_twoballupAuto);
 
   // Put the chooser on the dashboard
   frc::Shuffleboard::GetTab("Autonomous").Add(m_chooser);

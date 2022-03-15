@@ -46,6 +46,7 @@ class RobotContainer {
   ThreeBallDownAuto m_threeballdownAuto{&m_drive, &m_cargo};
   FourBallFeedAuto m_fourballfeedAuto{&m_drive, &m_cargo};
   ThreeBallUpAuto m_threeballupAuto{&m_drive, &m_cargo};
+  TwoBallUpAuto m_twoballupAuto{&m_drive, &m_cargo};
 
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;

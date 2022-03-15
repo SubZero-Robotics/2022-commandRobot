@@ -27,6 +27,12 @@
   );
 } */
 
+TwoBallUpAuto::TwoBallUpAuto(DriveSubsystem* drive, CargoSubsystem* cargo) {
+  AddCommands(
+    TwoBallUpRun(drive, cargo)
+  );
+}
+
 ThreeBallDownAuto::ThreeBallDownAuto(DriveSubsystem* drive, CargoSubsystem* cargo) {
   AddCommands(
     ThreeBallDownRun(drive, cargo)

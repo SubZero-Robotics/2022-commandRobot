@@ -20,6 +20,7 @@
 #include "commands/autos/ThreeBallDown.h"
 #include "commands/autos/FourBallFeed.h"
 #include "commands/autos/ThreeBallUp.h"
+#include "commands/autos/TwoBallUp.h"
 
 #include "commands/IntakeGrabBalls.h"
 #include "commands/IntakeAllOut.h"
@@ -32,6 +33,20 @@
 #include "Constants.h"
 #include <pathplanner/lib/PathPlanner.h>
 #include "subsystems/DriveSubsystem.h"
+
+/**
+ * An auto for jamming everything into one file. Like RobotContainer.cpp
+ */
+class TwoBallUpAuto
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup, TwoBallUpAuto> {
+ public:
+  /**
+   * Creates a new LeftAuto.
+   *
+   * @param drive The drive subsystem this command will run on
+   */
+  TwoBallUpAuto(DriveSubsystem* drive, CargoSubsystem* cargo);
+};
 
 /**
  * An auto for jamming everything into one file. Like RobotContainer.cpp
