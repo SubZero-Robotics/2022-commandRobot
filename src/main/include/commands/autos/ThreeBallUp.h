@@ -9,23 +9,25 @@
 
 #include <frc2/command/CommandBase.h> 
 #include <frc2/command/CommandHelper.h>
+#include <frc/XboxController.h>
 
 #include <frc/Filesystem.h>
 #include <frc/trajectory/TrajectoryUtil.h>
 #include <wpi/fs.h>
 
 #include "subsystems/DriveSubsystem.h"
+#include "subsystems/CargoSubsystem.h"
 
-class DriveTwoBallDosTrajectory
-    : public frc2::CommandHelper<frc2::CommandBase, DriveTwoBallDosTrajectory> {
+class ThreeBallUpRun
+    : public frc2::CommandHelper<frc2::CommandBase, ThreeBallUpRun> {
  public:
   /**
-   * Creates a new DriveTwoBallDosTrajectory.
+   * Creates a new DriveTwoBallUnoTrajectory.
    *
    * takes no parameters: the trajectory is hardcoded in here
    * 
    */
-  DriveTwoBallDosTrajectory(DriveSubsystem* subsystem);
+  ThreeBallUpRun(DriveSubsystem* dsubsystem, CargoSubsystem* csubsystem);
 
   void Initialize() override;
 
@@ -35,5 +37,8 @@ class DriveTwoBallDosTrajectory
 
  private:
   DriveSubsystem* m_drive;
+  CargoSubsystem* m_cargo;
   bool finished = false;
+  // The controller
+  frc::XboxController Xbox{0};
 };

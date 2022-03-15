@@ -17,9 +17,11 @@
 #include "commands/TurnToLimelight.h"
 #include "commands/DriveStraight.h"
 
-#include "commands/autos/DriveTwoBallUnoTrajectory.h"
-#include "commands/autos/DriveTwoBallDosTrajectory.h"
-#include "commands/autos/CenterAuto.h"
+#include "commands/autos/ThreeBallDown.h"
+#include "commands/autos/FourBallFeed.h"
+#include "commands/autos/ThreeBallUp.h"
+#include "commands/autos/TwoBallUp.h"
+#include "commands/autos/StraightBack.h"
 
 #include "commands/IntakeGrabBalls.h"
 #include "commands/IntakeAllOut.h"
@@ -34,44 +36,71 @@
 #include "subsystems/DriveSubsystem.h"
 
 /**
- * An auto for declaring individual move commands, leaving the rest the same
+ * An auto for jamming everything into one file. Like RobotContainer.cpp
  */
-class LeftAuto
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup, LeftAuto> {
+class StraightBackAuto
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup, StraightBackAuto> {
  public:
   /**
    * Creates a new LeftAuto.
    *
    * @param drive The drive subsystem this command will run on
    */
-  LeftAuto(DriveSubsystem* drive, CargoSubsystem* cargo);
+  StraightBackAuto(DriveSubsystem* drive, CargoSubsystem* cargo);
 };
 
 /**
  * An auto for jamming everything into one file. Like RobotContainer.cpp
  */
-class CenterAuto
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup, CenterAuto> {
+class TwoBallUpAuto
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup, TwoBallUpAuto> {
  public:
   /**
    * Creates a new LeftAuto.
    *
    * @param drive The drive subsystem this command will run on
    */
-  CenterAuto(DriveSubsystem* drive, CargoSubsystem* cargo);
+  TwoBallUpAuto(DriveSubsystem* drive, CargoSubsystem* cargo);
 };
 
 /**
- * An auto for declaring move commands in DriveSubsystem.cpp method
+ * An auto for jamming everything into one file. Like RobotContainer.cpp
  */
-class RightAuto
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup, RightAuto> {
+class ThreeBallDownAuto
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup, ThreeBallDownAuto> {
  public:
   /**
-   * Creates a new RightAuto.
+   * Creates a new LeftAuto.
    *
    * @param drive The drive subsystem this command will run on
    */
-  RightAuto(DriveSubsystem* drive, CargoSubsystem* cargo);
+  ThreeBallDownAuto(DriveSubsystem* drive, CargoSubsystem* cargo);
 };
 
+/**
+ * Four ball feed auto by jamming everything in one file. Thanks Kaiden!
+ */
+class FourBallFeedAuto
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup, FourBallFeedAuto> {
+ public:
+  /**
+   * Creates a new FourBallFeedAuto.
+   *
+   * @param drive The drive subsystem this command will run on
+   */
+  FourBallFeedAuto(DriveSubsystem* drive, CargoSubsystem* cargo);
+};
+
+/**
+ * Three ball top auto by jamming everything in one file.
+ */
+class ThreeBallUpAuto
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup, ThreeBallUpAuto> {
+ public:
+  /**
+   * Creates a new ThreeBallUpAuto.
+   *
+   * @param drive The drive subsystem this command will run on
+   */
+  ThreeBallUpAuto(DriveSubsystem* drive, CargoSubsystem* cargo);
+};

@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/autos/DriveTwoBallUnoTrajectory.h"
+#include "commands/autos/TwoBallUp.h"
 
 #include <frc/controller/PIDController.h>
 #include <frc/controller/RamseteController.h>
@@ -13,33 +13,34 @@
 #include <frc/trajectory/TrajectoryGenerator.h>
 #include <frc/trajectory/constraint/DifferentialDriveVoltageConstraint.h>
 #include <frc2/command/RamseteCommand.h>
+
+#include "commands/ShooterAutoShoot.h"
+#include "commands/IntakeGrabBalls.h"
+#include "commands/IntakeAllOut.h"
+
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/SequentialCommandGroup.h>
+#include <frc2/command/ParallelCommandGroup.h>
+#include <frc2/command/ParallelRaceGroup.h>
 
-DriveTwoBallUnoTrajectory::DriveTwoBallUnoTrajectory(DriveSubsystem* subsystem)
-    : m_drive(subsystem) {
-  AddRequirements({subsystem});
+TwoBallUpRun::TwoBallUpRun(DriveSubsystem* dsubsystem, CargoSubsystem* csubsystem)
+    : m_drive{dsubsystem}, m_cargo{csubsystem} {
+  AddRequirements({dsubsystem, csubsystem});
 }
 
-void DriveTwoBallUnoTrajectory::Initialize() {
-  finished = true;
-}
-
-bool DriveTwoBallUnoTrajectory::IsFinished() { return finished; }
-
-void DriveTwoBallUnoTrajectory::End(bool interrupted) {
-  // An 2BallsLowPart1 Trajectory
-  frc::Trajectory tooballlowpartuno;
+void TwoBallUpRun::Initialize() {
+  // An Top Auto Two Ball Trajectory
+  frc::Trajectory TwoBallUp1;
    fs::path deployDirectoryuno = frc::filesystem::GetDeployDirectory();
-   deployDirectoryuno = deployDirectoryuno / "pathplanner" / "generatedJSON" / "ThreeBallOne.wpilib.json";
-   tooballlowpartuno = frc::TrajectoryUtil::FromPathweaverJson(deployDirectoryuno.string());
-
+   deployDirectoryuno = deployDirectoryuno / "pathplanner" / "generatedJSON" / "Top Auto.wpilib.json";
+   TwoBallUp1 = frc::TrajectoryUtil::FromPathweaverJson(deployDirectoryuno.string());
+   
   // Reset odometry to the starting pose of the trajectory.
-  m_drive->ResetOdometry(tooballlowpartuno.InitialPose());
+  m_drive->ResetOdometry(TwoBallUp1.InitialPose());
 
   // this sets up the command
-  frc2::RamseteCommand TwoBallUnoCommand = frc2::RamseteCommand(
-      tooballlowpartuno, 
+  frc2::RamseteCommand TwoBallUp1Command = frc2::RamseteCommand(
+      TwoBallUp1, 
       [this]() { return m_drive->GetPose(); },
       frc::RamseteController(DriveConstants::kRamseteB,
                              DriveConstants::kRamseteZeta),
@@ -52,10 +53,18 @@ void DriveTwoBallUnoTrajectory::End(bool interrupted) {
       [this](auto left, auto right) { m_drive->TankDriveVolts(left, right); },
       {m_drive});
 
-  // Schedule this new command we just made, followed by a "stop the robot"
-    frc2::SequentialCommandGroup* myCommandGroup = new frc2::SequentialCommandGroup(
-      std::move(TwoBallUnoCommand),
-      frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {})
-                                  );
-    myCommandGroup->Schedule();
+  frc2::SequentialCommandGroup* myTwoBallUpAuto = new frc2::SequentialCommandGroup(
+    frc2::ParallelRaceGroup( 
+      std::move(TwoBallUp1Command),     
+      IntakeGrabBalls(m_cargo)),
+    frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {} ),
+    IntakeAllOut(m_cargo).WithTimeout(0.1_s), 
+    ShooterAutoShoot(m_cargo, &Xbox).WithTimeout(3_s));
+  myTwoBallUpAuto->Schedule();
+}
+
+bool TwoBallUpRun::IsFinished() { return finished; }
+
+void TwoBallUpRun::End(bool interrupted) {
+
 }
