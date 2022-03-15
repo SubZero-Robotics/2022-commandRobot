@@ -27,9 +27,9 @@
   );
 } */
 
-CenterAuto::CenterAuto(DriveSubsystem* drive, CargoSubsystem* cargo) {
+ThreeBallDownAuto::ThreeBallDownAuto(DriveSubsystem* drive, CargoSubsystem* cargo) {
   AddCommands(
-    CenterAutoRun(drive, cargo)
+    ThreeBallDownRun(drive, cargo)
   );
 }
 

@@ -18,8 +18,8 @@
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/CargoSubsystem.h"
 
-class CenterAutoRun
-    : public frc2::CommandHelper<frc2::CommandBase, CenterAutoRun> {
+class ThreeBallDownRun
+    : public frc2::CommandHelper<frc2::CommandBase, ThreeBallDownRun> {
  public:
   /**
    * Creates a new DriveTwoBallUnoTrajectory.
@@ -27,7 +27,7 @@ class CenterAutoRun
    * takes no parameters: the trajectory is hardcoded in here
    * 
    */
-  CenterAutoRun(DriveSubsystem* dsubsystem, CargoSubsystem* csubsystem);
+  ThreeBallDownRun(DriveSubsystem* dsubsystem, CargoSubsystem* csubsystem);
 
   void Initialize() override;
 

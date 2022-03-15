@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/autos/CenterAuto.h"
+#include "commands/autos/ThreeBallDown.h"
 
 #include <frc/controller/PIDController.h>
 #include <frc/controller/RamseteController.h>
@@ -23,12 +23,12 @@
 #include <frc2/command/ParallelCommandGroup.h>
 #include <frc2/command/ParallelRaceGroup.h>
 
-CenterAutoRun::CenterAutoRun(DriveSubsystem* dsubsystem, CargoSubsystem* csubsystem)
+ThreeBallDownRun::ThreeBallDownRun(DriveSubsystem* dsubsystem, CargoSubsystem* csubsystem)
     : m_drive{dsubsystem}, m_cargo{csubsystem} {
   AddRequirements({dsubsystem, csubsystem});
 }
 
-void CenterAutoRun::Initialize() {
+void ThreeBallDownRun::Initialize() {
   // An 2BallsLowPart1 Trajectory
   frc::Trajectory tooballlowpartuno;
    fs::path deployDirectoryuno = frc::filesystem::GetDeployDirectory();
@@ -73,7 +73,7 @@ void CenterAutoRun::Initialize() {
       [this](auto left, auto right) { m_drive->TankDriveVolts(left, right); },
       {m_drive});
 
-  frc2::SequentialCommandGroup* myCenterAuto = new frc2::SequentialCommandGroup(
+  frc2::SequentialCommandGroup* myThreeBallDown = new frc2::SequentialCommandGroup(
     frc2::ParallelRaceGroup( 
       std::move(TwoBallUnoCommand),     
       IntakeGrabBalls(m_cargo)),
@@ -85,11 +85,11 @@ void CenterAutoRun::Initialize() {
     frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {} ),
     IntakeAllOut(m_cargo).WithTimeout(0.1_s),
     ShooterAutoShoot(m_cargo, &Xbox).WithTimeout(4_s));
-  myCenterAuto->Schedule();
+  myThreeBallDown->Schedule();
 }
 
-bool CenterAutoRun::IsFinished() { return finished; }
+bool ThreeBallDownRun::IsFinished() { return finished; }
 
-void CenterAutoRun::End(bool interrupted) {
+void ThreeBallDownRun::End(bool interrupted) {
 
 }

@@ -43,7 +43,7 @@ class RobotContainer {
   
   // The auto routines
  // add in whichever subsystems you use in this call list
-  CenterAuto m_centerAuto{&m_drive, &m_cargo};
+  ThreeBallDownAuto m_threeballdownAuto{&m_drive, &m_cargo};
   FourBallFeedAuto m_fourballfeedAuto{&m_drive, &m_cargo};
   ThreeBallUpAuto m_threeballupAuto{&m_drive, &m_cargo};
 

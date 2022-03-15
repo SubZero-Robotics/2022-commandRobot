@@ -17,7 +17,7 @@
 #include "commands/TurnToLimelight.h"
 #include "commands/DriveStraight.h"
 
-#include "commands/autos/CenterAuto.h"
+#include "commands/autos/ThreeBallDown.h"
 #include "commands/autos/FourBallFeed.h"
 #include "commands/autos/ThreeBallUp.h"
 
@@ -36,15 +36,15 @@
 /**
  * An auto for jamming everything into one file. Like RobotContainer.cpp
  */
-class CenterAuto
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup, CenterAuto> {
+class ThreeBallDownAuto
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup, ThreeBallDownAuto> {
  public:
   /**
    * Creates a new LeftAuto.
    *
    * @param drive The drive subsystem this command will run on
    */
-  CenterAuto(DriveSubsystem* drive, CargoSubsystem* cargo);
+  ThreeBallDownAuto(DriveSubsystem* drive, CargoSubsystem* cargo);
 };
 
 /**
