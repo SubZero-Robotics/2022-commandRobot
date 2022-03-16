@@ -43,7 +43,7 @@ void FourBallFeedRun::Initialize() {
   frc::Trajectory FourBallFeed3;
    fs::path deployDirectorytres = frc::filesystem::GetDeployDirectory();
    deployDirectorytres = deployDirectorytres / "pathplanner" / "generatedJSON" / "FourBallThree.wpilib.json";
-   FourBallFeed2 = frc::TrajectoryUtil::FromPathweaverJson(deployDirectorytres.string());
+   FourBallFeed3 = frc::TrajectoryUtil::FromPathweaverJson(deployDirectorytres.string());
 
   // Reset odometry to the starting pose of the trajectory.
   m_drive->ResetOdometry(FourBallFeed1.InitialPose());
@@ -98,7 +98,7 @@ void FourBallFeedRun::Initialize() {
       std::move(FourBallFeed1Command),     
       IntakeGrabBalls(m_cargo)),
     frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {} ),
-    ShooterAutoShoot(m_cargo, &Xbox).WithTimeout(2_s),
+    ShooterAutoShoot(m_cargo, &Xbox).WithTimeout(2.5_s),
     frc2::ParallelRaceGroup( 
       std::move(FourBallFeed2Command),     
       IntakeGrabBalls(m_cargo)),
