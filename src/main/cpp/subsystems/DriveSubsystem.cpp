@@ -196,7 +196,7 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
   units::meter_t lime_dist = 0_m;
   SelectLimelightPipeline(0);
   //calculate distance from the target angle
-  lime_dist = (kUpHub - kRobotHeight) / tan((ty + kMountAngle) * (3.14159 / 180));
+  lime_dist = ((kUpHub - kRobotHeight) / tan((ty + kMountAngle) * (3.14159 / 180)) - kIdealDistance);
   return lime_dist;
 }
 

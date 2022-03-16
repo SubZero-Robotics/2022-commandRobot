@@ -104,6 +104,7 @@ constexpr double kShootD = 3.0;    //kD for shooter velocity
 constexpr auto kRobotHeight = 0.94_m;// Height of limelight
 constexpr auto kUpHub = 2.64_m;      // height of upper target
 constexpr double kMountAngle = 30.0; // Limelight angle off horizintal
+constexpr auto kIdealDistance = 2.1336_m;
 
 // XboxController enums.  Since the Trigger stuff works on the base Joystick class, not the
 // Xbox extension, these are undefined where we want to use them.  So, flat-out copied them 

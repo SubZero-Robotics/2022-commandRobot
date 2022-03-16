@@ -180,7 +180,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
  /**
    * Returns the ultrasonic sensor's distance
    *
-   * @return The range from the ultrasonic sensor, in inches
+   * @return Return only the tx value, should have drive move only a small ammount
    */
   units::degree_t LimelightDifferenceAngle();
   
@@ -204,7 +204,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
   /**
    * Returns the distance to the limelight target
    *
-   * @return The distance at which the limelight target sits
+   * @return The distance at from where we want to be in relation to the target
    */
   units::meter_t GetLimelightDistance();
 
