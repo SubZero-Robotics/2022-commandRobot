@@ -44,6 +44,7 @@ void Robot::DisabledInit() {
             m_cargo.PutLED(0.00);
           break;
   }*/
+  m_cargo.PutLED(0.85);
 }
 
 void Robot::DisabledPeriodic() {}

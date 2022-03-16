@@ -33,5 +33,5 @@ class Robot : public frc::TimedRobot {
   RobotContainer m_container;
 
   DriveSubsystem m_drive;
-  //CargoSubsystem m_cargo;
+  CargoSubsystem m_cargo;
 };
