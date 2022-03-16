@@ -221,8 +221,8 @@ void DriveSubsystem::ZeroGyro(){
   ahrs.ZeroYaw();
 }
 
-double DriveSubsystem::GetDistance() {
-  return Distance;
+units::degree_t DriveSubsystem::LimelightDifferenceAngle() {
+  return (units::degree_t)(tx);
 }
 
 units::degree_t DriveSubsystem::SanitizeAngle(units::degree_t target){

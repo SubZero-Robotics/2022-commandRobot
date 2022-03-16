@@ -182,7 +182,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
    *
    * @return The range from the ultrasonic sensor, in inches
    */
-  double GetDistance();
+  units::degree_t LimelightDifferenceAngle();
   
  /**
    * make sure target angle is in the right range
@@ -242,10 +242,6 @@ class DriveSubsystem : public frc2::SubsystemBase {
   frc::Pose2d currentRobotPose;      // is also zeroed by default
   // so now use those to initialize odemetry at zero too
   frc::DifferentialDriveOdometry m_odometry{currentrobotAngle,currentRobotPose};
-
-  // Ultrasonic Ranger
-  //frc::AnalogInput Ultrasonic{0};
-  double Distance = 0.0;    // the ranger distance
 
   // navx
   double gyroAngle = 0.0;   // What is the angle (degrees) from the gyro?
