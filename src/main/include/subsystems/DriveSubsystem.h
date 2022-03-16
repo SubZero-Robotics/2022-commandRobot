@@ -201,6 +201,13 @@ class DriveSubsystem : public frc2::SubsystemBase {
    */
   frc::TrajectoryConfig *GetTrajectoryConfig();
 
+  /**
+   * Returns the distance to the limelight target
+   *
+   * @return The distance at which the limelight target sits
+   */
+  units::meter_t GetLimelightDistance();
+
  /**
    * Choose a path
    * 
@@ -248,6 +255,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // limelight
   float tx = 0.0;           // limelight angle off left/right
   int tv = 1;               // does the limelight have a target?
+  float ty = 0.0;           // limelight distance calculation
   units::degree_t TargetAngle = 0.0_deg;  // Saved value of an angle to turn to
 
   // pointer to network tables for limelight stuff

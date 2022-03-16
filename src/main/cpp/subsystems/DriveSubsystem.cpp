@@ -105,6 +105,7 @@ void DriveSubsystem::Periodic() {
 
 // Get limelight stuff
   tx = table->GetNumber("tx",0.0); 
+  ty = table->GetNumber("ty",0.0); 
   frc::SmartDashboard::PutNumber("DifferenceLimelightAngle", tx);
   //float ty = table->GetNumber("ty",0.0); 
   //float ta = table-> GetNumber("ta",0.0);
@@ -188,6 +189,14 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
     target = units::degree_t((gyroAngle) * (kGyroReversed ? -1.0 : 1.0)); //improvemnet is to remove this have return error so it doesnt turn
   }
   return target; 
+}
+
+ units::meter_t DriveSubsystem::GetLimelightDistance() {
+  units::meter_t lime_dist = 0_m;
+  //calculate distance from the target angle
+  
+
+  return lime_dist;
 }
 
  int DriveSubsystem::GetLimelightTargetValid() {
