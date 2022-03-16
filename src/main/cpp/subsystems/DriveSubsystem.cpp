@@ -85,6 +85,7 @@ void DriveSubsystem::Periodic() {
 
   currentrobotAngle = Get2dAngle();
   //Display encoder values in SmartDashboard
+  frc::SmartDashboard::PutNumber("Distance to Target", (double)GetLimelightDistance());
   frc::SmartDashboard::PutNumber("TargetAngle", (double)(gyroAngle+tx));
   frc::SmartDashboard::PutNumber("2d Angle", (double)currentrobotAngle.Degrees());
   frc::SmartDashboard::PutNumber("Pose X", (double)m_odometry.GetPose().X());
@@ -193,9 +194,9 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
 
  units::meter_t DriveSubsystem::GetLimelightDistance() {
   units::meter_t lime_dist = 0_m;
+  SelectLimelightPipeline(0);
   //calculate distance from the target angle
-  
-
+  lime_dist = (kUpHub - kRobotHeight) / tan((ty + kMountAngle) * (3.14159 / 180));
   return lime_dist;
 }
 
