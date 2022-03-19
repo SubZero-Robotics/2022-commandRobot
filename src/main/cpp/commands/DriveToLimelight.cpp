@@ -22,11 +22,17 @@
 DriveToLimelight::DriveToLimelight(DriveSubsystem* subsystem)
     : m_drive(subsystem) {
   AddRequirements({subsystem});
-  m_distance = m_drive->GetLimelightDistance(); // possible problem: can't see target long enough to pull ty value
-  m_angle = m_drive->LimelightDifferenceAngle(); //see above
 }
 
 void DriveToLimelight::Initialize() {
+  m_drive->SelectLimelightPipeline(0);
+  if (m_drive->GetLimelightTargetValid()) {
+    m_distance = m_drive->GetLimelightDistance(); // possible problem: can't see target long enough to pull ty value
+    m_angle = m_drive->LimelightDifferenceAngle(); //see above
+  } else {
+    m_distance = 0_m;
+    m_angle = 0_deg;
+  }
   // Create a trajectory starting right where we are now and ending m_distance
   // straight ahead
 

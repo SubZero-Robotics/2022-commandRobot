@@ -32,7 +32,7 @@
 
 #include "commands/DefaultDrive.h"
 #include "commands/DriveDistance.h"
-#include "commands/TurnToLimelight.h"
+#include "commands/DriveToLimelight.h"
 #include "commands/TurnToAngle.h"
 #include "commands/TurnToSavedAngle.h"
 #include "commands/DriveResetOdometry.h"
@@ -120,7 +120,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   // While held, drive robot faster
   frc2::JoystickButton(&Xbox, Button::kBack)
-      .WhenHeld(DriveDistance(0.5_m, &m_drive));
+      .WhenHeld(DriveToLimelight(&m_drive));
         /*DefaultDrive(
       &m_drive,
       [this] { return Xbox.GetLeftY(); },
@@ -131,8 +131,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&Xbox, Button::kX)
     .WhenHeld(TurnToLimelight(
     &m_drive,
-    [this] { return Xbox.GetLeftY()/2; },
-    [this] { return Xbox.GetLeftX()/2.5; }));
+    [this] { return Xbox.GetLeftY(); },
+    [this] { return Xbox.GetLeftX(); }));
 
   frc2::JoystickButton(&Xbox, Button::kStart)
       .WhenHeld(IntakeAllOut(&m_cargo));

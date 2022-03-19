@@ -23,7 +23,7 @@ TurnToLimelight::TurnToLimelight(DriveSubsystem* subsystem,
 
 void TurnToLimelight::Initialize() {
   //Turn on limelight
-  //m_drive->SelectLimelightPipeline(0);
+  m_drive->SelectLimelightPipeline(0);
 }
 
 void TurnToLimelight::Execute() {

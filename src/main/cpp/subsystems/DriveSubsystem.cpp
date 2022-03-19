@@ -194,9 +194,8 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
 
  units::meter_t DriveSubsystem::GetLimelightDistance() {
   units::meter_t lime_dist = 0_m;
-  SelectLimelightPipeline(0);
   //calculate distance from the target angle
-  lime_dist = ((kUpHub - kRobotHeight) / tan((ty + kMountAngle) * (3.14159 / 180)) - kIdealDistance);
+  lime_dist = 2.1*((kUpHub - kRobotHeight) / tan((ty + kMountAngle) * (3.14159 / 180)) - kIdealDistance);
   return lime_dist;
 }
 
@@ -222,7 +221,7 @@ void DriveSubsystem::ZeroGyro(){
 }
 
 units::degree_t DriveSubsystem::LimelightDifferenceAngle() {
-  return (units::degree_t)(tx);
+  return (units::degree_t)(-tx);
 }
 
 units::degree_t DriveSubsystem::SanitizeAngle(units::degree_t target){
