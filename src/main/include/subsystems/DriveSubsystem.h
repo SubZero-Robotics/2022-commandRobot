@@ -178,9 +178,9 @@ class DriveSubsystem : public frc2::SubsystemBase {
   void ZeroGyro(void);
 
  /**
-   * Returns the ultrasonic sensor's distance
+   * Returns tx value in a degree wrapper
    *
-   * @return Return only the tx value, should have drive move only a small ammount
+   * @return Return only the tx value, can be in ~ range -20_deg to 20_deg
    */
   units::degree_t LimelightDifferenceAngle();
   
@@ -200,6 +200,11 @@ class DriveSubsystem : public frc2::SubsystemBase {
    * get the trajectory config for this drive
    */
   frc::TrajectoryConfig *GetTrajectoryConfig();
+
+ /**
+   * get a reversed trajectory config for this drive
+   */
+  frc::TrajectoryConfig *GetReversedTrajectoryConfig();
 
   /**
    * Returns the distance to the limelight target

@@ -261,6 +261,12 @@ void DriveSubsystem::ConfigureMotor(WPI_TalonFX *_talon) {
    return trajectoryConfig;
  }
 
+ frc::TrajectoryConfig *DriveSubsystem::GetReversedTrajectoryConfig() {
+   trajectoryConfig->SetReversed(true);
+   return trajectoryConfig;
+ }
+
+
 frc2::SequentialCommandGroup DriveSubsystem::GetRamseteCommand(enum Paths drivePath) {
   // get a pointer to the driveSubsystem, because we need to use it in the command later
   DriveSubsystem *driveSubSystem = this;
