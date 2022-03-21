@@ -32,8 +32,11 @@ void DriveToLimelight::Initialize() {
   m_distance = m_drive->GetLimelightDistance(); // possible problem: can't see target long enough to pull ty value
   m_angle = m_drive->LimelightDifferenceAngle(); //see above
 
-  while(abs((double)m_distance)>0.05 || abs((double)m_angle)>2) {
-    
+  int i = 0;
+
+  while((abs((double)m_distance)>0.05 || abs((double)m_angle)>2) && i<5) {
+    m_distance = m_drive->GetLimelightDistance(); // possible problem: can't see target long enough to pull ty value
+    m_angle = m_drive->LimelightDifferenceAngle(); //see above
     if (m_drive->GetLimelightTargetValid() && m_distance>0.05_m) {
       // Create a trajectory starting right where we are now and ending m_distance
       // straight ahead
@@ -69,8 +72,12 @@ void DriveToLimelight::Initialize() {
         frc2::SequentialCommandGroup *myCommandGroup = new frc2::SequentialCommandGroup(
           std::move(DriveToLimelightCommand),
           frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {})
+          //Code here that sends us to top of while loop
                                       );
         myCommandGroup->Schedule();
+        i++;
+        frc2::WaitCommand(5_s);
+
     } else if (m_drive->GetLimelightTargetValid() && m_distance<-0.05_m) {
       // Create a trajectory starting right where we are now and ending m_distance
       // straight ahead
@@ -106,13 +113,14 @@ void DriveToLimelight::Initialize() {
         frc2::SequentialCommandGroup *myCommandGroup = new frc2::SequentialCommandGroup(
           std::move(DriveToLimelightCommand),
           frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {})
+          //Code here that sends us to top of while loop
                                       );
         myCommandGroup->Schedule();
+        i++;
+        frc2::WaitCommand(5_s);
     } else {
       break;
     }
-    m_distance = m_drive->GetLimelightDistance(); // possible problem: can't see target long enough to pull ty value
-    m_angle = m_drive->LimelightDifferenceAngle(); //see above
   }
 }
 
