@@ -35,7 +35,5 @@ class DriveToLimelight
   units::meter_t m_distance;
   units::degree_t m_angle;
   bool finished = false;
-  // Leaving this here: once we figure out how to attach a speed scaling to a 
-  // RamsetesCommand, we can put it back as a parameter
-  double m_speed;  
+  frc2::RamseteCommand *PointerToDriveToLimelightCommand;
 };
