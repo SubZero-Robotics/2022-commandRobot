@@ -17,30 +17,37 @@ ShooterAutoShoot::ShooterAutoShoot(CargoSubsystem* subsystem, frc::XboxControlle
   AddRequirements({subsystem});
 }
 
-void ShooterAutoShoot::Initialize() { }
+void ShooterAutoShoot::Initialize() {
+  //if top and bottom blocked, we have two balls
+  if (TopIntakeLaser.Get()==false && BottomIntakeLaser.Get()==false) {
+    CargoToShoot = 2;
+  //if only top blocked, we have one ball
+  } else if (TopIntakeLaser.Get()==false && BottomIntakeLaser.Get()==true) {
+    CargoToShoot = 1;
+  //default to two balls
+  } else {
+    CargoToShoot = 2;
+  }
+}
  
 void ShooterAutoShoot::Execute() {
   // tell shooter to get to set rpm
   m_cargo->AutoShoot();
-
-  // Auto commands pass in NULL for the controller as there's no need to rumble
-  if (m_controller != NULL) {
-    // get distance from network tables to prevent a DriveSubsystem dependancy
-    double distance = frc::SmartDashboard::GetNumber("Distance", 10000.0); // a lot of inches, by default
-    // if we're too close, warn driver
-    if (distance < kRumbleDistance)
-      m_controller->SetRumble(frc::GenericHID::RumbleType::kLeftRumble,1.0);
-    else
-      m_controller->SetRumble(frc::GenericHID::RumbleType::kLeftRumble,0.0);  
+  //if top index blocked, we are armed to shoot
+  if (TopIntakeLaser.Get()==false) {
+    armed = true;
   }
+  //if top "was" blocked (armed used to equal true) and it's not anymore, we have one less ball
+  if (TopIntakeLaser.Get()==true && armed==true) {
+    CargoToShoot--;
+    armed = false;
+  }
+
 }
 
-// stop rumbling when the command finishes, stop shooter (redundant with default command. hopefully)
 void ShooterAutoShoot::End(bool interrupted) {
-  m_controller->SetRumble(frc::GenericHID::RumbleType::kLeftRumble,0.0);  
   m_cargo->Stop();
 }
 
-// this is a state, it lasts till it's cancelled
-// although we could check if we are at the right RPM
-bool ShooterAutoShoot::IsFinished() { return false; }
+// this will stop after we have zero more balls
+bool ShooterAutoShoot::IsFinished() { if (CargoToShoot==0) {return true;} else {return false;} }
