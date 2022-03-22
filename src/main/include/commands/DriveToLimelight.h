@@ -35,5 +35,5 @@ class DriveToLimelight
   units::meter_t m_distance;
   units::degree_t m_angle;
   bool finished = false;
-  frc2::RamseteCommand *PointerToDriveToLimelightCommand;
+  frc2::RamseteCommand *PointerToDriveToLimelightCommand = NULL;
 };

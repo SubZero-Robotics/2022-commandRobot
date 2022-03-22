@@ -26,13 +26,10 @@ DriveToLimelight::DriveToLimelight(DriveSubsystem* subsystem)
 }
 
 void DriveToLimelight::Initialize() {
-  m_drive->SelectLimelightPipeline(0);
-  frc2::WaitCommand(0.2_s);
-
   m_distance = m_drive->GetLimelightDistance(); // possible problem: can't see target long enough to pull ty value
   m_angle = m_drive->LimelightDifferenceAngle(); //see above
 
-  if (m_drive->GetLimelightTargetValid() && m_distance>0.05_m) {
+  if (m_drive->GetLimelightTargetValid() && (m_distance>0.05_m || abs((double)m_angle))>2) {
     // Create a trajectory starting right where we are now and ending m_distance
     // straight ahead
     auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
@@ -72,7 +69,7 @@ void DriveToLimelight::Initialize() {
       PointerToDriveToLimelightCommand = &DriveToLimelightCommand;
       myCommandGroup->Schedule();
 
-  } else if (m_drive->GetLimelightTargetValid() && m_distance<-0.05_m) {
+  } else if (m_drive->GetLimelightTargetValid() && (m_distance<-0.05_m || abs((double)m_angle))>2) {
     // Create a trajectory starting right where we are now and ending m_distance
     // straight ahead
     auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
@@ -116,9 +113,8 @@ void DriveToLimelight::Initialize() {
 
 void DriveToLimelight::Execute() { }
 
-bool DriveToLimelight::IsFinished() { if (PointerToDriveToLimelightCommand->IsScheduled()) {return false;} else {return true;} }
+bool DriveToLimelight::IsFinished() { }
 
 void DriveToLimelight::End(bool interrupted) {
   frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {});
-  m_drive->SelectLimelightPipeline(1);
 }
