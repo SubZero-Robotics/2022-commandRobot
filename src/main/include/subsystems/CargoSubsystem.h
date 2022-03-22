@@ -11,6 +11,9 @@
 #include <ctre/Phoenix.h>
 #include <frc/motorcontrol/VictorSP.h>
 
+#include <frc/Timer.h>
+#include <units/time.h>
+
 #include <frc2/command/SubsystemBase.h>
 
 #include <frc/DigitalInput.h>
@@ -37,9 +40,14 @@ class CargoSubsystem : public frc2::SubsystemBase {
   void GrabBalls();
 
   /**
+   * One stop solution to handle all of our intaking needs in auto. Spins up the shooter motors to warm them up.
+   */
+  void AutoGrabBalls(units::second_t durationOfMove);
+
+  /**
    * @param ledMotorValue the value in percent out to be sent to the Blinkin
    */
-  double PutLED(double ledMotorValue);
+  void PutLED(double ledMotorValue);
 
   /**
    * All index motors in
@@ -102,6 +110,9 @@ class CargoSubsystem : public frc2::SubsystemBase {
    */
   double rollingRPMs(double nextRPM);
 
+ protected:
+  frc::Timer m_timer;
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -122,6 +133,8 @@ class CargoSubsystem : public frc2::SubsystemBase {
   WPI_VictorSPX ShooterFollow{5};
   double RPM = 0.0;         // Shooter motor speed
   bool truth = 0;
+
+  units::second_t m_duration;
 
   #define numRPMs 5
   double recentRPMs[numRPMs];

@@ -55,13 +55,35 @@ void CargoSubsystem::Periodic() {
   frc::SmartDashboard::PutNumber("AvgRPM", (averageRPMs));
 }
 
-double CargoSubsystem::PutLED(double ledMotorValue) {
+void CargoSubsystem::PutLED(double ledMotorValue) {
     //I WOULD create an enum for this, except that the list of values would take me all day, and is not worth typing out
     //PLUS you'd have to find the table anyways to know how to enter the values
     led_lights.Set(ledMotorValue);
 }
 
 void CargoSubsystem::GrabBalls() {
+    if (TopLaserState) {
+        TopIndexer.Set(kIndexerSpeed);
+        BottomIndexer.Set(kIndexerSpeed);
+        IntakeWheels.Set(kIntakeSpeed);
+    } else {
+        TopIndexer.StopMotor();
+        if (BottomLaserState)
+        {
+            BottomIndexer.Set(kIndexerSpeed);
+            IntakeWheels.Set(kIntakeSpeed);
+        } else {
+            BottomIndexer.StopMotor();
+            IntakeWheels.StopMotor();
+        }
+    }   
+}
+
+void CargoSubsystem::AutoGrabBalls(units::second_t durationOfMove) {
+    m_timer.Reset();
+    m_timer.Start();
+    if (m_timer.HasElapsed(durationOfMove-2_s)) {
+        Shooter.Set(ControlMode::Velocity, -39000); }
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);

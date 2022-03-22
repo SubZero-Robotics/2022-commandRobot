@@ -98,7 +98,7 @@ void FourBallFeedRun::Initialize() {
       std::move(FourBallFeed1Command),     
       IntakeGrabBalls(m_cargo)),
     frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {} ),
-    ShooterAutoShoot(m_cargo, &Xbox).WithTimeout(2.5_s),
+    ShooterAutoShoot(m_cargo, &Xbox).WithTimeout(2.7_s),
     frc2::ParallelRaceGroup( 
       std::move(FourBallFeed2Command),     
       IntakeGrabBalls(m_cargo)),
