@@ -16,7 +16,8 @@ CargoSubsystem::CargoSubsystem() {
     IntakeWheels.StopMotor();
     BottomIndexer.StopMotor();
     TopIndexer.StopMotor();
-
+//reset follow motor
+  ShooterFollow.ConfigFactoryDefault();
 //tie in second motor 
   ShooterFollow.Follow(Shooter);
 
@@ -128,7 +129,7 @@ void CargoSubsystem::Shoot() {
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);
-    } else if (-Shooter.GetSelectedSensorVelocity(0) >= 39000 && -Shooter.GetSelectedSensorVelocity(0) <= 39750) {
+    } else if (abs(Shooter.GetSelectedSensorVelocity(0)) >= 39000 && abs(Shooter.GetSelectedSensorVelocity(0)) <= 39750) {
         truth = true;
         BottomIndexer.Set(kIndexerSpeed);
         TopIndexer.Set(kIndexerSpeed);
@@ -144,7 +145,7 @@ void CargoSubsystem::AutoShoot() {
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);
-    } else if (-Shooter.GetSelectedSensorVelocity(0) >= 39000 && -Shooter.GetSelectedSensorVelocity(0) <= 39750) {
+    } else if (abs(Shooter.GetSelectedSensorVelocity(0)) >= 39000 && abs(Shooter.GetSelectedSensorVelocity(0)) <= 39750) {
         truth = true;
         BottomIndexer.Set(kIndexerSpeed);
         TopIndexer.Set(kIndexerSpeed);
@@ -160,7 +161,7 @@ void CargoSubsystem::LowShoot() {
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);
-    } else if (-Shooter.GetSelectedSensorVelocity(0) >= 19900) {
+    } else if (abs(Shooter.GetSelectedSensorVelocity(0)) >= 19900) {
         truth = true;
         BottomIndexer.Set(kIndexerSpeed);
         TopIndexer.Set(kIndexerSpeed);
