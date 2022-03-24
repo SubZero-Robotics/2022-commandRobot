@@ -7,6 +7,7 @@
 
 #include "commands/ShooterAutoShoot.h"
 #include <frc/smartdashboard/Smartdashboard.h>
+#include <frc2/command/WaitCommand.h>
 
 #include "commands/TurnToLimelight.h"
 
@@ -19,10 +20,10 @@ ShooterAutoShoot::ShooterAutoShoot(CargoSubsystem* subsystem, frc::XboxControlle
 
 void ShooterAutoShoot::Initialize() {
   //if top and bottom blocked, we have two balls
-  if (TopIntakeLaser.Get()==false && BottomIntakeLaser.Get()==false) {
+  if (m_cargo->TopLaserGet()==false && m_cargo->BottomLaserGet()==false) {
     CargoToShoot = 2;
   //if only top blocked, we have one ball
-  } else if (TopIntakeLaser.Get()==false && BottomIntakeLaser.Get()==true) {
+  } else if (m_cargo->TopLaserGet()==false && m_cargo->BottomLaserGet()==true) {
     CargoToShoot = 1;
   //default to two balls
   } else {
@@ -34,11 +35,11 @@ void ShooterAutoShoot::Execute() {
   // tell shooter to get to set rpm
   m_cargo->AutoShoot();
   //if top index blocked, we are armed to shoot
-  if (TopIntakeLaser.Get()==false) {
+  if (m_cargo->TopLaserGet()==false) {
     armed = true;
   }
   //if top "was" blocked (armed used to equal true) and it's not anymore, we have one less ball
-  if (TopIntakeLaser.Get()==true && armed==true) {
+  if (m_cargo->TopLaserGet()==true && armed==true) {
     CargoToShoot--;
     armed = false;
   }
@@ -46,6 +47,7 @@ void ShooterAutoShoot::Execute() {
 }
 
 void ShooterAutoShoot::End(bool interrupted) {
+  frc2::WaitCommand(0.1_s);
   m_cargo->Stop();
 }
 

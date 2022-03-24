@@ -11,6 +11,7 @@
 #include <frc2/command/CommandHelper.h>
 #include <frc/XboxController.h>
 
+
 #include "subsystems/CargoSubsystem.h"
  
 /**
@@ -35,8 +36,6 @@ class ShooterAutoShoot : public frc2::CommandHelper<frc2::CommandBase, ShooterAu
  private:
   CargoSubsystem* m_cargo;
   frc::XboxController* m_controller;
-  frc::DigitalInput TopIntakeLaser {8};  
-  frc::DigitalInput BottomIntakeLaser{6};
   int CargoToShoot = 2;
   bool armed = false;
 };

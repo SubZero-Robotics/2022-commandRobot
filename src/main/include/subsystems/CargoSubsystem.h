@@ -50,6 +50,16 @@ class CargoSubsystem : public frc2::SubsystemBase {
   void PutLED(double ledMotorValue);
 
   /**
+   * return bool top laserstate
+   */
+  bool TopLaserGet();
+
+  /**
+   * return bool bottom laserstate
+   */
+  bool BottomLaserGet();
+
+  /**
    * All index motors in
    */
   void AutomaticIntake();

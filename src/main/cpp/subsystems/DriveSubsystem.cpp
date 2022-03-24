@@ -41,7 +41,7 @@ DriveSubsystem::DriveSubsystem()
   // get limelight network tables
   table = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
   // set camera mode to start with, we don't want the led's on
-  table->PutNumber("pipeline", 1);
+  SelectLimelightPipeline(1);
 
   // setup for trajectories 
   trajectoryConfig = new frc::TrajectoryConfig(kMaxSpeed,
@@ -71,6 +71,7 @@ void DriveSubsystem::TeleopInit() {
   ConfigureMotor(&RightFollow);
   ConfigureMotor(&LeftLead);
   ConfigureMotor(&LeftFollow);
+  SelectLimelightPipeline(1);
 }
 
 void DriveSubsystem::SetCoast(WPI_TalonFX *_talon) {

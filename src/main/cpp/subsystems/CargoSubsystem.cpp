@@ -48,7 +48,7 @@ void CargoSubsystem::Periodic() {
   frc::SmartDashboard::PutBoolean("Bottom Intake Laser", BottomLaserState);
 
   
-  RPM = -Shooter.GetSelectedSensorVelocity(0);
+  RPM = abs(Shooter.GetSelectedSensorVelocity(0));
   frc::SmartDashboard::PutNumber("RPM", (RPM));
   frc::SmartDashboard::PutBoolean("INTAKE WOULD BE SPINNING", truth);
 
@@ -60,6 +60,14 @@ void CargoSubsystem::PutLED(double ledMotorValue) {
     //I WOULD create an enum for this, except that the list of values would take me all day, and is not worth typing out
     //PLUS you'd have to find the table anyways to know how to enter the values
     led_lights.Set(ledMotorValue);
+}
+
+bool CargoSubsystem::TopLaserGet() {
+    return TopLaserState;
+}
+
+bool CargoSubsystem::BottomLaserGet() {
+    return BottomLaserState;
 }
 
 void CargoSubsystem::GrabBalls() {
@@ -83,7 +91,7 @@ void CargoSubsystem::GrabBalls() {
 void CargoSubsystem::AutoGrabBalls(units::second_t durationOfMove) {
     m_timer.Reset();
     m_timer.Start();
-    if (m_timer.HasElapsed(durationOfMove-2_s)) {
+    if (m_timer.HasElapsed(durationOfMove-0.5_s)) {
         Shooter.Set(ControlMode::Velocity, -39000); }
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
@@ -125,11 +133,11 @@ void CargoSubsystem::AutomaticIntake() {
 }
 
 void CargoSubsystem::Shoot() {
-    Shooter.Set(ControlMode::Velocity, -39600);
+    Shooter.Set(ControlMode::Velocity, -39090);
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);
-    } else if (abs(Shooter.GetSelectedSensorVelocity(0)) >= 39000 && abs(Shooter.GetSelectedSensorVelocity(0)) <= 39750) {
+    } else if (abs(Shooter.GetSelectedSensorVelocity(0)) >= 39000 && abs(Shooter.GetSelectedSensorVelocity(0)) <= 39150) {
         truth = true;
         BottomIndexer.Set(kIndexerSpeed);
         TopIndexer.Set(kIndexerSpeed);
@@ -141,11 +149,11 @@ void CargoSubsystem::Shoot() {
 }
 
 void CargoSubsystem::AutoShoot() {
-    Shooter.Set(ControlMode::Velocity, -39800);
+    Shooter.Set(ControlMode::Velocity, -39110);
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);
-    } else if (abs(Shooter.GetSelectedSensorVelocity(0)) >= 39000 && abs(Shooter.GetSelectedSensorVelocity(0)) <= 39750) {
+    } else if (abs(Shooter.GetSelectedSensorVelocity(0)) >= 39000 && abs(Shooter.GetSelectedSensorVelocity(0)) <= 39150) {
         truth = true;
         BottomIndexer.Set(kIndexerSpeed);
         TopIndexer.Set(kIndexerSpeed);
@@ -157,7 +165,7 @@ void CargoSubsystem::AutoShoot() {
 }
 
 void CargoSubsystem::LowShoot() {
-    Shooter.Set(ControlMode::Velocity, -22000);
+    Shooter.Set(ControlMode::Velocity, -20000);
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);
