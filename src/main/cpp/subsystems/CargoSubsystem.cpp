@@ -133,10 +133,10 @@ void CargoSubsystem::AutomaticIntake() {
 }
 
 void CargoSubsystem::Shoot() {
-    Shooter.Set(ControlMode::Velocity, -39090);
+    Shooter.Set(ControlMode::Velocity, -39100);
     if (TopLaserState) {
-        TopIndexer.Set(kIndexerSpeed);
-        BottomIndexer.Set(kIndexerSpeed);
+        TopIndexer.Set(kIndexerSpeed-0.07);
+        BottomIndexer.Set(kIndexerSpeed-0.07);
     } else if (abs(Shooter.GetSelectedSensorVelocity(0)) >= 39000 && abs(Shooter.GetSelectedSensorVelocity(0)) <= 39150) {
         truth = true;
         BottomIndexer.Set(kIndexerSpeed);
@@ -149,7 +149,7 @@ void CargoSubsystem::Shoot() {
 }
 
 void CargoSubsystem::AutoShoot() {
-    Shooter.Set(ControlMode::Velocity, -39110);
+    Shooter.Set(ControlMode::Velocity, -39130);
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);

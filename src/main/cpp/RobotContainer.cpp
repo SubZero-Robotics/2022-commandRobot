@@ -72,8 +72,8 @@ RobotContainer::RobotContainer() {
 // Set up default drive command.  Does this whenever the DriveSubSystem isn't doing anything else
   m_drive.SetDefaultCommand(DefaultDrive(
       &m_drive,
-      [this] { return Xbox.GetLeftY(); },
-      [this] { return Xbox.GetLeftX(); }));
+      [this] { return Xbox.GetLeftY()*0.8; },
+      [this] { return Xbox.GetLeftX()*0.8; }));
 
 // Set default intake, shooter, and indexer command.  Does this when not doing something else
   m_cargo.SetDefaultCommand(IntakeStop(&m_cargo));
@@ -129,10 +129,10 @@ void RobotContainer::ConfigureButtonBindings() {
   // this logic will need Camden's explanation to implement
   // limelight aiming. 
   frc2::JoystickButton(&Xbox, Button::kX)
-    .ToggleWhenPressed(TurnToLimelight(
+    .WhenHeld(TurnToLimelight(
     &m_drive,
-    [this] { return Xbox.GetLeftY()*0.9; },
-    [this] { return Xbox.GetLeftX()*0.9; }));
+    [this] { return Xbox.GetLeftY(); },
+    [this] { return Xbox.GetLeftX()*0.8; }));
 
   frc2::JoystickButton(&Xbox, Button::kStart)
       .WhenHeld(IntakeAllOut(&m_cargo));

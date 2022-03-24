@@ -83,7 +83,6 @@ void ThreeBallUpRun::Initialize() {
       std::move(ThreeBallUp2Command),     
       IntakeGrabBalls(m_cargo)),
     frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {} ),
-    IntakeGrabBalls(m_cargo).WithTimeout(2_s),
     IntakeAllOut(m_cargo).WithTimeout(0.1_s),
     ShooterAutoShoot(m_cargo, &Xbox).WithTimeout(4_s));
   myThreeBallUpAuto->Schedule();

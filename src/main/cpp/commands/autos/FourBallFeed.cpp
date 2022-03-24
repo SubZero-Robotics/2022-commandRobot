@@ -97,17 +97,17 @@ void FourBallFeedRun::Initialize() {
   frc2::SequentialCommandGroup* myFourBallFeedAuto = new frc2::SequentialCommandGroup(
     frc2::ParallelRaceGroup( 
       std::move(FourBallFeed1Command),     
-      IntakeAutoGrabBalls(2.57_s, m_cargo)),
+      IntakeGrabBalls(m_cargo)),
     frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {} ),
     ShooterAutoShoot(m_cargo, &Xbox).WithTimeout(2.7_s),
     frc2::ParallelRaceGroup( 
       std::move(FourBallFeed2Command),     
       IntakeGrabBalls(m_cargo)),
     frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {} ),
-    IntakeGrabBalls(m_cargo).WithTimeout(2_s),
+    IntakeGrabBalls(m_cargo).WithTimeout(1.8_s),
     frc2::ParallelRaceGroup(
       std::move(FourBallFeed3Command),
-      IntakeAutoGrabBalls(3.22_s, m_cargo)),
+      IntakeGrabBalls(m_cargo)),
     frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {} ),
     IntakeAllOut(m_cargo).WithTimeout(0.1_s),
     ShooterAutoShoot(m_cargo, &Xbox).WithTimeout(4_s));
