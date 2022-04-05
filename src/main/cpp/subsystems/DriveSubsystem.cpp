@@ -86,33 +86,33 @@ void DriveSubsystem::Periodic() {
 
   currentrobotAngle = Get2dAngle();
   //Display encoder values in SmartDashboard
-  frc::SmartDashboard::PutNumber("Distance to Target", (double)GetLimelightDistance());
-  frc::SmartDashboard::PutNumber("TargetAngle", (double)(gyroAngle+tx));
-  frc::SmartDashboard::PutNumber("2d Angle", (double)currentrobotAngle.Degrees());
-  frc::SmartDashboard::PutNumber("Pose X", (double)m_odometry.GetPose().X());
-  frc::SmartDashboard::PutNumber("Pose Y", (double)m_odometry.GetPose().Y());
-  frc::SmartDashboard::PutNumber("Pose Degrees", (double)m_odometry.GetPose().Rotation().Degrees());
-  frc::SmartDashboard::PutNumber("Wheel Speeds Meters", (double)((-(RightLead.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse+RightFollow.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse)/2.0)
-                                  +(-(LeftLead.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse+LeftFollow.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse)/2.0))/2);
+  //frc::SmartDashboard::PutNumber("Distance to Target", (double)GetLimelightDistance());
+  //frc::SmartDashboard::PutNumber("TargetAngle", (double)(gyroAngle+tx));
+  //frc::SmartDashboard::PutNumber("2d Angle", (double)currentrobotAngle.Degrees());
+  //frc::SmartDashboard::PutNumber("Pose X", (double)m_odometry.GetPose().X());
+  //frc::SmartDashboard::PutNumber("Pose Y", (double)m_odometry.GetPose().Y());
+  //frc::SmartDashboard::PutNumber("Pose Degrees", (double)m_odometry.GetPose().Rotation().Degrees());
+  //frc::SmartDashboard::PutNumber("Wheel Speeds Meters", (double)((-(RightLead.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse+RightFollow.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse)/2.0)
+                                  //+(-(LeftLead.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse+LeftFollow.GetSelectedSensorVelocity()*10*kEncoderDistancePerPulse)/2.0))/2);
   rEncoder = GetRightEncoder();
-  frc::SmartDashboard::PutNumber("Right Encoder", rEncoder);
+  //frc::SmartDashboard::PutNumber("Right Encoder", rEncoder);
   lEncoder = GetLeftEncoder();
-  frc::SmartDashboard::PutNumber("Left Encoder", lEncoder);
+  //frc::SmartDashboard::PutNumber("Left Encoder", lEncoder);
   gyroAngle = ahrs.GetYaw();
-  frc::SmartDashboard::PutNumber("gyroAngle", gyroAngle);
+  //frc::SmartDashboard::PutNumber("gyroAngle", gyroAngle);
   gyroRate = ahrs.GetRate();
-  frc::SmartDashboard::PutNumber("gyroRate", gyroRate);
-  AverageEncoderDistance = GetAverageEncoderDistance();
-  frc::SmartDashboard::PutNumber("Encoder Distance in:", AverageEncoderDistance);
+  //frc::SmartDashboard::PutNumber("gyroRate", gyroRate);
+  //AverageEncoderDistance = GetAverageEncoderDistance();
+  //frc::SmartDashboard::PutNumber("Encoder Distance in:", AverageEncoderDistance);
 
 // Get limelight stuff
-  tx = table->GetNumber("tx",0.0); 
-  ty = table->GetNumber("ty",0.0); 
-  frc::SmartDashboard::PutNumber("DifferenceLimelightAngle", tx);
+  //tx = table->GetNumber("tx",0.0); 
+  //ty = table->GetNumber("ty",0.0); 
+  //frc::SmartDashboard::PutNumber("DifferenceLimelightAngle", tx);
   //float ty = table->GetNumber("ty",0.0); 
   //float ta = table-> GetNumber("ta",0.0);
   //float ts = table-> GetNumber("ts", 0.0);
-  tv = table-> GetNumber("tv", 0); //tv is 0 when box is not in view
+  //tv = table-> GetNumber("tv", 0); //tv is 0 when box is not in view
 
  m_odometry.Update(currentrobotAngle,
                     units::meter_t(lEncoder*kEncoderDistancePerPulse),

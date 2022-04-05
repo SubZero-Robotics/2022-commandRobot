@@ -24,7 +24,7 @@ void ShooterAutoShoot::Initialize() {
     CargoToShoot = 2;
   //if only top blocked, we have one ball
   } else if (m_cargo->TopLaserGet()==false && m_cargo->BottomLaserGet()==true) {
-    CargoToShoot = 1;
+    CargoToShoot = 2;
   //default to two balls
   } else {
     CargoToShoot = 2;

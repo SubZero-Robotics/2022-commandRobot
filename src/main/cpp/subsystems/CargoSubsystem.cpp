@@ -49,11 +49,11 @@ void CargoSubsystem::Periodic() {
 
   
   RPM = abs(Shooter.GetSelectedSensorVelocity(0));
-  frc::SmartDashboard::PutNumber("RPM", (RPM));
-  frc::SmartDashboard::PutBoolean("INTAKE WOULD BE SPINNING", truth);
+  //frc::SmartDashboard::PutNumber("RPM", (RPM));
+  //frc::SmartDashboard::PutBoolean("INTAKE WOULD BE SPINNING", truth);
 
-  averageRPMs = rollingRPMs(RPM); 
-  frc::SmartDashboard::PutNumber("AvgRPM", (averageRPMs));
+  //averageRPMs = rollingRPMs(RPM); 
+  //frc::SmartDashboard::PutNumber("AvgRPM", (averageRPMs));
 }
 
 void CargoSubsystem::PutLED(double ledMotorValue) {
@@ -169,7 +169,7 @@ void CargoSubsystem::LowShoot() {
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);
-    } else if (abs(Shooter.GetSelectedSensorVelocity(0)) >= 19900) {
+    } else if (abs(Shooter.GetSelectedSensorVelocity(0)) >= 19800) {
         truth = true;
         BottomIndexer.Set(kIndexerSpeed);
         TopIndexer.Set(kIndexerSpeed);
