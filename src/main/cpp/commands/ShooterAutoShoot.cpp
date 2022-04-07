@@ -42,6 +42,7 @@ void ShooterAutoShoot::Execute() {
   if (m_cargo->TopLaserGet()==true && armed==true) {
     CargoToShoot--;
     armed = false;
+    m_cargo->PutLED(-0.05);
   }
 
 }
