@@ -108,8 +108,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   //Spin up shooter motor for high while pressed, and rumble controller if you're too close
   frc2::JoystickButton(&Xbox, Button::kY)
-      .WhenHeld(frc2::SequentialCommandGroup(IntakeAllOut(&m_cargo).WithTimeout(0.05_s),
-                                            ShooterShoot(&m_cargo, &Xbox)));
+      .WhenHeld(ShooterShoot(&m_cargo, &Xbox));
 
   // move intake arm out and spin intake wheels while A is held down,
   // return arm and stop when you let go. (the default mode for Intake)

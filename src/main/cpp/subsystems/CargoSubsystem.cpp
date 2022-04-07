@@ -54,6 +54,21 @@ void CargoSubsystem::Periodic() {
 
   //averageRPMs = rollingRPMs(RPM); 
   //frc::SmartDashboard::PutNumber("AvgRPM", (averageRPMs));
+
+  if (frc::DriverStation::IsDisabled()==true && frc::DriverStation::IsAutonomous()==false) {
+      switch (frc::DriverStation::GetAlliance()) {
+      case frc::DriverStation::kRed:
+            PutLED(0.59);
+          break;
+      case frc::DriverStation::kBlue:
+            PutLED(0.85);
+          break;
+      case frc::DriverStation::kInvalid:
+      default:
+            PutLED(0.00);
+          break;
+        }
+  }
 }
 
 void CargoSubsystem::PutLED(double ledMotorValue) {
@@ -134,6 +149,7 @@ void CargoSubsystem::AutomaticIntake() {
 
 void CargoSubsystem::Shoot() {
     Shooter.Set(ControlMode::Velocity, -39100);
+    frc2::InstantCommand([this] { AllOut(); }, {} ).WithTimeout(0.05_s);
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed-0.07);
         BottomIndexer.Set(kIndexerSpeed-0.07);
