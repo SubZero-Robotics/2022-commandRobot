@@ -56,7 +56,6 @@ DriveSubsystem::DriveSubsystem()
   trajectoryConfig->SetKinematics(DriveConstants::kDriveKinematics);
   // Apply the voltage constraint
   trajectoryConfig->AddConstraint(autoVoltageConstraint);
-
 }
 
 void DriveSubsystem::DisabledInit() {
@@ -120,7 +119,17 @@ void DriveSubsystem::Periodic() {
 }
 
 void DriveSubsystem::ArcadeDrive(double fwd, double rot) {
-  m_drive.ArcadeDrive(fwd, rot, true);
+  double currentPercentage = fwd;
+  double slewOutput;
+  if (abs(currentPercentage) > previousPercentage) { //speeding up, accel filter
+    slewOutput = (double)accelfilter.Calculate(currentPercentage / 1_s);
+    decelfilter.Calculate(currentPercentage / 1_s);
+  } else { //slowing down, decel filter
+    slewOutput = (double)decelfilter.Calculate(currentPercentage / 1_s);
+    accelfilter.Calculate(currentPercentage / 1_s);
+  }
+  m_drive.ArcadeDrive(slewOutput, rot, true);
+  previousPercentage = abs(currentPercentage);
 }
 
 void DriveSubsystem::TankDriveVolts(units::volt_t left, units::volt_t right) {

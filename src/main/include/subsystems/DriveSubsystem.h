@@ -24,6 +24,7 @@
 #include <frc/kinematics/DifferentialDriveOdometry.h>
 
 #include <frc/trajectory/TrajectoryGenerator.h>
+#include <frc/filter/SlewRateLimiter.h>
 #include <frc2/command/RamseteCommand.h>
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/SequentialCommandGroup.h>
@@ -241,6 +242,10 @@ class DriveSubsystem : public frc2::SubsystemBase {
   double LOffset = 0.0;
 
   double AverageEncoderDistance = 0.0;
+
+  frc::SlewRateLimiter<double> decelfilter{2.0 / 1_s};
+  frc::SlewRateLimiter<double> accelfilter{3.0 / 1_s};
+  double previousPercentage = 0.0;
 
   // Odometry class for tracking robot pose
   frc::Rotation2d currentrobotAngle; // is zeroed by default
