@@ -13,8 +13,17 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
 #include <cameraserver/CameraServer.h>
+#include <wpi/PortForwarder.h>
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+  wpi::PortForwarder::GetInstance().Add(5800, "limelight.local", 5800);
+  wpi::PortForwarder::GetInstance().Add(5801, "limelight.local", 5801);
+  wpi::PortForwarder::GetInstance().Add(5802, "limelight.local", 5802);
+  wpi::PortForwarder::GetInstance().Add(5803, "limelight.local", 5803);
+  wpi::PortForwarder::GetInstance().Add(5804, "limelight.local", 5804);
+  wpi::PortForwarder::GetInstance().Add(5805, "limelight.local", 5805);
+  wpi::PortForwarder::GetInstance().Add(8888, "wpilibpi.local", 80);
+}
 /**
  * This function is called every robot packet, no matter the mode. Use
  * this for items like diagnostics that you want to run during disabled,
