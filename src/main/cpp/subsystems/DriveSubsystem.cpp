@@ -105,13 +105,13 @@ void DriveSubsystem::Periodic() {
   //frc::SmartDashboard::PutNumber("Encoder Distance in:", AverageEncoderDistance);
 
 // Get limelight stuff
-  //tx = table->GetNumber("tx",0.0); 
-  //ty = table->GetNumber("ty",0.0); 
+  tx = table->GetNumber("tx",0.0); 
+  ty = table->GetNumber("ty",0.0); 
   //frc::SmartDashboard::PutNumber("DifferenceLimelightAngle", tx);
   //float ty = table->GetNumber("ty",0.0); 
   //float ta = table-> GetNumber("ta",0.0);
   //float ts = table-> GetNumber("ts", 0.0);
-  //tv = table-> GetNumber("tv", 0); //tv is 0 when box is not in view
+  tv = table-> GetNumber("tv", 0); //tv is 0 when box is not in view
 
  m_odometry.Update(currentrobotAngle,
                     units::meter_t(lEncoder*kEncoderDistancePerPulse),
@@ -234,6 +234,27 @@ units::degree_t DriveSubsystem::LimelightDifferenceAngle() {
   return (units::degree_t)(-tx);
 }
 
+void DriveSubsystem::LimelightTimedCopy(double fwd, double rot) {
+  table->PutNumber("pipeline", 0); //shooting pipe line
+  float KpDistance = -0.1f;  // Proportional control constant for distance
+  double output = 0.0;
+  float distance_adjust = 0.0;
+  double distance_error = (double)GetLimelightDistance();  // see the 'Case Study: Estimating Distance' (we already do the subtraction)
+  if (tv == 1) {
+        TurnToAngle.SetSetpoint(gyroAngle + tx);
+        distance_adjust = KpDistance * distance_error;
+      } else { 
+        // we don't have a lock yet, just point where we're already pointing
+        TurnToAngle.SetSetpoint(gyroAngle);
+      }
+      //Feed where we're at now as the input to the turning PID
+      output = TurnToAngle.Calculate(gyroAngle);
+      if (TurnToAngle.AtSetpoint()){   // If the PID thinks we're pointed correctly, no correction needed
+        tx = 0;
+      }
+  m_drive.ArcadeDrive(distance_adjust + (fwd*0.6), output + (rot*0.4), true);
+}
+
 units::degree_t DriveSubsystem::SanitizeAngle(units::degree_t target){
   units::degree_t cleanedAngle = target;
   if ( cleanedAngle >= 180_deg) cleanedAngle -= 360_deg;
@@ -275,103 +296,3 @@ void DriveSubsystem::ConfigureMotor(WPI_TalonFX *_talon) {
    trajectoryConfig->SetReversed(true);
    return trajectoryConfig;
  }
-
-
-frc2::SequentialCommandGroup DriveSubsystem::GetRamseteCommand(enum Paths drivePath) {
-  // get a pointer to the driveSubsystem, because we need to use it in the command later
-  DriveSubsystem *driveSubSystem = this;
-
-// make an empty Trjactory, we will fill it later
-frc::Trajectory chosenTrajectory;
-
-// Use the drivePath to pick one of the following trajectories
-switch(drivePath) {
-  case kScurvePath: // if drivePath == kScurvePath, do the stuff from here to "break"
-    // Do an S-curve
-    chosenTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
-      // Start at the origin facing the +X direction
-      frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
-      // Pass through these two interior waypoints, making an 's' curve path
-      {frc::Translation2d(1_m, 1_m), frc::Translation2d(2_m, -1_m)},
-      // End 3 meters straight ahead of where we started, facing forward
-      frc::Pose2d(3_m, 0_m, frc::Rotation2d(0_deg)),
-      // Pass the config
-      *trajectoryConfig);
-    break;  // you've chosen one now, "break" gets you out of the "switch"
-
-  case kStraight1Path:
-    // Go straight one meter
-    chosenTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
-      // Start at the origin facing the +X direction
-      frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
-      // Pass through these this interior waypoint, just going straight
-      {frc::Translation2d(0.5_m, 0_m)},
-      // End 1 meter straight ahead of where we started, facing forward
-      frc::Pose2d(1_m, 0_m, frc::Rotation2d(0_deg)),
-      // Pass the config
-      *trajectoryConfig);
-    break;  // always remember the "break:!
-  
-   default: // default is when the selected drivePath doesn't exist in the list above
-  // do nothing: the trajectory doesn't go anywhere, is a safe choice in case you
-  // made a new choice but haven't made a "case" for it yet
-    chosenTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
-      // Start at the origin facing the +X direction
-      frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
-      // Pass through these this interior waypoint, going nowhere
-      {frc::Translation2d(0.0_m, 0_m)},
-      // End 0 meters straight ahead of where we started, facing forward
-      frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
-      // Pass the config
-      *trajectoryConfig);
-      // you don't need a "break" at the end of "default" because you're done anyway
-}
-
-  // Reset odometry to the starting pose of the trajectory.
-  ResetOdometry(chosenTrajectory.InitialPose());
-
-  // create a new RamseteCommand with the chosenTrajectory
-  frc2::RamseteCommand chosenCommand(
-      chosenTrajectory, 
-      [this]() { return GetPose(); },
-      frc::RamseteController(DriveConstants::kRamseteB,
-                             DriveConstants::kRamseteZeta),
-      frc::SimpleMotorFeedforward<units::meters>(
-          DriveConstants::ks, DriveConstants::kv, DriveConstants::ka),
-      DriveConstants::kDriveKinematics,
-      [this] { return GetWheelSpeeds(); },
-      frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
-      frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
-      [this](auto left, auto right) { TankDriveVolts(left, right); },
-      {driveSubSystem});
-
-// The RamseteCommand takes several std::functions as arguments, and
-// in what looks like a wierd way.
-// So, here's what's going on.  We are tying to pass the methods GetPose, 
-// GetWheelSpeeds, and TankDriveVolts to RamseteCommand as std::function
-// That way, the command can call these DriveSubSystem methods to talk
-// to the odometry, speeds, and set the wheel power.
-// At the top of this method, we make note of where the real DriveSubSystem is:
-//   DriveSubsystem *driveSubSystem = this;
-// So, driveSubSystem is a pointer to the robot's actual drive for the 
-// final argument as the command subSystem requirements
-//
-// Look at the first place we try and pass a function using a lambda:
-//
-//   [this]() { return GetPose(); },
-//
-// The [] brackets grab something local to use, in this case, it has access to 
-// "this", which is the whole local scope.
-// The () enclose parameters we're passing to the function.  None
-// here, but later you see us making temporary left and right for the volts
-// The {} enclose what the function is doing.  In our case, it's 
-// calling the GetPose so the RamseteCommand knows the current odometry
-
-  // return the chosen command in a SequentialCommandGroup with a "stop" afterards
-  return frc2::SequentialCommandGroup(
-    std::move(chosenCommand),
-    frc2::InstantCommand([this] { TankDriveVolts(0_V, 0_V); }, {} )
-    );
-  // you might want to put frc2::InstantCommand([this] { TankDriveVolts(0_V, 0_V); }, {})
-  // in after calling this command if the robot doesn't stop
-}

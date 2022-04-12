@@ -197,6 +197,11 @@ class DriveSubsystem : public frc2::SubsystemBase {
    */
   void ConfigureMotor(WPI_TalonFX *_talon);
 
+/**
+   * This example uses code from the aiming and range adjustment examples and puts everything together into one simple function. Using this, you can get your robot “close” and then use code to automatically aim and drive to the correct distance.
+   */
+  void LimelightTimedCopy(double fwd, double rot);
+
  /**
    * get the trajectory config for this drive
    */
@@ -263,6 +268,9 @@ class DriveSubsystem : public frc2::SubsystemBase {
   int tv = 1;               // does the limelight have a target?
   float ty = 0.0;           // limelight distance calculation
   units::degree_t TargetAngle = 0.0_deg;  // Saved value of an angle to turn to
+
+  //TurnToAnglePID
+  frc2::PIDController TurnToAngle{0.0396, 0.132, 0.00297};
 
   // pointer to network tables for limelight stuff
   std::shared_ptr<nt::NetworkTable> table;
