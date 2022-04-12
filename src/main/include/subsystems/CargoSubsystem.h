@@ -135,7 +135,7 @@ class CargoSubsystem : public frc2::SubsystemBase {
 
   frc::DigitalInput TopIntakeLaser {8};  
   frc::DigitalInput BottomIntakeLaser{6};
-  frc::Spark led_lights{5};
+  frc::Spark led_lights{1};
   bool TopLaserState = 0;
   bool BottomLaserState = 0;
   frc::XboxController Xbox{0};
