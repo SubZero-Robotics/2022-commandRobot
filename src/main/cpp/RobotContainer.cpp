@@ -33,6 +33,7 @@
 #include "commands/DefaultDrive.h"
 #include "commands/DriveDistance.h"
 #include "commands/DriveToLimelight.h"
+#include "commands/LimelightTimedCopy.h"
 #include "commands/TurnToAngle.h"
 #include "commands/TurnToSavedAngle.h"
 #include "commands/DriveResetOdometry.h"
@@ -103,8 +104,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   // Spin up shooter motor for low while pressed
   frc2::JoystickButton(&Xbox, Button::kB)
-      .WhenHeld(frc2::SequentialCommandGroup(IntakeAllOut(&m_cargo).WithTimeout(0.05_s),
-                                            ShooterLowShoot(&m_cargo, &Xbox)));
+      .WhenHeld(ShooterLowShoot(&m_cargo, &Xbox));
 
   //Spin up shooter motor for high while pressed, and rumble controller if you're too close
   frc2::JoystickButton(&Xbox, Button::kY)
@@ -113,7 +113,8 @@ void RobotContainer::ConfigureButtonBindings() {
   // move intake arm out and spin intake wheels while A is held down,
   // return arm and stop when you let go. (the default mode for Intake)
   frc2::JoystickButton(&Xbox, Button::kA)
-      .WhenHeld(IntakeGrabBalls(&m_cargo));
+      .WhenHeld(IntakeGrabBalls(&m_cargo))
+      .WhenReleased(IntakeAllOut(&m_cargo).WithTimeout(0.05_s));
 // you can stack commands like this (below).  But in this case, RetractIntake is the default anyway
 //      .WhenReleased(RetractIntake(&m_cargo)); 
 
@@ -128,10 +129,10 @@ void RobotContainer::ConfigureButtonBindings() {
   // this logic will need Camden's explanation to implement
   // limelight aiming. 
   frc2::JoystickButton(&Xbox, Button::kX)
-    .WhenHeld(TurnToLimelight(
+    .WhenHeld(LimelightTimedCopy(
     &m_drive,
     [this] { return Xbox.GetLeftY(); },
-    [this] { return Xbox.GetLeftX()*0.8; }));
+    [this] { return Xbox.GetLeftX(); }));
 
   frc2::JoystickButton(&Xbox, Button::kStart)
       .WhenHeld(IntakeAllOut(&m_cargo));

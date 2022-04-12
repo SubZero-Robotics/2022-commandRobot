@@ -149,7 +149,6 @@ void CargoSubsystem::AutomaticIntake() {
 
 void CargoSubsystem::Shoot() {
     Shooter.Set(ControlMode::Velocity, -39100);
-    frc2::InstantCommand([this] { AllOut(); }, {} ).WithTimeout(0.05_s);
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed-0.07);
         BottomIndexer.Set(kIndexerSpeed-0.07);
