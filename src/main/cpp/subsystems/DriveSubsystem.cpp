@@ -236,7 +236,7 @@ units::degree_t DriveSubsystem::LimelightDifferenceAngle() {
 
 void DriveSubsystem::LimelightTimedCopy(double fwd, double rot) {
   table->PutNumber("pipeline", 0); //shooting pipe line
-  float KpDistance = -0.1f;  // Proportional control constant for distance
+  float KpDistance = -2.0f;  // Proportional control constant for distance
   double output = 0.0;
   float distance_adjust = 0.0;
   double distance_error = (double)GetLimelightDistance();  // see the 'Case Study: Estimating Distance' (we already do the subtraction)
