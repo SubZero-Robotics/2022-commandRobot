@@ -148,7 +148,7 @@ void CargoSubsystem::AutomaticIntake() {
 }
 
 void CargoSubsystem::Shoot() {
-    Shooter.Set(ControlMode::Velocity, -39150);
+    Shooter.Set(ControlMode::Velocity, -39100);
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed-0.07);
         BottomIndexer.Set(kIndexerSpeed-0.07);
@@ -164,7 +164,7 @@ void CargoSubsystem::Shoot() {
 }
 
 void CargoSubsystem::AutoShoot() {
-    Shooter.Set(ControlMode::Velocity, -39180);
+    Shooter.Set(ControlMode::Velocity, -39130);
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);
