@@ -12,7 +12,7 @@ IntakeAutoGrabBalls::IntakeAutoGrabBalls(units::second_t durationOfMove, CargoSu
 }
 
 void IntakeAutoGrabBalls::Initialize() {
-
+  m_cargo->IntakeDown();
 }
 
 void IntakeAutoGrabBalls::Execute() {

@@ -12,7 +12,7 @@ IntakeGrabBalls::IntakeGrabBalls(CargoSubsystem* subsystem) : m_cargo(subsystem)
 }
 
 void IntakeGrabBalls::Initialize() {
-
+  m_cargo->IntakeDown();
 }
 
 void IntakeGrabBalls::Execute() {
