@@ -97,7 +97,6 @@ constexpr double kRPM_OK = 0.0;  // if we're within this of the target, it's ok 
 constexpr double kShootF = 0.01; //kF for shooter velocity
 constexpr double kShootP = 0.09;   //kP for shooter velocity
 constexpr double kShootI = 0.0;    //kI for shooter velocity
-constexpr double kShootI1 = 0.00004;    //kI for shooter velocity low
 constexpr double kShootD = 3.0;    //kD for shooter velocity
 
 // Robot/Field Constants
