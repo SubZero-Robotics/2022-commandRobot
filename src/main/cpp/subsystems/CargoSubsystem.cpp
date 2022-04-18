@@ -47,7 +47,35 @@ void CargoSubsystem::Periodic() {
   BottomLaserState = BottomIntakeLaser.Get();
   frc::SmartDashboard::PutBoolean("Bottom Intake Laser", BottomLaserState);
 
-  
+  static frc::DriverStation::Alliance AllianceColor = frc::DriverStation::GetAlliance();
+  frc::Color detectedColor = m_colorSensor.GetColor();
+  double IR = m_colorSensor.GetIR();
+  frc::SmartDashboard::PutNumber("Red", detectedColor.red);
+  frc::SmartDashboard::PutNumber("Green", detectedColor.green);
+  frc::SmartDashboard::PutNumber("Blue", detectedColor.blue);
+  if (frc::DriverStation::IsDisabled() != true && frc::DriverStation::IsAutonomous() == false) {
+    switch (AllianceColor) {
+    case frc::DriverStation::kRed:
+      if (detectedColor.blue > 0.275) {
+        ballCorrectColor = false;
+      } else {
+        ballCorrectColor = true;
+      }
+      break;
+    case frc::DriverStation::kBlue:
+      if (detectedColor.red > 0.45) {
+        ballCorrectColor = false;
+      } else {
+        ballCorrectColor = true;
+      }
+      break;
+    case frc::DriverStation::kInvalid:
+    default:
+        ballCorrectColor = true;
+      break;
+    }
+  }
+
   RPM = abs(Shooter.GetSelectedSensorVelocity(0));
   frc::SmartDashboard::PutNumber("RPM", (RPM));
   //frc::SmartDashboard::PutBoolean("INTAKE WOULD BE SPINNING", truth);
@@ -56,7 +84,7 @@ void CargoSubsystem::Periodic() {
   //frc::SmartDashboard::PutNumber("AvgRPM", (averageRPMs));
 
   if (frc::DriverStation::IsDisabled()==true && frc::DriverStation::IsAutonomous()==false) {
-      switch (frc::DriverStation::GetAlliance()) {
+      switch (AllianceColor) {
       case frc::DriverStation::kRed:
             PutLED(0.59);
           break;
@@ -90,7 +118,7 @@ void CargoSubsystem::GrabBalls() {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);
         IntakeWheels.Set(kIntakeSpeed);
-    } else {
+    } else if (ballCorrectColor) {
         TopIndexer.StopMotor();
         if (BottomLaserState)
         {
@@ -100,7 +128,18 @@ void CargoSubsystem::GrabBalls() {
             BottomIndexer.StopMotor();
             IntakeWheels.StopMotor();
         }
-    }   
+    } else if (!ballCorrectColor) {
+        Shooter.Set(ControlMode::Velocity, -10000);
+        TopIndexer.Set(kIndexerSpeed);
+        if (BottomLaserState)
+        {
+            BottomIndexer.Set(kIndexerSpeed);
+            IntakeWheels.Set(kIntakeSpeed);
+        } else {
+            BottomIndexer.StopMotor();
+            IntakeWheels.StopMotor();
+        }
+    }
 }
 
 void CargoSubsystem::AutoGrabBalls(units::second_t durationOfMove) {
@@ -125,26 +164,10 @@ void CargoSubsystem::AutoGrabBalls(units::second_t durationOfMove) {
     }   
 }
 
-void CargoSubsystem::BottomIn() {
-    BottomIndexer.Set(kIndexerSpeed);
-}
-
 void CargoSubsystem::AllOut() {
     TopIndexer.Set(-kIndexerSpeed);
     BottomIndexer.Set(-kIndexerSpeed);
     IntakeWheels.Set(-kIndexerSpeed);
-}
-
-void CargoSubsystem::TopIn() {
-    TopIndexer.Set(kIndexerSpeed);
-}
-
-void CargoSubsystem::TopOut() {
-    TopIndexer.Set(-kIndexerSpeed);
-}
-
-void CargoSubsystem::AutomaticIntake() {
-    TopIn();
 }
 
 void CargoSubsystem::Shoot() {
@@ -193,10 +216,6 @@ void CargoSubsystem::LowShoot() {
         BottomIndexer.StopMotor();
         TopIndexer.StopMotor();
         }
-}
-
-void CargoSubsystem::Unjam() {
-    Shooter.Set(ControlMode::PercentOutput, -0.5);
 }
 
 void CargoSubsystem::Stop() {

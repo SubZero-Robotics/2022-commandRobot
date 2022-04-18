@@ -65,7 +65,7 @@ constexpr double kRumbleDistance = 85.0;
 constexpr double kIndexerSpeed = 0.45;
 
 // The indexer motor speed
-constexpr double kIntakeSpeed = 0.85;
+constexpr double kIntakeSpeed = 0.95;
 
 //DriveSubsystem constants
 

@@ -19,6 +19,7 @@
 
 #include <frc/DigitalInput.h>
 #include <frc/motorcontrol/Spark.h>
+#include "rev/ColorSensorV3.h"
 #include "Constants.h"
 
 #include <frc/XboxController.h>
@@ -113,6 +114,10 @@ class CargoSubsystem : public frc2::SubsystemBase {
   rev::CANSparkMax BottomIndexer{7, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax TopIndexer{9, rev::CANSparkMax::MotorType::kBrushless};
   //TODO: Add intake arm
+
+  static constexpr auto i2cPort = frc::I2C::Port::kOnboard;
+  rev::ColorSensorV3 m_colorSensor{i2cPort};
+  bool ballCorrectColor = true;
 
   frc::DigitalInput TopIntakeLaser {8};  
   frc::DigitalInput BottomIntakeLaser{6};
