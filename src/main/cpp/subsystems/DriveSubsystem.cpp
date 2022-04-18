@@ -252,7 +252,12 @@ void DriveSubsystem::LimelightTimedCopy(double fwd, double rot) {
       if (TurnToAngle.AtSetpoint()){   // If the PID thinks we're pointed correctly, no correction needed
         tx = 0;
       }
-  m_drive.ArcadeDrive(distance_adjust + (fwd*0.6), output + (rot*0.4), true);
+  if (tv == 1) { //if no target, no more turn: simple!
+    m_drive.ArcadeDrive(distance_adjust + (fwd*0.6), output + (rot*0.4), true);
+    } else { 
+    m_drive.ArcadeDrive((fwd*0.6), (rot*0.4), true);
+    }
+
 }
 
 units::degree_t DriveSubsystem::SanitizeAngle(units::degree_t target){
