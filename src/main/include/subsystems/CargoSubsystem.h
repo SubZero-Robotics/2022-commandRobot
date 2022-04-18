@@ -61,29 +61,14 @@ class CargoSubsystem : public frc2::SubsystemBase {
   bool BottomLaserGet();
 
   /**
-   * All index motors in
+   * Intake arm PID goes to down position with gap
    */
-  void AutomaticIntake();
-
-  /**
-   * Bottom indexer wheels forward
-   */
-  void BottomIn();
+  void IntakeDown();
   
   /**
    * Bottom, top, indexer wheels backward and intake wheels backwards
    */
   void AllOut();
-  
-  /**
-   * Top indexer wheels forward
-   */
-  void TopIn();
-  
-  /**
-   * Top indexer wheels backward
-   */
-  void TopOut();
 
   /**
    * Move balls towards the high target, fast
@@ -101,17 +86,12 @@ class CargoSubsystem : public frc2::SubsystemBase {
   void LowShoot(); 
 
   /**
-   * Move balls away from the shooter, towards the intake, to clear jams
-   */
-  void Unjam();  
-
-  /**
    * How fast is the shooter going?
    */
   double GetRPM();
 
   /**
-   * Stop the shooter, indexer, and intake
+   * Stop the shooter, indexer, and intake, return intake arm PID to upright
    */
   void Stop();
 
@@ -132,6 +112,7 @@ class CargoSubsystem : public frc2::SubsystemBase {
   rev::CANSparkMax IntakeWheels{8, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax BottomIndexer{7, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax TopIndexer{9, rev::CANSparkMax::MotorType::kBrushless};
+  //TODO: Add intake arm
 
   frc::DigitalInput TopIntakeLaser {8};  
   frc::DigitalInput BottomIntakeLaser{6};

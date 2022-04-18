@@ -12,7 +12,6 @@
 #include <frc2/command/ParallelCommandGroup.h>
 #include <frc2/command/ParallelRaceGroup.h>
 
-#include "commands/IntakeAutomatic.h"
 #include "commands/IntakeGrabBalls.h"
 #include "commands/IntakeAllOut.h"
 #include "commands/IntakeStop.h"

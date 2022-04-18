@@ -9,8 +9,6 @@
 #include <frc/smartdashboard/Smartdashboard.h>
 #include <frc2/command/WaitCommand.h>
 
-#include "commands/TurnToLimelight.h"
-
 
 
 ShooterAutoShoot::ShooterAutoShoot(CargoSubsystem* subsystem, frc::XboxController* controller) 
