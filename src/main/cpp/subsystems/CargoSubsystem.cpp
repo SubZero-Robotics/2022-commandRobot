@@ -43,6 +43,11 @@ CargoSubsystem::CargoSubsystem() {
   IntakeArm.ConfigFactoryDefault();
   
   IntakeArm.ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10); 
+  IntakeArm.ConfigReverseLimitSwitchSource(
+					LimitSwitchSource::LimitSwitchSource_FeedbackConnector,
+					LimitSwitchNormal::LimitSwitchNormal_NormallyOpen,
+					10);
+
 
   IntakeArm.SetSensorPhase(true);
 
@@ -262,10 +267,10 @@ void CargoSubsystem::Stop() {
     BottomIndexer.StopMotor();
     TopIndexer.StopMotor();
     Shooter.Set(ControlMode::PercentOutput, 0.0); 
-    IntakeArm.Set(ControlMode::MotionMagic, 0); 
-    if (/*limit switch==false &&*/ abs(IntakeArm.GetSelectedSensorPosition(0)) <= 100) {
+    IntakeArm.Set(ControlMode::MotionMagic, -100); 
+    if (IntakeArm.GetSensorCollection().IsRevLimitSwitchClosed()==false && abs(IntakeArm.GetSelectedSensorPosition(0)) <= 100) {
         IntakeArm.Set(ControlMode::PercentOutput, -0.3);
-    } else if (/*limit switch==true*/) {
+    } else if (IntakeArm.GetSensorCollection().IsRevLimitSwitchClosed()) {
         IntakeArm.SetSelectedSensorPosition(0, 0, 10);
     }
 }
