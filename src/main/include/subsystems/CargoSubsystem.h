@@ -113,7 +113,7 @@ class CargoSubsystem : public frc2::SubsystemBase {
   rev::CANSparkMax IntakeWheels{8, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax BottomIndexer{7, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax TopIndexer{9, rev::CANSparkMax::MotorType::kBrushless};
-  //TODO: Add intake arm
+  WPI_TalonSRX IntakeArm = WPI_TalonSRX(15); 
 
   static constexpr auto i2cPort = frc::I2C::Port::kOnboard;
   rev::ColorSensorV3 m_colorSensor{i2cPort};

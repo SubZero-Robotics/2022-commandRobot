@@ -38,6 +38,18 @@ CargoSubsystem::CargoSubsystem() {
   Shooter.Config_kP(0, kShootP, 10);
   Shooter.Config_kI(0, kShootI, 10);
   Shooter.Config_kD(0, kShootD, 10);    
+
+//Intake arm motor setting
+  IntakeArm.ConfigFactoryDefault();
+  
+  IntakeArm.ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10); 
+
+  IntakeArm.SetSensorPhase(true);
+  
+  IntakeArm.ConfigNominalOutputForward(0,10);
+  IntakeArm.ConfigNominalOutputReverse(0,10);
+  IntakeArm.ConfigPeakOutputForward(1,10);
+  IntakeArm.ConfigPeakOutputReverse(-1,10);
 }
 
 void CargoSubsystem::Periodic() {
@@ -58,15 +70,19 @@ void CargoSubsystem::Periodic() {
     case frc::DriverStation::kRed:
       if (detectedColor.blue > 0.275) {
         ballCorrectColor = false;
+        frc::SmartDashboard::PutBoolean("is red", false);
       } else {
         ballCorrectColor = true;
+        frc::SmartDashboard::PutBoolean("is red", true);
       }
       break;
     case frc::DriverStation::kBlue:
-      if (detectedColor.red > 0.45) {
+      if (detectedColor.red > 0.275) {
         ballCorrectColor = false;
+        frc::SmartDashboard::PutBoolean("is blue", false);
       } else {
         ballCorrectColor = true;
+        frc::SmartDashboard::PutBoolean("is blue", true);
       }
       break;
     case frc::DriverStation::kInvalid:
@@ -111,6 +127,10 @@ bool CargoSubsystem::TopLaserGet() {
 
 bool CargoSubsystem::BottomLaserGet() {
     return BottomLaserState;
+}
+
+void CargoSubsystem::IntakeDown() {
+    //TODO: Actually send lower command to down
 }
 
 void CargoSubsystem::GrabBalls() {
