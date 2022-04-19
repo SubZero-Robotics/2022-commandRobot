@@ -45,11 +45,30 @@ CargoSubsystem::CargoSubsystem() {
   IntakeArm.ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10); 
 
   IntakeArm.SetSensorPhase(true);
-  
+
+  /* Set relevant frame periods to be at least as fast as periodic rate */
+  IntakeArm.SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0, 10, 10);
+  IntakeArm.SetStatusFramePeriod(StatusFrameEnhanced::Status_10_MotionMagic, 10, 10);
+
+  /* Set the peak and nominal outputs */
   IntakeArm.ConfigNominalOutputForward(0,10);
   IntakeArm.ConfigNominalOutputReverse(0,10);
   IntakeArm.ConfigPeakOutputForward(1,10);
   IntakeArm.ConfigPeakOutputReverse(-1,10);
+
+  /* Set Motion Magic gains in slot0 - see documentation */
+  IntakeArm.SelectProfileSlot(0, 0);
+  IntakeArm.Config_kF(0, 0.3, 10);
+  IntakeArm.Config_kP(0, 0.1, 10);
+  IntakeArm.Config_kI(0, 0.0, 10);
+  IntakeArm.Config_kD(0, 0.0, 10);
+
+  /* Set acceleration and vcruise velocity - see documentation */
+  IntakeArm.ConfigMotionCruiseVelocity(1500, 10);
+  IntakeArm.ConfigMotionAcceleration(1500, 10);
+
+  /* Zero the sensor */
+  IntakeArm.SetSelectedSensorPosition(0, 0, 10);
 }
 
 void CargoSubsystem::Periodic() {
@@ -242,7 +261,13 @@ void CargoSubsystem::Stop() {
     IntakeWheels.StopMotor();
     BottomIndexer.StopMotor();
     TopIndexer.StopMotor();
-    Shooter.Set(ControlMode::PercentOutput, 0.0);    
+    Shooter.Set(ControlMode::PercentOutput, 0.0); 
+    IntakeArm.Set(ControlMode::MotionMagic, 0); 
+    if (/*limit switch==false &&*/ abs(IntakeArm.GetSelectedSensorPosition(0)) <= 100) {
+        IntakeArm.Set(ControlMode::PercentOutput, -0.3);
+    } else if (/*limit switch==true*/) {
+        IntakeArm.SetSelectedSensorPosition(0, 0, 10);
+    }
 }
 
 double CargoSubsystem::GetRPM() {
