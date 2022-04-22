@@ -63,14 +63,14 @@ CargoSubsystem::CargoSubsystem() {
 
   /* Set Motion Magic gains in slot0 - see documentation */
   IntakeArm.SelectProfileSlot(0, 0);
-  IntakeArm.Config_kF(0, 0.3, 10);
-  IntakeArm.Config_kP(0, 0.1, 10);
+  IntakeArm.Config_kF(0, 0.9, 10);
+  IntakeArm.Config_kP(0, 0.35, 10);
   IntakeArm.Config_kI(0, 0.0, 10);
-  IntakeArm.Config_kD(0, 0.0, 10);
+  IntakeArm.Config_kD(0, 6.0, 10);
 
   /* Set acceleration and vcruise velocity - see documentation */
   IntakeArm.ConfigMotionCruiseVelocity(1500, 10);
-  IntakeArm.ConfigMotionAcceleration(1500, 10);
+  IntakeArm.ConfigMotionAcceleration(2400, 10);
 
   /* Zero the sensor */
   IntakeArm.SetSelectedSensorPosition(0, 0, 10);
@@ -78,10 +78,11 @@ CargoSubsystem::CargoSubsystem() {
 
 void CargoSubsystem::Periodic() {
   TopLaserState = TopIntakeLaser.Get();
-  frc::SmartDashboard::PutBoolean("Top Intake Laser", TopLaserState);
+  frc::SmartDashboard::PutBoolean("Top Intake Laser", IntakeArm.GetSensorCollection().IsRevLimitSwitchClosed());
 
   BottomLaserState = BottomIntakeLaser.Get();
   frc::SmartDashboard::PutBoolean("Bottom Intake Laser", BottomLaserState);
+  frc::SmartDashboard::PutBoolean("BallCorrectColor", ballCorrectColor);
 
   static frc::DriverStation::Alliance AllianceColor = frc::DriverStation::GetAlliance();
   frc::Color detectedColor = m_colorSensor.GetColor();
@@ -154,7 +155,7 @@ bool CargoSubsystem::BottomLaserGet() {
 }
 
 void CargoSubsystem::IntakeDown() {
-    //TODO: Actually send lower command to down
+    IntakeArm.Set(ControlMode::MotionMagic, 1700); 
 }
 
 void CargoSubsystem::GrabBalls() {
@@ -267,11 +268,12 @@ void CargoSubsystem::Stop() {
     BottomIndexer.StopMotor();
     TopIndexer.StopMotor();
     Shooter.Set(ControlMode::PercentOutput, 0.0); 
-    IntakeArm.Set(ControlMode::MotionMagic, -100); 
-    if (IntakeArm.GetSensorCollection().IsRevLimitSwitchClosed()==false && abs(IntakeArm.GetSelectedSensorPosition(0)) <= 100) {
-        IntakeArm.Set(ControlMode::PercentOutput, -0.3);
-    } else if (IntakeArm.GetSensorCollection().IsRevLimitSwitchClosed()) {
+    IntakeArm.Set(ControlMode::MotionMagic, -75); 
+    if (IntakeArm.GetSensorCollection().IsRevLimitSwitchClosed()) {
         IntakeArm.SetSelectedSensorPosition(0, 0, 10);
+        IntakeArm.Set(ControlMode::PercentOutput, 0.0);
+    } else if ((IntakeArm.GetSensorCollection().IsRevLimitSwitchClosed()==false) && (abs(IntakeArm.GetClosedLoopError(0)) <= 100)) {
+        IntakeArm.Set(ControlMode::PercentOutput, -0.25);
     }
 }
 
