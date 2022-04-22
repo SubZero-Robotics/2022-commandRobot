@@ -25,6 +25,8 @@ class IntakeStop : public frc2::CommandHelper<frc2::CommandBase, IntakeStop> {
 
   void Initialize() override;
 
+  void Execute() override;
+
   bool IsFinished() override;
 
  private:
