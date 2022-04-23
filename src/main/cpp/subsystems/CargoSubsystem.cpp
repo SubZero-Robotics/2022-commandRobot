@@ -74,6 +74,7 @@ CargoSubsystem::CargoSubsystem() {
 
   /* Zero the sensor */
   IntakeArm.SetSelectedSensorPosition(0, 0, 10);
+  IntakeArm.ConfigClearPositionOnLimitR(true, 10);
 }
 
 void CargoSubsystem::Periodic() {
@@ -86,7 +87,6 @@ void CargoSubsystem::Periodic() {
 
   static frc::DriverStation::Alliance AllianceColor = frc::DriverStation::GetAlliance();
   frc::Color detectedColor = m_colorSensor.GetColor();
-  double IR = m_colorSensor.GetIR();
   frc::SmartDashboard::PutNumber("Red", detectedColor.red);
   frc::SmartDashboard::PutNumber("Green", detectedColor.green);
   frc::SmartDashboard::PutNumber("Blue", detectedColor.blue);
@@ -263,14 +263,17 @@ void CargoSubsystem::LowShoot() {
         }
 }
 
-void CargoSubsystem::Stop() {
+void CargoSubsystem::StopInt() {
     IntakeWheels.StopMotor();
     BottomIndexer.StopMotor();
     TopIndexer.StopMotor();
     Shooter.Set(ControlMode::PercentOutput, 0.0); 
+}
+
+void CargoSubsystem::Stop() {
     IntakeArm.Set(ControlMode::MotionMagic, -75); 
     if (IntakeArm.GetSensorCollection().IsRevLimitSwitchClosed()) {
-        IntakeArm.SetSelectedSensorPosition(0, 0, 10);
+        //IntakeArm.SetSelectedSensorPosition(0, 0, 10);
         IntakeArm.Set(ControlMode::PercentOutput, 0.0);
     } else if ((IntakeArm.GetSensorCollection().IsRevLimitSwitchClosed()==false) && (abs(IntakeArm.GetClosedLoopError(0)) <= 100)) {
         IntakeArm.Set(ControlMode::PercentOutput, -0.25);

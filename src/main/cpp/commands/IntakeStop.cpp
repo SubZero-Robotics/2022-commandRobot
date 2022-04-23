@@ -11,7 +11,7 @@ IntakeStop::IntakeStop(CargoSubsystem* subsystem) : m_cargo(subsystem) {
   AddRequirements({subsystem});
 }
 
-void IntakeStop::Initialize() { m_cargo->Stop(); }
+void IntakeStop::Initialize() { m_cargo->StopInt(); }
 
 void IntakeStop::Execute() { m_cargo->Stop(); }
 

@@ -92,7 +92,12 @@ class CargoSubsystem : public frc2::SubsystemBase {
   double GetRPM();
 
   /**
-   * Stop the shooter, indexer, and intake, return intake arm PID to upright
+   * Stop the shooter, indexer, and intake
+   */
+  void StopInt();
+
+  /**
+   * Return intake arm PID to upright and keep it there
    */
   void Stop();
 
