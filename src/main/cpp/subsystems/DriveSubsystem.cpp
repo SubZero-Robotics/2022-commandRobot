@@ -56,6 +56,8 @@ DriveSubsystem::DriveSubsystem()
   trajectoryConfig->SetKinematics(DriveConstants::kDriveKinematics);
   // Apply the voltage constraint
   trajectoryConfig->AddConstraint(autoVoltageConstraint);
+  
+  frc::SmartDashboard::PutNumber("KpDistance", -2);
 }
 
 void DriveSubsystem::DisabledInit() {
@@ -85,7 +87,7 @@ void DriveSubsystem::Periodic() {
 
   currentrobotAngle = Get2dAngle();
   //Display encoder values in SmartDashboard
-  //frc::SmartDashboard::PutNumber("Distance to Target", (double)GetLimelightDistance());
+  frc::SmartDashboard::PutNumber("Distance to Target", (double)GetLimelightDistance());
   //frc::SmartDashboard::PutNumber("TargetAngle", (double)(gyroAngle+tx));
   //frc::SmartDashboard::PutNumber("2d Angle", (double)currentrobotAngle.Degrees());
   //frc::SmartDashboard::PutNumber("Pose X", (double)m_odometry.GetPose().X());
@@ -119,17 +121,15 @@ void DriveSubsystem::Periodic() {
 }
 
 void DriveSubsystem::ArcadeDrive(double fwd, double rot) {
-  /*double currentPercentage = fwd;
-  double slewOutput;
+  double currentPercentage = fwd;
   if (abs(currentPercentage) > previousPercentage) { //speeding up, accel filter
-    slewOutput = (double)accelfilter.Calculate(currentPercentage / 1_s);
-    decelfilter.Calculate(currentPercentage / 1_s);
+    m_drive.ArcadeDrive(accelfilter.Calculate(currentPercentage), rot, true);
+    decelfilter.Calculate(currentPercentage);
   } else { //slowing down, decel filter
-    slewOutput = (double)decelfilter.Calculate(currentPercentage / 1_s);
-    accelfilter.Calculate(currentPercentage / 1_s);
-  }*/
-  m_drive.ArcadeDrive(fwd, rot, true);
-  //previousPercentage = abs(currentPercentage);
+    m_drive.ArcadeDrive(decelfilter.Calculate(currentPercentage), rot, true);
+    accelfilter.Calculate(currentPercentage);
+  }
+  previousPercentage = abs(currentPercentage);
 }
 
 void DriveSubsystem::TankDriveVolts(units::volt_t left, units::volt_t right) {
@@ -205,7 +205,9 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
  units::meter_t DriveSubsystem::GetLimelightDistance() {
   units::meter_t lime_dist = 0_m;
   //calculate distance from the target angle
-  lime_dist = 2.1*((kUpHub - kRobotHeight) / tan((ty + kMountAngle) * (3.14159 / 180)) - kIdealDistance);
+  double angleToGoalDegrees = kMountAngle + ty;
+  double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+  lime_dist = ((kUpHub - kRobotHeight) / tan(angleToGoalRadians) - kIdealDistance);
   return lime_dist;
 }
 
@@ -236,7 +238,7 @@ units::degree_t DriveSubsystem::LimelightDifferenceAngle() {
 
 void DriveSubsystem::LimelightTimedCopy(double fwd, double rot) {
   table->PutNumber("pipeline", 0); //shooting pipe line
-  float KpDistance = -1.0f;  // Proportional control constant for distance
+  double KpDistance = frc::SmartDashboard::GetNumber("KpDistance", 0);  // Proportional control constant for distance
   double output = 0.0;
   float distance_adjust = 0.0;
   double distance_error = (double)GetLimelightDistance();  // see the 'Case Study: Estimating Distance' (we already do the subtraction)
@@ -253,9 +255,9 @@ void DriveSubsystem::LimelightTimedCopy(double fwd, double rot) {
         tx = 0;
       }
   if (tv == 1) { //if no target, no more turn: simple!
-    m_drive.ArcadeDrive(distance_adjust + (fwd*0.6), output + (rot*0.4), true);
+    ArcadeDrive(distance_adjust + (fwd*0.6), output + (rot*0.4));
     } else { 
-    m_drive.ArcadeDrive((fwd*0.6), (rot*0.4), true);
+    ArcadeDrive((fwd*0.6), (rot*0.4));
     }
 
 }
