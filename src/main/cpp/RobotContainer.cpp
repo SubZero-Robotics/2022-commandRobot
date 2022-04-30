@@ -13,6 +13,7 @@
 #include <frc2/command/ParallelRaceGroup.h>
 
 #include "commands/IntakeGrabBalls.h"
+#include "commands/IntakeGrabBallsWalls.h"
 #include "commands/IntakeAllOut.h"
 #include "commands/IntakeStop.h"
 
@@ -145,12 +146,10 @@ void RobotContainer::ConfigureButtonBindings() {
       //.WhenHeld(frc2::ParallelCommandGroup{IndexerBackward(&m_indexer),
                                             //ShooterUnjam(&m_cargo)
                                             //});
-  // Run indexer and shooter backwards AND burp them out the intake
-  //frc2::JoystickButton(&Xbox, Button::kBack)
-      //.WhenHeld(frc2::ParallelCommandGroup{IndexerForward(&m_indexer),
-                                            //IntakeBottomIn(&m_cargo),
-                                            //ShooterUnjam(&m_cargo)
-                                            //});
+  
+  // Runs intake run and 1 and intake two but not intake down arm shoot command
+  frc2::JoystickButton(&Xbox, Button::kBack)
+      .WhenHeld(IntakeGrabBallsWalls(&m_cargo));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
