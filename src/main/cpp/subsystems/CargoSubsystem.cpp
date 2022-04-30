@@ -78,15 +78,13 @@ CargoSubsystem::CargoSubsystem() {
 
 void CargoSubsystem::Periodic() {
   TopLaserState = TopIntakeLaser.Get();
-  frc::SmartDashboard::PutBoolean("Top Intake Laser", IntakeArm.GetSensorCollection().IsRevLimitSwitchClosed());
-
+  frc::SmartDashboard::PutBoolean("Top Intake Laser", TopLaserState);
   BottomLaserState = BottomIntakeLaser.Get();
   frc::SmartDashboard::PutBoolean("Bottom Intake Laser", BottomLaserState);
   frc::SmartDashboard::PutBoolean("BallCorrectColor", ballCorrectColor);
 
   static frc::DriverStation::Alliance AllianceColor = frc::DriverStation::GetAlliance();
   frc::Color detectedColor = m_colorSensor.GetColor();
-  double IR = m_colorSensor.GetIR();
   frc::SmartDashboard::PutNumber("Red", detectedColor.red);
   frc::SmartDashboard::PutNumber("Green", detectedColor.green);
   frc::SmartDashboard::PutNumber("Blue", detectedColor.blue);
@@ -187,11 +185,7 @@ void CargoSubsystem::GrabBalls() {
     }
 }
 
-void CargoSubsystem::AutoGrabBalls(units::second_t durationOfMove) {
-    m_timer.Reset();
-    m_timer.Start();
-    if (m_timer.HasElapsed(durationOfMove-0.5_s)) {
-        Shooter.Set(ControlMode::Velocity, -39000); }
+void CargoSubsystem::AutoGrabBalls() {
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);
@@ -203,8 +197,10 @@ void CargoSubsystem::AutoGrabBalls(units::second_t durationOfMove) {
             BottomIndexer.Set(kIndexerSpeed);
             IntakeWheels.Set(kIntakeSpeed);
         } else {
+            Shooter.Set(ControlMode::Velocity, -39000);
             BottomIndexer.StopMotor();
             IntakeWheels.StopMotor();
+            IntakeArm.Set(ControlMode::MotionMagic, -75);
         }
     }   
 }
@@ -248,7 +244,7 @@ void CargoSubsystem::AutoShoot() {
 }
 
 void CargoSubsystem::LowShoot() {
-    Shooter.Set(ControlMode::Velocity, -20000);
+    Shooter.Set(ControlMode::Velocity, -20100);
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);

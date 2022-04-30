@@ -38,12 +38,12 @@ void FourBallFeedRun::Initialize() {
 
   frc::Trajectory FourBallFeed2;
    fs::path deployDirectorydos = frc::filesystem::GetDeployDirectory();
-   deployDirectorydos = deployDirectorydos / "pathplanner" / "generatedJSON" / "FourBallTwo.wpilib.json";
+   deployDirectorydos = deployDirectorydos / "pathplanner" / "generatedJSON" / "FourBallTwoNewIntake.wpilib.json";
    FourBallFeed2 = frc::TrajectoryUtil::FromPathweaverJson(deployDirectorydos.string());
 
   frc::Trajectory FourBallFeed3;
    fs::path deployDirectorytres = frc::filesystem::GetDeployDirectory();
-   deployDirectorytres = deployDirectorytres / "pathplanner" / "generatedJSON" / "FourBallThree.wpilib.json";
+   deployDirectorytres = deployDirectorytres / "pathplanner" / "generatedJSON" / "FourBallThreeNewIntake.wpilib.json";
    FourBallFeed3 = frc::TrajectoryUtil::FromPathweaverJson(deployDirectorytres.string());
 
   // Reset odometry to the starting pose of the trajectory.
@@ -97,7 +97,7 @@ void FourBallFeedRun::Initialize() {
   frc2::SequentialCommandGroup* myFourBallFeedAuto = new frc2::SequentialCommandGroup(
     frc2::ParallelRaceGroup( 
       std::move(FourBallFeed1Command),     
-      IntakeGrabBalls(m_cargo)),
+      IntakeAutoGrabBalls(m_cargo)),
     frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {} ),
     ShooterAutoShoot(m_cargo, &Xbox).WithTimeout(2.7_s),
     frc2::ParallelRaceGroup( 
@@ -107,9 +107,9 @@ void FourBallFeedRun::Initialize() {
     IntakeGrabBalls(m_cargo).WithTimeout(1.8_s),
     frc2::ParallelRaceGroup(
       std::move(FourBallFeed3Command),
-      IntakeGrabBalls(m_cargo)),
+      IntakeAutoGrabBalls(m_cargo)),
     frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {} ),
-    IntakeAllOut(m_cargo).WithTimeout(0.1_s),
+    IntakeAllOut(m_cargo).WithTimeout(0.05_s),
     ShooterAutoShoot(m_cargo, &Xbox).WithTimeout(4_s));
   myFourBallFeedAuto->Schedule();
 }

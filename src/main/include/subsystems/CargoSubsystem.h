@@ -44,7 +44,7 @@ class CargoSubsystem : public frc2::SubsystemBase {
   /**
    * One stop solution to handle all of our intaking needs in auto. Spins up the shooter motors to warm them up.
    */
-  void AutoGrabBalls(units::second_t durationOfMove);
+  void AutoGrabBalls();
 
   /**
    * @param ledMotorValue the value in percent out to be sent to the Blinkin

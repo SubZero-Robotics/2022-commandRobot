@@ -7,7 +7,7 @@
 
 #include "commands/IntakeAutoGrabBalls.h"
 
-IntakeAutoGrabBalls::IntakeAutoGrabBalls(units::second_t durationOfMove, CargoSubsystem* subsystem) : m_length(durationOfMove), m_cargo(subsystem) {
+IntakeAutoGrabBalls::IntakeAutoGrabBalls(CargoSubsystem* subsystem) : m_cargo(subsystem) {
   AddRequirements({subsystem});
 }
 
@@ -16,7 +16,7 @@ void IntakeAutoGrabBalls::Initialize() {
 }
 
 void IntakeAutoGrabBalls::Execute() {
-  m_cargo->AutoGrabBalls(m_length);
+  m_cargo->AutoGrabBalls();
 }
 
 void IntakeAutoGrabBalls::End(bool interrupted) {

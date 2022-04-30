@@ -66,7 +66,7 @@ RobotContainer::RobotContainer() {
   m_drive.SetDefaultCommand(DefaultDrive(
       &m_drive,
       [this] { return Xbox.GetLeftY(); },
-      [this] { return Xbox.GetLeftX(); }));
+      [this] { return Xbox.GetLeftX()*0.85; }));
 
 // Set default intake, shooter, and indexer command.  Does this when not doing something else
   m_cargo.SetDefaultCommand(IntakeStop(&m_cargo));

@@ -21,7 +21,7 @@
  */
 class IntakeAutoGrabBalls : public frc2::CommandHelper<frc2::CommandBase, IntakeAutoGrabBalls> {
  public:
-  explicit IntakeAutoGrabBalls(units::second_t durationOfMove, CargoSubsystem* subsystem);
+  explicit IntakeAutoGrabBalls(CargoSubsystem* subsystem);
 
   void Initialize() override;
 
@@ -33,5 +33,4 @@ class IntakeAutoGrabBalls : public frc2::CommandHelper<frc2::CommandBase, Intake
 
  private:
   CargoSubsystem* m_cargo;
-  units::second_t m_length;
 };
