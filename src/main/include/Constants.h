@@ -46,9 +46,9 @@ namespace DriveConstants {
 // theoretically for *your* robot's drive. The Robot Characterization
 // Toolsuite provides a convenient tool for obtaining these values for your
 // robot.
-  constexpr auto ks = 0.64669_V;
-  constexpr auto kv = 3.1182 * 1_V * 1_s / 1_m;
-  constexpr auto ka = 0.25148 * 1_V * 1_s * 1_s / 1_m;
+  constexpr auto ks = 0.6416_V;
+  constexpr auto kv = 3.1057 * 1_V * 1_s / 1_m;
+  constexpr auto ka = 0.29699 * 1_V * 1_s * 1_s / 1_m;
   extern const frc::DifferentialDriveKinematics kDriveKinematics;
 
   constexpr double kPDriveVel = 1.6686;
@@ -94,16 +94,16 @@ constexpr auto kMaxTurnAcceleration = 200_deg_per_s / 1_s;
 constexpr double kHighTargetRPM = 1150.0; // desired shooter wheel speed
 constexpr double kLowTargetRPM = 690.0; // desired shooter wheel speed
 constexpr double kRPM_OK = 0.0;  // if we're within this of the target, it's ok to throw a ball
-constexpr double kShootF = 0.01; //kF for shooter velocity
-constexpr double kShootP = 0.09;   //kP for shooter velocity
+constexpr double kShootF = 0.0092; //kF for shooter velocity
+constexpr double kShootP = 0.081;   //kP for shooter velocity
 constexpr double kShootI = 0.0;    //kI for shooter velocity
-constexpr double kShootD = 3.0;    //kD for shooter velocity
+constexpr double kShootD = 3.5;    //kD for shooter velocity
 
 // Robot/Field Constants
-constexpr auto kRobotHeight = 0.94_m;// Height of limelight
-constexpr auto kUpHub = 2.64_m;      // height of upper target
+constexpr double kRobotHeight = 0.94;// Height of limelight
+constexpr double kUpHub = 2.64;      // height of upper target
 constexpr double kMountAngle = 25.0; // Limelight angle off horizintal
-constexpr auto kIdealDistance = 2.1336_m;
+constexpr double kIdealDistance = 2.976;
 
 // XboxController enums.  Since the Trigger stuff works on the base Joystick class, not the
 // Xbox extension, these are undefined where we want to use them.  So, flat-out copied them 

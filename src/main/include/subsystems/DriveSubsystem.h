@@ -217,7 +217,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
    *
    * @return The distance at from where we want to be in relation to the target
    */
-  units::meter_t GetLimelightDistance();
+  double GetLimelightDistance();
 
  /**
    * Choose a path

@@ -202,12 +202,12 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
   return target; 
 }
 
- units::meter_t DriveSubsystem::GetLimelightDistance() {
-  units::meter_t lime_dist = 0_m;
+ double DriveSubsystem::GetLimelightDistance() {
+  double lime_dist = 0;
   //calculate distance from the target angle
   double angleToGoalDegrees = kMountAngle + ty;
   double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
-  lime_dist = ((kUpHub - kRobotHeight) / tan(angleToGoalRadians) - kIdealDistance);
+  lime_dist = (((kUpHub - kRobotHeight) / tan(angleToGoalRadians)) - 2.72);
   return lime_dist;
 }
 
