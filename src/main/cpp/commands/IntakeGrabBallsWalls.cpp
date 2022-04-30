@@ -5,23 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/IntakeGrabBalls.h"
+#include "commands/IntakeGrabBallsWalls.h"
 
-IntakeGrabBalls::IntakeGrabBalls(CargoSubsystem* subsystem) : m_cargo(subsystem) {
+IntakeGrabBallsWalls::IntakeGrabBallsWalls(CargoSubsystem* subsystem) : m_cargo(subsystem) {
   AddRequirements({subsystem});
 }
 
-void IntakeGrabBalls::Initialize() {
-  m_cargo->IntakeDown();
+void IntakeGrabBallsWalls::Initialize() {
+
 }
 
-void IntakeGrabBalls::Execute() {
+void IntakeGrabBallsWalls::Execute() {
   m_cargo->GrabBalls();
 }
 
-void IntakeGrabBalls::End(bool interrupted) {
+void IntakeGrabBallsWalls::End(bool interrupted) {
   m_cargo->Stop();
 }
 
 // this is a state, it lasts till it's cancelled
-bool IntakeGrabBalls::IsFinished() { return false; }
+bool IntakeGrabBallsWalls::IsFinished() { return false; }

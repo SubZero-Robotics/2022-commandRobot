@@ -19,9 +19,9 @@
  *
  * @see InstantCommand
  */
-class IntakeGrabBalls : public frc2::CommandHelper<frc2::CommandBase, IntakeGrabBalls> {
+class IntakeGrabBallsWalls : public frc2::CommandHelper<frc2::CommandBase, IntakeGrabBallsWalls> {
  public:
-  explicit IntakeGrabBalls(CargoSubsystem* subsystem);
+  explicit IntakeGrabBallsWalls(CargoSubsystem* subsystem);
 
   void Initialize() override;
 
