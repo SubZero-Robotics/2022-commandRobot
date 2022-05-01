@@ -131,9 +131,5 @@ class CargoSubsystem : public frc2::SubsystemBase {
   double RPM = 0.0;         // Shooter motor speed
   bool truth = 0;
 
-  units::second_t m_duration;
-
-  #define numRPMs 5
-  double recentRPMs[numRPMs];
-  double averageRPMs = 0.0;
+  bool firstPass = true;
 };

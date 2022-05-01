@@ -21,10 +21,12 @@
 #include "commands/autos/StraightBack.h"
 
 #include "commands/IntakeGrabBalls.h"
+#include "commands/IntakeAutoGrabBalls.h"
 #include "commands/IntakeAllOut.h"
 
 #include "commands/ShooterShoot.h"
 #include "commands/ShooterAutoShoot.h"
+#include "commands/ShooterAutoShootOne.h"
 #include "commands/ShooterLowShoot.h"
 
 #include "commands/DriveDistance.h"

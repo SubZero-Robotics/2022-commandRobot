@@ -94,10 +94,10 @@ constexpr auto kMaxTurnAcceleration = 200_deg_per_s / 1_s;
 constexpr double kHighTargetRPM = 1150.0; // desired shooter wheel speed
 constexpr double kLowTargetRPM = 690.0; // desired shooter wheel speed
 constexpr double kRPM_OK = 0.0;  // if we're within this of the target, it's ok to throw a ball
-constexpr double kShootF = 0.0092; //kF for shooter velocity
-constexpr double kShootP = 0.081;   //kP for shooter velocity
+constexpr double kShootF = 0.01; //kF for shooter velocity
+constexpr double kShootP = 0.09;   //kP for shooter velocity
 constexpr double kShootI = 0.0;    //kI for shooter velocity
-constexpr double kShootD = 3.5;    //kD for shooter velocity
+constexpr double kShootD = 3.0;    //kD for shooter velocity
 
 // Robot/Field Constants
 constexpr double kRobotHeight = 0.94;// Height of limelight

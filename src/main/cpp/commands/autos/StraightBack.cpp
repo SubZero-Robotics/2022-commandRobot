@@ -14,14 +14,17 @@
 #include <frc/trajectory/constraint/DifferentialDriveVoltageConstraint.h>
 #include <frc2/command/RamseteCommand.h>
 
-#include "commands/ShooterAutoShoot.h"
+#include "commands/ShooterAutoShootOne.h"
+#include "commands/ShooterShoot.h"
 #include "commands/IntakeGrabBalls.h"
 #include "commands/IntakeAllOut.h"
+#include "commands/LimelightTimedCopy.h"
 
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/ParallelCommandGroup.h>
 #include <frc2/command/ParallelRaceGroup.h>
+#include <frc2/command/WaitCommand.h>
 
 StraightBackRun::StraightBackRun(DriveSubsystem* dsubsystem, CargoSubsystem* csubsystem)
     : m_drive{dsubsystem}, m_cargo{csubsystem} {
@@ -57,9 +60,13 @@ void StraightBackRun::Initialize() {
     frc2::ParallelRaceGroup( 
       std::move(StraightBack1Command),     
       IntakeGrabBalls(m_cargo)),
-    frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {} ),
-    IntakeAllOut(m_cargo).WithTimeout(0.1_s), 
-    ShooterAutoShoot(m_cargo, &Xbox).WithTimeout(3_s));
+    frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {} ), 
+    LimelightTimedCopy(m_drive,
+    [this] { return Xbox.GetLeftY(); },
+    [this] { return Xbox.GetLeftX(); }).WithTimeout(3.5_s),
+    ShooterAutoShootOne(m_cargo, &Xbox),
+    frc2::WaitCommand(0.4_s),
+    ShooterShoot(m_cargo, &Xbox).WithTimeout(5_s));
   myStraightBackAuto->Schedule();
 }
 

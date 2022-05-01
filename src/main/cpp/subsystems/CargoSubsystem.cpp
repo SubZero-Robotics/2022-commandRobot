@@ -136,6 +136,20 @@ void CargoSubsystem::Periodic() {
           break;
         }
   }
+
+    if (Xbox.GetXButtonReleased() && Xbox.GetPOV()==180){
+        if (firstPass == true) {
+            Shooter.Config_kF(0, 0.0092, 10);
+            Shooter.Config_kP(0, 0.081, 10);
+            Shooter.Config_kD(0, 3.5, 10);  
+            firstPass = false;
+        } else {
+            Shooter.Config_kF(0, kShootF, 10);
+            Shooter.Config_kP(0, kShootP, 10);
+            Shooter.Config_kD(0, kShootD, 10); 
+            firstPass = true;  
+        }
+    }
 }
 
 void CargoSubsystem::PutLED(double ledMotorValue) {
@@ -209,14 +223,16 @@ void CargoSubsystem::AllOut() {
     TopIndexer.Set(-kIndexerSpeed);
     BottomIndexer.Set(-kIndexerSpeed);
     IntakeWheels.Set(-kIndexerSpeed);
+    IntakeArm.Set(ControlMode::MotionMagic, -75);
 }
 
 void CargoSubsystem::Shoot() {
     Shooter.Set(ControlMode::Velocity, -39100);
+    IntakeArm.Set(ControlMode::MotionMagic, -75);
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed-0.07);
         BottomIndexer.Set(kIndexerSpeed-0.07);
-    } else if (abs(Shooter.GetSelectedSensorVelocity(0)) >= 39000 && abs(Shooter.GetSelectedSensorVelocity(0)) <= 39150) {
+    } else if (abs(Shooter.GetSelectedSensorVelocity(0)) >= 39000 && abs(Shooter.GetSelectedSensorVelocity(0)) <= 49150) {
         truth = true;
         BottomIndexer.Set(kIndexerSpeed);
         TopIndexer.Set(kIndexerSpeed);
@@ -232,7 +248,7 @@ void CargoSubsystem::AutoShoot() {
     if (TopLaserState) {
         TopIndexer.Set(kIndexerSpeed);
         BottomIndexer.Set(kIndexerSpeed);
-    } else if (abs(Shooter.GetSelectedSensorVelocity(0)) >= 39000 && abs(Shooter.GetSelectedSensorVelocity(0)) <= 39150) {
+    } else if (abs(Shooter.GetSelectedSensorVelocity(0)) >= 39000 && abs(Shooter.GetSelectedSensorVelocity(0)) <= 49150) {
         truth = true;
         BottomIndexer.Set(kIndexerSpeed);
         TopIndexer.Set(kIndexerSpeed);
@@ -275,21 +291,4 @@ void CargoSubsystem::Stop() {
 
 double CargoSubsystem::GetRPM() {
     return RPM;
-}
-
-double CargoSubsystem::rollingRPMs(double nextRPM) {
-    // first thing, move all stored RPMs down one, losing the oldest one
-    for (int i=(numRPMs - 2); i>=0; i--) {
-        recentRPMs[i+1] = recentRPMs[i];
-    }
-    // store new RPM in the newest place
-    recentRPMs[0] = nextRPM;
-
-    // get an average
-    double average = 0.0;
-    for (int i=0; i<numRPMs; i++) {
-        average += recentRPMs[i];
-    }
-    average = average / (double)numRPMs;
-    return average;
 }

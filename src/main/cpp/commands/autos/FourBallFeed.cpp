@@ -18,6 +18,7 @@
 #include "commands/IntakeAutoGrabBalls.h"
 #include "commands/IntakeGrabBalls.h"
 #include "commands/IntakeAllOut.h"
+#include "commands/LimelightTimedCopy.h"
 
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/SequentialCommandGroup.h>
@@ -104,11 +105,15 @@ void FourBallFeedRun::Initialize() {
       std::move(FourBallFeed2Command),     
       IntakeGrabBalls(m_cargo)),
     frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {} ),
-    IntakeGrabBalls(m_cargo).WithTimeout(1.8_s),
     frc2::ParallelRaceGroup(
       std::move(FourBallFeed3Command),
       IntakeAutoGrabBalls(m_cargo)),
     frc2::InstantCommand([this] { m_drive->TankDriveVolts(0_V, 0_V); }, {} ),
+    frc2::ParallelRaceGroup( 
+      LimelightTimedCopy(m_drive,
+      [this] { return Xbox.GetLeftY(); },
+      [this] { return Xbox.GetLeftX(); }).WithTimeout(2_s),
+      IntakeAutoGrabBalls(m_cargo)),
     IntakeAllOut(m_cargo).WithTimeout(0.05_s),
     ShooterAutoShoot(m_cargo, &Xbox).WithTimeout(4_s));
   myFourBallFeedAuto->Schedule();
