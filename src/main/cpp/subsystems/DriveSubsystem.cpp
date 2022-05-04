@@ -20,7 +20,10 @@ DriveSubsystem::DriveSubsystem()
 
   // Initialize each motor with MotionMagic settings
   // Made this a function since we do the same thing four times
-  DisabledInit();
+  ConfigureMotor(&RightLead);
+  ConfigureMotor(&RightFollow);
+  ConfigureMotor(&LeftLead);
+  ConfigureMotor(&LeftFollow);
 
   // Invert left side, since DifferentialDrive no longer does it for us
   LeftLead.SetInverted(true);
@@ -58,13 +61,14 @@ DriveSubsystem::DriveSubsystem()
   trajectoryConfig->AddConstraint(autoVoltageConstraint);
   
   frc::SmartDashboard::PutNumber("KpDistance", -2);
+
 }
 
 void DriveSubsystem::DisabledInit() {
-  SetCoast(&RightLead);
-  SetCoast(&RightFollow);
-  SetCoast(&LeftLead);
-  SetCoast(&LeftFollow);
+  //SetCoast(&RightLead);
+  //SetCoast(&RightFollow);
+  //SetCoast(&LeftLead);
+  //SetCoast(&LeftFollow);
 }
 
 void DriveSubsystem::TeleopInit() {
@@ -75,10 +79,6 @@ void DriveSubsystem::TeleopInit() {
   SelectLimelightPipeline(1);
 }
 
-void DriveSubsystem::SetCoast(WPI_TalonFX *_talon) {
-   _talon->SetNeutralMode(Coast);
-
-}
 
 
 void DriveSubsystem::Periodic() {

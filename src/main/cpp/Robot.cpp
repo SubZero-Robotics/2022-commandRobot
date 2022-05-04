@@ -16,13 +16,7 @@
 #include <wpi/PortForwarder.h>
 
 void Robot::RobotInit() {
-  wpi::PortForwarder::GetInstance().Add(5800, "limelight.local", 5800);
-  wpi::PortForwarder::GetInstance().Add(5801, "limelight.local", 5801);
-  wpi::PortForwarder::GetInstance().Add(5802, "limelight.local", 5802);
-  wpi::PortForwarder::GetInstance().Add(5803, "limelight.local", 5803);
-  wpi::PortForwarder::GetInstance().Add(5804, "limelight.local", 5804);
-  wpi::PortForwarder::GetInstance().Add(5805, "limelight.local", 5805);
-  wpi::PortForwarder::GetInstance().Add(8888, "wpilibpi.local", 80);
+
 }
 /**
  * This function is called every robot packet, no matter the mode. Use
@@ -40,19 +34,7 @@ void Robot::RobotPeriodic() { frc2::CommandScheduler::GetInstance().Run(); }
  * robot is disabled.
  */
 void Robot::DisabledInit() {
-  m_drive.DisabledInit();
-  /*switch (frc::DriverStation::GetAlliance()) {
-      case frc::DriverStation::kRed:
-            m_cargo.PutLED(0.59);
-          break;
-      case frc::DriverStation::kBlue:
-            m_cargo.PutLED(0.85);
-          break;
-      case frc::DriverStation::kInvalid:
-      default:
-            m_cargo.PutLED(0.00);
-          break;
-  }*/
+
 }
 
 void Robot::DisabledPeriodic() {}
@@ -62,7 +44,6 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
-  m_drive.TeleopInit();
   m_autonomousCommand = m_container.GetAutonomousCommand();
 
   if (m_autonomousCommand != nullptr) {
@@ -73,7 +54,6 @@ void Robot::AutonomousInit() {
 void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {
-  m_drive.TeleopInit();
   // This makes sure that the autonomous stops running when
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
