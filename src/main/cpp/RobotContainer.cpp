@@ -51,11 +51,12 @@ RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
 
   // Add commands to the autonomous command chooser
-  m_chooser.SetDefaultOption("Four Ball - Kaiden Feed", &m_fourballfeedAuto);
+  m_chooser.SetDefaultOption("Two Ball - Stright Back", &m_straightbackAuto);
+  m_chooser.AddOption("Four Ball - Kaiden Feed", &m_fourballfeedAuto);
   m_chooser.AddOption("Three Ball - Lower", &m_threeballdownAuto);
   m_chooser.AddOption("Three Ball*UNTESTED* - Upper", &m_threeballupAuto);
   m_chooser.AddOption("Two Ball - Upper", &m_twoballupAuto);
-  m_chooser.AddOption("Straight Back", &m_straightbackAuto);
+
 
   // Put the chooser on the dashboard
   frc::Shuffleboard::GetTab("Autonomous").Add(m_chooser);
@@ -148,6 +149,7 @@ void RobotContainer::ConfigureButtonBindings() {
                                             //});
   
   // Runs intake run and 1 and intake two but not intake down arm shoot command
+  
   frc2::JoystickButton(&Xbox, Button::kBack)
       .WhenHeld(IntakeGrabBallsWalls(&m_cargo));
 }
