@@ -91,7 +91,7 @@ void CargoSubsystem::Periodic() {
   if (frc::DriverStation::IsDisabled() != true && frc::DriverStation::IsAutonomous() == false) {
     switch (AllianceColor) {
     case frc::DriverStation::kRed:
-      if (detectedColor.blue > 0.275) {
+      if ((detectedColor.blue / detectedColor.red) > 1.1) {
         ballCorrectColor = false;
         frc::SmartDashboard::PutBoolean("is red", false);
       } else {
@@ -100,7 +100,7 @@ void CargoSubsystem::Periodic() {
       }
       break;
     case frc::DriverStation::kBlue:
-      if (detectedColor.red > 0.275) {
+      if ((detectedColor.red / detectedColor.blue) > 1.2) {
         ballCorrectColor = false;
         frc::SmartDashboard::PutBoolean("is blue", false);
       } else {
