@@ -13,6 +13,7 @@
 #include <networktables/NetworkTable.h>
 #include <networktables/NetworkTableInstance.h>
 #include <networktables/NetworkTableEntry.h>
+#include <frc/DriverStation.h>
 
 #include <frc/drive/DifferentialDrive.h>
 
@@ -277,4 +278,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   // The drive's config for trajectory
   frc::TrajectoryConfig *trajectoryConfig;
+
+  // State transition variables
+  bool EnteredEnabled = false;
+  bool EnteredDisabled = false;
 };

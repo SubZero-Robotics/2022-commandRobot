@@ -118,6 +118,23 @@ void DriveSubsystem::Periodic() {
  m_odometry.Update(currentrobotAngle,
                     units::meter_t(lEncoder*kEncoderDistancePerPulse),
                     units::meter_t(rEncoder*kEncoderDistancePerPulse)); 
+
+ // Do things when first enabled or disabled
+ if (frc::DriverStation::IsDisabled() != true && frc::DriverStation::IsAutonomousEnabled() == false) {
+   if (!EnteredDisabled) {
+     EnteredDisabled = true;
+     EnteredEnabled = false;
+     // set coast since we are disabled and not in auto
+     //DisabledInit();  // maybe?
+   }
+ }  else { 
+   if (!EnteredEnabled) {
+   // we are enabled or in auto, so set brake mode
+   EnteredEnabled = true;
+   EnteredDisabled = false;
+   //EnabledInit();
+   }
+ }                 
 }
 
 void DriveSubsystem::ArcadeDrive(double fwd, double rot) {
