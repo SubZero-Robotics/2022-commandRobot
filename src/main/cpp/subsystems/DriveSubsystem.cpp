@@ -65,10 +65,10 @@ DriveSubsystem::DriveSubsystem()
 }
 
 void DriveSubsystem::DisabledInit() {
-  //SetCoast(&RightLead);
-  //SetCoast(&RightFollow);
-  //SetCoast(&LeftLead);
-  //SetCoast(&LeftFollow);
+  SetCoast(&RightLead);
+  SetCoast(&RightFollow);
+  SetCoast(&LeftLead);
+  SetCoast(&LeftFollow);
 }
 
 void DriveSubsystem::TeleopInit() {
@@ -76,10 +76,11 @@ void DriveSubsystem::TeleopInit() {
   ConfigureMotor(&RightFollow);
   ConfigureMotor(&LeftLead);
   ConfigureMotor(&LeftFollow);
-  SelectLimelightPipeline(1);
 }
 
-
+void DriveSubsystem::SetCoast(WPI_TalonFX *_talon) {
+  _talon->SetNeutralMode(Coast);
+}
 
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
@@ -125,14 +126,14 @@ void DriveSubsystem::Periodic() {
      EnteredDisabled = true;
      EnteredEnabled = false;
      // set coast since we are disabled and not in auto
-     //DisabledInit();  // maybe?
+     DisabledInit();  // yep!
    }
  }  else { 
    if (!EnteredEnabled) {
    // we are enabled or in auto, so set brake mode
    EnteredEnabled = true;
    EnteredDisabled = false;
-   //EnabledInit();
+   TeleopInit();
    }
  }                 
 }
