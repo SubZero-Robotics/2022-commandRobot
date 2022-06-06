@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/ShooterAutoShoot.h"
-#include <frc/smartdashboard/Smartdashboard.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/WaitCommand.h>
 
 

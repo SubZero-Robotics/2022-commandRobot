@@ -1,4 +1,4 @@
-#include <frc/smartdashboard/Smartdashboard.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 #include "subsystems/ClimberSubsystem.h"
 

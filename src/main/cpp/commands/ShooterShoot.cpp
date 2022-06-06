@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/ShooterShoot.h"
-#include <frc/smartdashboard/Smartdashboard.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 ShooterShoot::ShooterShoot(CargoSubsystem* subsystem, frc::XboxController* controller) 
     : m_cargo(subsystem), m_controller(controller)  {

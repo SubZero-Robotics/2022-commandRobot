@@ -7,7 +7,7 @@
 
 #include "subsystems/CargoSubsystem.h"
 
-#include <frc/smartdashboard/Smartdashboard.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 #include "Constants.h"
 
