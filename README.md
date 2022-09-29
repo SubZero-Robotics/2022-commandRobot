@@ -48,10 +48,6 @@
 
 This code was built for our 2022 robot. It is designed to play the First Robotics Competition game Rapid React. The robot is capable of a four ball auto and can shoot in the upper and lower hub. It has a 3 second mid rung climb.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
 <!-- GETTING STARTED -->
 ## Getting Started
 
@@ -70,8 +66,6 @@ These steps detail how to build and run the code locally. Because this code does
 2. Open the project in VSCode
 3. Build and deploy the code to your robot
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- CONTRIBUTING -->
 ## Contributing
 
@@ -84,8 +78,6 @@ To contribute, follow these steps:
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p> 
 
 
 <!-- CONTACT -->
