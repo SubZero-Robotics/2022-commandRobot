@@ -43,8 +43,8 @@
 
 
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+<!-- ABOUT THE REPOSITORY -->
+## About The Repository
 
 This code was built for our 2022 robot. It is designed to play the First Robotics Competition game Rapid React. The robot is capable of a four ball auto and can shoot in the upper and lower hub. It has a 3 second mid rung climb.
 
