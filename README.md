@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/subzero-robotics/2022-commandRobot">
-    <img src="https://raw.githubusercontent.com/SubZero-Robotics/2022-commandRobot/main/robot.png" alt="Logo" width="200">
+    <img src="https://raw.githubusercontent.com/SubZero-Robotics/2022-commandRobot/main/robot.png" alt="Logo" width="300">
   </a>
 
 <h3 align="center">2022 Command Robot</h3>
